@@ -1079,6 +1079,8 @@
       .s-eye { display: block; position: fixed; top: calc(10px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%);
         z-index: 40; width: 48px; height: 48px; padding: 0; border: 0; background: none; cursor: pointer; }
       .s-eye img { width: 100%; height: 100%; display: block; }
+      body::before { content: ""; position: fixed; top: 0; left: 0; right: 0; z-index: 39; height: calc(68px + env(safe-area-inset-top, 0px)); background: #fff; }
+      .s-top { padding-top: calc(68px + env(safe-area-inset-top, 0px)) !important; }
     }
 
     /* Narrow window with a mouse: photo inset, arrows outside it in the desktop style (2026-11-11) */
@@ -1090,7 +1092,7 @@
       .s-media .s-arrow:hover { background: #f3f5f5 !important; }
       .s-media .s-arrow svg { width: 16px !important; height: 16px !important; stroke-width: 1.5 !important; }
       .s-info { margin-top: 0 !important; border-radius: 0 !important; }
-      .s-top { padding-top: 64px !important; }
+      .s-top { padding-top: 84px !important; }
       .s-photo { width: 360px !important; height: 532px !important; aspect-ratio: auto !important; flex: none; }
       .s-media { width: 472px !important; max-width: 100%; }
       .s-top { max-width: 520px !important; }
