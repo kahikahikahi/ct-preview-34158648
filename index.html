@@ -1104,11 +1104,9 @@
       .s-media { position: sticky !important; top: 0; z-index: 1; }
       .s-top { overflow: visible !important; }
     }
-    /* Phones: photo fills the whole screen; glass card stays where it was (2026-11-12) */
+    /* Phones: teal wall behind the glass card (2026-11-12) */
     @media (max-width: 960px) and (hover: none) {
-      .s-photo { height: 100svh !important; }
-      .s-info { margin-top: calc(-44svh - 28px) !important; }
-      .s-dots { bottom: calc(44svh + 40px) !important; }
+      .s-top { background: #3099af url(teal-wall-bg.jpg) center / cover; }
     }
 </style>
 </head>
