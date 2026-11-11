@@ -1047,14 +1047,18 @@
     }
 
     /* MOBILE: no arrows, swipe only (2026-11-11) */
-    @media (max-width: 960px) { .s-media .s-nav { display: none !important; } }
+    @media (max-width: 960px) and (hover: none) { .s-media .s-nav { display: none !important; } }
+    /* Narrow window with a mouse: keep the arrows (white chevrons over the photo), no dots */
+    @media (max-width: 960px) and (hover: hover) and (pointer: fine) {
+      .s-dots { display: none !important; }
+    }
 
     /* MOBILE: swipe hint dots under the photo (2026-11-11) */
     .s-dots { display: none; }
     @media (max-width: 960px) {
-      .s-dots { display: flex; justify-content: center; gap: 8px; margin-top: 10px; }
-      .s-dots span { width: 7px; height: 7px; border-radius: 50%; background: #cfd8d8; }
-      .s-dots span.is-on { background: var(--teal); }
+      .s-dots { display: flex; justify-content: center; gap: 8px; position: absolute; left: 0; right: 0; bottom: 12px; z-index: 3; pointer-events: none; }
+      .s-dots span { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.5); }
+      .s-dots span.is-on { background: #fff; }
     }
 </style>
 </head>
