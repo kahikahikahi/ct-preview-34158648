@@ -1037,6 +1037,14 @@
       .s-gal img.s-front { object-fit: cover !important; object-position: center; }
       .s-media .s-nav { top: 0; height: 100%; left: 8px; right: 8px; }
     }
+
+    /* MOBILE: swipe photos; arrows are plain white chevrons, no circle (2026-11-11) */
+    @media (max-width: 960px) {
+      .s-gal { touch-action: pan-y; }
+      .s-media .s-arrow { background: none !important; border: none !important; box-shadow: none !important; color: #fff !important; width: 40px; height: 40px; }
+      .s-media .s-arrow:hover { background: none !important; }
+      .s-media .s-arrow svg { width: 26px; height: 26px; stroke-width: 2; }
+    }
 </style>
 </head>
 <body id="top">
@@ -2188,9 +2196,33 @@
       const ov = document.getElementById("op-overlay"); if (ov && ov.classList.contains("op-open")) return;
       show(i + (e.key === "ArrowRight" ? 1 : -1));
     });
-    let x0 = null;
-    g.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
-    g.addEventListener("touchend", e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1)); }, { passive: true });
+    /* Swipe: photo follows the finger, then slides to the next/previous one */
+    let x0 = null, y0 = 0, dx = 0, dir = null, nb = null, busy = false;
+    const W = () => g.clientWidth;
+    const clear = el => { if (!el) return; el.style.transition = ""; el.style.transform = ""; el.style.opacity = ""; };
+    g.addEventListener("touchstart", e => { if (busy || imgs.length < 2) return; x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; dx = 0; dir = null; nb = null; }, { passive: true });
+    g.addEventListener("touchmove", e => {
+      if (x0 === null) return;
+      const t = e.touches[0]; dx = t.clientX - x0; const dy = t.clientY - y0;
+      if (dir === null) { if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return; dir = Math.abs(dx) > Math.abs(dy) ? "x" : "y"; }
+      if (dir !== "x") return;
+      if (e.cancelable) e.preventDefault();
+      const want = imgs[(i + (dx < 0 ? 1 : -1) + imgs.length) % imgs.length];
+      if (nb !== want) { clear(nb); nb = want; }
+      const cur = imgs[i], w = W();
+      cur.style.transition = "none"; cur.style.transform = "translateX(" + dx + "px)";
+      nb.style.transition = "none"; nb.style.opacity = "1"; nb.style.transform = "translateX(" + (dx + (dx < 0 ? w : -w)) + "px)";
+    }, { passive: false });
+    g.addEventListener("touchend", () => {
+      if (x0 === null) return; x0 = null;
+      if (dir !== "x" || !nb) { dx = 0; return; }
+      const cur = imgs[i], w = W(), go = Math.abs(dx) > w * 0.18, sign = dx < 0 ? -1 : 1, n = nb;
+      busy = true;
+      [cur, n].forEach(el => { el.style.transition = "transform 0.25s ease"; });
+      if (go) { cur.style.transform = "translateX(" + (sign * w) + "px)"; n.style.transform = "translateX(0)"; }
+      else { cur.style.transform = "translateX(0)"; n.style.transform = "translateX(" + (-sign * w) + "px)"; }
+      setTimeout(() => { if (go) show(i - sign); clear(cur); clear(n); nb = null; busy = false; }, 260);
+    });
   })();
   </script>
 
