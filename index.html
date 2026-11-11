@@ -1117,6 +1117,13 @@
       .s-info { margin-top: calc(56svh - 28px) !important; position: relative; z-index: 2; }
       .ct-menu, footer { position: relative; z-index: 2; background: #fff !important; }
     }
+    /* Phones: white space above the card with a smaller desktop-style portrait photo centred in it (2026-11-12) */
+    @media (max-width: 960px) and (hover: none) {
+      .s-media { height: calc(56svh - 28px) !important; background: #fff; display: flex !important; align-items: center; justify-content: center; padding: 36px 0 !important; box-sizing: border-box; }
+      .s-photo { height: 100% !important; width: auto !important; aspect-ratio: 360 / 532 !important; max-width: calc(100% - 40px); flex: none; }
+      .s-gal img.s-front { object-position: 50% 50% !important; }
+      .s-dots { bottom: 48px !important; }
+    }
 </style>
 </head>
 <body id="top">
@@ -1148,7 +1155,7 @@
       </div>
       <div class="s-media">
         <div class="s-photo s-gal" role="region" aria-roledescription="carousel" aria-label="Photos" tabindex="0">
-          <img class="is-on s-front" src="front-cropped.jpg" data-desktop="front-cropped.jpg" data-mobile="front-mobile-long.jpg" alt="Cafe Turquoise storefront on Devon Street West" width="720" height="1064" />
+          <img class="is-on s-front" src="front-cropped.jpg" data-desktop="front-cropped.jpg" data-mobile="front-cropped.jpg" alt="Cafe Turquoise storefront on Devon Street West" width="720" height="1064" />
           <img src="kebab.jpg" alt="Kebab from Cafe Turquoise" width="1024" height="1024" loading="lazy" />
         </div>
         <div class="s-nav">
