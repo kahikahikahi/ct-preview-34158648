@@ -1048,6 +1048,14 @@
 
     /* MOBILE: no arrows, swipe only (2026-11-11) */
     @media (max-width: 960px) { .s-media .s-nav { display: none !important; } }
+
+    /* MOBILE: swipe hint dots under the photo (2026-11-11) */
+    .s-dots { display: none; }
+    @media (max-width: 960px) {
+      .s-dots { display: flex; justify-content: center; gap: 8px; margin-top: 10px; }
+      .s-dots span { width: 7px; height: 7px; border-radius: 50%; background: #cfd8d8; }
+      .s-dots span.is-on { background: var(--teal); }
+    }
 </style>
 </head>
 <body id="top">
@@ -2190,7 +2198,10 @@
     const g = document.querySelector(".s-gal"); if (!g) return;
     const root = g.closest(".s-media") || g;
     const imgs = Array.from(g.querySelectorAll("img")); let i = 0;
-    const show = n => { i = (n + imgs.length) % imgs.length; imgs.forEach((im, k) => im.classList.toggle("is-on", k === i)); };
+    const dots = document.createElement("div"); dots.className = "s-dots"; dots.setAttribute("aria-hidden", "true");
+    imgs.forEach((_, k) => { const d = document.createElement("span"); if (k === 0) d.className = "is-on"; dots.appendChild(d); });
+    g.insertAdjacentElement("afterend", dots);
+    const show = n => { i = (n + imgs.length) % imgs.length; imgs.forEach((im, k) => im.classList.toggle("is-on", k === i)); Array.from(dots.children).forEach((d, k) => d.classList.toggle("is-on", k === i)); };
     root.querySelector(".s-prev").addEventListener("click", () => show(i - 1));
     root.querySelector(".s-next").addEventListener("click", () => show(i + 1));
     document.addEventListener("keydown", e => {
