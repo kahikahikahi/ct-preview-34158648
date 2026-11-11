@@ -1113,6 +1113,11 @@
     @media (max-width: 960px) and (hover: none) {
       .s-info { background: rgba(255,255,255,.72) !important; -webkit-backdrop-filter: blur(24px) saturate(1.4); backdrop-filter: blur(24px) saturate(1.4); }
     }
+    /* Phones: photo stays put, glass card slides over it (2026-11-12) */
+    @media (max-width: 960px) and (hover: none) {
+      .s-media { position: sticky !important; top: 0; z-index: 1; }
+      .s-top { overflow: visible !important; }
+    }
 </style>
 </head>
 <body id="top">
