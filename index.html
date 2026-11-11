@@ -1104,10 +1104,6 @@
       .s-media { position: sticky !important; top: 0; z-index: 1; }
       .s-top { overflow: visible !important; }
     }
-    /* Phones: teal wall behind the glass card (2026-11-12) */
-    @media (max-width: 960px) and (hover: none) {
-      .s-top { background: #3099af url(teal-wall-bg.jpg) center / cover; }
-    }
 </style>
 </head>
 <body id="top">
@@ -2601,5 +2597,21 @@
 (function(){var mq=window.matchMedia("(max-width: 960px) and (hover: none)");function sw(){document.querySelectorAll("img.s-front").forEach(function(im){var w=mq.matches?im.dataset.mobile:im.dataset.desktop;if(im.getAttribute("src")!==w)im.setAttribute("src",w);});}sw();(mq.addEventListener?mq.addEventListener("change",sw):mq.addListener(sw));})();
 </script>
 
+<script>
+/* Phones: photo shrinks as you scroll up the page (2026-11-12) */
+(function(){
+  var mq=window.matchMedia("(max-width: 960px) and (hover: none)");
+  var ph=document.querySelector(".s-photo"); if(!ph) return;
+  ph.style.transformOrigin="50% 0";
+  var ticking=false;
+  function upd(){ ticking=false;
+    if(!mq.matches){ ph.style.transform=""; return; }
+    var h=ph.offsetHeight||1, p=Math.min(Math.max(window.scrollY/h,0),1);
+    ph.style.transform="scale("+(1-0.3*p)+")";
+  }
+  window.addEventListener("scroll",function(){ if(!ticking){ ticking=true; requestAnimationFrame(upd);} },{passive:true});
+  window.addEventListener("resize",upd); upd();
+})();
+</script>
 </body>
 </html>
