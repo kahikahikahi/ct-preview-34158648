@@ -1048,6 +1048,11 @@
 
     /* MOBILE: no arrows, swipe only (2026-11-11) */
     @media (max-width: 960px) and (hover: none) { .s-media .s-nav { display: none !important; } }
+    /* White header bar: narrow mouse windows only (phones show just the eye) */
+    @media (max-width: 960px) and (hover: hover) and (pointer: fine) {
+      body::before { content: ""; position: fixed; top: 0; left: 0; right: 0; z-index: 39; height: 68px; background: #fff; }
+    }
+
     /* Narrow window with a mouse: keep the arrows (white chevrons over the photo), no dots */
     @media (max-width: 960px) and (hover: hover) and (pointer: fine) {
       .s-dots { display: none !important; }
@@ -1079,8 +1084,6 @@
       .s-eye { display: block; position: fixed; top: calc(10px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%);
         z-index: 40; width: 48px; height: 48px; padding: 0; border: 0; background: none; cursor: pointer; }
       .s-eye img { width: 100%; height: 100%; display: block; }
-      body::before { content: ""; position: fixed; top: 0; left: 0; right: 0; z-index: 39; height: calc(68px + env(safe-area-inset-top, 0px)); background: #fff; box-shadow: 0 -300px 0 300px #fff; }
-      .s-top { padding-top: calc(68px + env(safe-area-inset-top, 0px)) !important; }
     }
 
     /* Narrow window with a mouse: photo inset, arrows outside it in the desktop style (2026-11-11) */
