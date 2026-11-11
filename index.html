@@ -1060,11 +1060,46 @@
       .s-dots span { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.5); }
       .s-dots span.is-on { background: #fff; }
     }
+
+    /* MOBILE layout D (2026-11-11): big photo, white sheet with rounded top overlapping it */
+    @media (max-width: 960px) {
+      .s-top { padding-bottom: 0 !important; }
+      .s-media { margin-bottom: 0 !important; }
+      .s-photo { aspect-ratio: auto !important; height: 56svh !important; }
+      .s-gal img { object-fit: cover !important; }
+      .s-dots { bottom: 40px !important; }
+      .s-info { display: flex !important; flex-direction: column; align-items: center; order: 2;
+        width: calc(100% + 40px); margin: -28px -20px 0; padding: 22px 20px 28px; box-sizing: border-box;
+        background: #fff; border-radius: 24px 24px 0 0; position: relative; z-index: 4; }
+      .s-info > * { order: 0 !important; }
+    }
+    /* MOBILE: eye icon fixed at top centre; tap to go back to top */
+    .s-eye { display: none; }
+    @media (max-width: 960px) {
+      .s-eye { display: block; position: fixed; top: calc(10px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%);
+        z-index: 40; width: 48px; height: 48px; padding: 0; border: 0; background: none; cursor: pointer; }
+      .s-eye img { width: 100%; height: 100%; display: block; }
+    }
+
+    /* Narrow window with a mouse: photo inset, arrows outside it in the desktop style (2026-11-11) */
+    @media (max-width: 960px) and (hover: hover) and (pointer: fine) {
+      .s-media { width: 100% !important; margin: 16px 0 0 !important; padding: 0 56px; box-sizing: border-box; }
+      .s-media .s-nav { top: 0 !important; height: 100% !important; left: 0 !important; right: 0 !important; }
+      .s-media .s-arrow { width: 40px !important; height: 40px !important; border-radius: 50% !important; border: 1px solid #ddd !important;
+        background: #fff !important; color: var(--teal-ink) !important; filter: none !important; }
+      .s-media .s-arrow:hover { background: #f3f5f5 !important; }
+      .s-media .s-arrow svg { width: 16px !important; height: 16px !important; stroke-width: 1.5 !important; }
+      .s-info { margin-top: 0 !important; border-radius: 0 !important; }
+      .s-top { padding-top: 64px !important; }
+      .s-photo { height: auto !important; aspect-ratio: 720 / 1064 !important; }
+      .s-gal img { object-fit: contain !important; }
+    }
 </style>
 </head>
 <body id="top">
 
   <main>
+    <button type="button" class="s-eye" id="s-eye" aria-label="Back to top"><img src="eye-logo.png" alt="" width="194" height="194" /></button>
     <section class="s-top" aria-label="Cafe Turquoise">
       <div class="s-info">
       <img class="s-logo" src="logo-clean.png" alt="Café Turquoise – Turkish Cuisine" width="1024" height="437" />
@@ -2550,7 +2585,11 @@
 
 
 <script>
-(function(){var mq=window.matchMedia("(max-width: 960px)");function sw(){document.querySelectorAll("img.s-front").forEach(function(im){var w=mq.matches?im.dataset.mobile:im.dataset.desktop;if(im.getAttribute("src")!==w)im.setAttribute("src",w);});}sw();(mq.addEventListener?mq.addEventListener("change",sw):mq.addListener(sw));})();
+(function(){var mq=window.matchMedia("(max-width: 960px) and (hover: none)");function sw(){document.querySelectorAll("img.s-front").forEach(function(im){var w=mq.matches?im.dataset.mobile:im.dataset.desktop;if(im.getAttribute("src")!==w)im.setAttribute("src",w);});}sw();(mq.addEventListener?mq.addEventListener("change",sw):mq.addListener(sw));})();
+</script>
+
+<script>
+document.getElementById("s-eye").addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
 </script>
 </body>
 </html>
