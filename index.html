@@ -1074,14 +1074,7 @@
       .s-info > * { order: 0 !important; }
     }
     /* MOBILE: eye icon fixed at top centre; tap to go back to top */
-    .s-eye { display: none; }
-    @media (max-width: 960px) {
-      .s-eye { display: block; position: fixed; top: calc(10px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%);
-        z-index: 40; width: 48px; height: 48px; padding: 0; border: 0; background: none; cursor: pointer; }
-      .s-eye img { width: 100%; height: 100%; display: block; }
-      body::before { content: ""; position: fixed; top: 0; left: 0; right: 0; z-index: 39; height: calc(68px + env(safe-area-inset-top, 0px)); background: #fff; box-shadow: 0 -300px 0 300px #fff; }
-      .s-top { padding-top: calc(68px + env(safe-area-inset-top, 0px)) !important; }
-    }
+    @media (max-width: 960px) and (hover: none) { .s-top { padding-top: 0 !important; } }
 
     /* Narrow window with a mouse: photo inset, arrows outside it in the desktop style (2026-11-11) */
     @media (max-width: 960px) and (hover: hover) and (pointer: fine) {
@@ -1092,18 +1085,11 @@
       .s-media .s-arrow:hover { background: #f3f5f5 !important; }
       .s-media .s-arrow svg { width: 16px !important; height: 16px !important; stroke-width: 1.5 !important; }
       .s-info { margin-top: 0 !important; border-radius: 0 !important; }
-      .s-top { padding-top: 84px !important; }
+      .s-top { padding-top: 32px !important; }
       .s-photo { width: 360px !important; height: 532px !important; aspect-ratio: auto !important; flex: none; }
       .s-media { width: 472px !important; max-width: 100%; }
       .s-top { max-width: 520px !important; }
       .s-gal img { object-fit: contain !important; }
-    }
-    /* Phones: only the area under the white header scrolls, so nothing shows above it (2026-11-12) */
-    @media (max-width: 960px) and (hover: none) {
-      html { background: #fff; overflow: hidden; height: 100%; }
-      body { position: fixed; top: calc(68px + env(safe-area-inset-top, 0px)); left: 0; right: 0; bottom: 0;
-        overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-y: none; margin: 0; }
-      .s-top { padding-top: 0 !important; }
     }
     /* Phones: small grab handle on top of the white card (2026-11-12) */
     @media (max-width: 960px) and (hover: none) {
@@ -1123,7 +1109,6 @@
 <body id="top">
 
   <main>
-    <button type="button" class="s-eye" id="s-eye" aria-label="Back to top"><img src="eye-logo.png" alt="" width="194" height="194" /></button>
     <section class="s-top" aria-label="Cafe Turquoise">
       <div class="s-info">
       <img class="s-logo" src="logo-clean.png" alt="Café Turquoise – Turkish Cuisine" width="1024" height="437" />
@@ -2612,18 +2597,5 @@
 (function(){var mq=window.matchMedia("(max-width: 960px) and (hover: none)");function sw(){document.querySelectorAll("img.s-front").forEach(function(im){var w=mq.matches?im.dataset.mobile:im.dataset.desktop;if(im.getAttribute("src")!==w)im.setAttribute("src",w);});}sw();(mq.addEventListener?mq.addEventListener("change",sw):mq.addListener(sw));})();
 </script>
 
-<script>
-document.getElementById("s-eye").addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
-</script>
-<script>
-/* Phones: the page scrolls inside body, so point window scroll calls at it */
-(function(){
-  var mq=window.matchMedia("(max-width: 960px) and (hover: none)");
-  var b=document.body, orig=window.scrollTo.bind(window);
-  window.scrollTo=function(a,c){ if(mq.matches){ return typeof a==="object"?b.scrollTo(a):b.scrollTo(a,c);} return orig(a,c); };
-  try{ Object.defineProperty(window,"scrollY",{configurable:true,get:function(){return mq.matches?b.scrollTop:(document.documentElement.scrollTop||0);}}); }catch(e){}
-  b.addEventListener("scroll",function(){ if(mq.matches) window.dispatchEvent(new Event("scroll")); },{passive:true});
-})();
-</script>
 </body>
 </html>
