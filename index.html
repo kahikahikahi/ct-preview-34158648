@@ -1105,6 +1105,10 @@
         overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-y: none; margin: 0; }
       .s-top { padding-top: 0 !important; }
     }
+    /* Phones: small grab handle on top of the white card (2026-11-12) */
+    @media (max-width: 960px) and (hover: none) {
+      .s-info::before { content: ""; display: block; width: 36px; height: 5px; border-radius: 3px; background: #d1d5d8; margin: -12px auto 14px; flex: none; }
+    }
 </style>
 </head>
 <body id="top">
