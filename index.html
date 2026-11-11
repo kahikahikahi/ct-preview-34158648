@@ -1,0 +1,2506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cafe Turquoise New Plymouth</title>
+  <meta name="description" content="Cafe Turquoise, 81 Devon Street West, New Plymouth. Turkish kebabs, burgers &amp; meze. Phone 06 757 8921." />
+  <meta name="theme-color" content="#0f6e6e" />
+  <link rel="icon" href="eye-logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* =========================================================
+       Landing page v3
+       Type: Inter
+       Spacing: 8px rhythm (--s1 … --s8)
+       ========================================================= */
+    :root {
+      --teal: #0f6e6e;
+      --teal-dark: #0a5252;
+      --teal-ink: #0b3d3d;
+      --gold: #c9a227;
+      --gold-dark: #a8861c;
+      --pale: #e4f2f2;
+      --white: #ffffff;
+      --ink: #1b2b2b;
+      --muted: #5a6b6b;
+      --hair: #d5e6e6;
+      --s1: 8px; --s2: 16px; --s3: 24px; --s4: 32px; --s5: 40px; --s6: 48px; --s7: 56px; --s8: 64px;
+      --display: "Inter", system-ui, sans-serif;
+      --body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--body);
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--ink);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+    /* ---------- Buttons: flat, hover = darker colour ---------- */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 56px; padding: 0 var(--s3);
+      border-radius: 999px;
+      font-family: var(--display); font-size: 18px; font-weight: 500; letter-spacing: 0.06em;
+      color: #fff; text-decoration: none;
+      transition: background-color 0.15s ease;
+    }
+    .btn-menu { background: var(--teal); }
+    .btn-menu:hover { background: var(--teal-dark); }
+    .btn-order { background: var(--gold); }
+    .btn { white-space: nowrap; }
+    .btn-order:hover { background: var(--gold-dark); }
+    .btn-book {
+      background: #fff; color: var(--teal); border: 2px solid var(--teal);
+      box-sizing: border-box;
+    }
+    .btn-book:hover { background: var(--pale); color: var(--teal-dark); border-color: var(--teal-dark); }
+
+    /* ---------- Hero: full-bleed photo | info column ---------- */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(460px, 1fr);
+      height: 100vh; height: 100svh;
+      min-height: 640px; max-height: 900px;
+    }
+    .gallery { position: relative; overflow: hidden; background: var(--pale); }
+    .gallery img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .gal-nav { position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%); display: flex; gap: 10px; z-index: 2; }
+    .gal-btn {
+      width: 48px; height: 48px; border: none; border-radius: 50%;
+      background: var(--white); color: var(--teal-ink);
+      display: grid; place-items: center; cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+    .gal-btn:hover { background: var(--pale); }
+    .gal-btn svg { width: 20px; height: 20px; }
+    /* dots kept for the gallery script, hidden: the arrows do the job */
+    .dots { display: none; }
+    .dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.55); cursor: pointer; }
+    .dots span.active { background: #fff; }
+
+    .info {
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: var(--s3) var(--s7);
+      text-align: center;
+      background: var(--white);
+      position: relative;
+    }
+    .info-inner { width: 100%; max-width: 420px; display: flex; flex-direction: column; align-items: center; }
+    .logo-link { display: block; line-height: 0; }
+    .logo { width: 208px; height: auto; }
+    .descriptor {
+      margin-top: var(--s1);
+      font-size: 16px; color: var(--muted); letter-spacing: 0.01em;
+    }
+    .facts { width: 100%; margin-top: var(--s4); display: grid; gap: 20px; }
+    .label {
+      display: flex; align-items: center; justify-content: center; gap: var(--s1);
+      font-family: var(--display); font-size: 15px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal);
+      margin-bottom: 2px;
+    }
+    .status {
+      display: none; align-items: center; gap: 6px;
+      font-family: var(--body); font-size: 13px; font-weight: 500; letter-spacing: 0.02em; text-transform: none;
+      padding: 2px 10px; border-radius: 999px;
+      background: var(--pale); color: var(--teal-dark);
+    }
+    .status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--teal); }
+    .status.is-closed { background: #eef1f1; color: #4a5a5a; }
+    .status.is-closed::before { background: #8a9a9a; }
+    .status.is-ordering-closed { background: #f5efdc; color: #6d5710; }
+    .status.is-ordering-closed::before { background: var(--gold); }
+    .status.ready { display: inline-flex; }
+    .hours { list-style: none; font-size: 18px; line-height: 1.5; }
+    .hours .day { font-weight: 500; color: var(--teal-ink); margin-right: 6px; }
+    .contact { display: grid; grid-template-columns: 1fr; gap: var(--s2); }
+    .text-link { line-height: 1.45; color: var(--ink); text-decoration: underline; text-decoration-color: rgba(15,110,110,0.45); text-decoration-thickness: 1.5px; text-underline-offset: 5px; font-size: 18px; }
+    .text-link:hover { color: var(--teal); text-decoration-color: var(--teal); }
+    .ctas { width: 100%; max-width: 340px; margin-top: var(--s3); display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .ctas .btn { min-height: 52px; }
+    .apps { margin-top: var(--s2); display: flex; flex-direction: column; align-items: center; gap: var(--s1); }
+    .apps-label { font-size: 15px; color: var(--muted); }
+    .apps-row { display: flex; justify-content: center; gap: var(--s2); }
+    .app { display: block; line-height: 0; border-radius: 50%; }
+    .app img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; transition: opacity 0.15s ease; }
+    .app:hover img { opacity: 0.82; }
+
+    /* ---------- Find us (wallpaper used once, as a band) ---------- */
+    .find {
+      background: var(--teal) url("teal-wall-bg.jpg") center / cover;
+      padding: var(--s8) var(--s3);
+    }
+    .find-inner {
+      max-width: 1120px; margin: 0 auto;
+      display: grid; grid-template-columns: 280px 1fr; gap: var(--s5); align-items: center;
+    }
+    .find-copy { text-align: center; color: #fff; }
+    .find h2 { font-family: var(--display); font-weight: 500; font-size: 40px; line-height: 1.1; letter-spacing: -0.01em; }
+    .btn-light {
+      margin-top: var(--s3); background: var(--white); color: var(--teal-ink);
+    }
+    .btn-light:hover { background: var(--pale); }
+    .map { height: 320px; border-radius: 16px; overflow: hidden; background: var(--pale); }
+    .map iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+    /* ---------- Footer ---------- */
+    body > footer {
+      background: var(--teal-ink); color: rgba(255,255,255,0.85);
+      padding: var(--s3) var(--s3) calc(var(--s3) + env(safe-area-inset-bottom));
+      text-align: center; font-size: 15px;
+    }
+    body > footer .sep { margin: 0 var(--s1); opacity: 0.5; }
+    body > footer .nw { white-space: nowrap; }
+
+    /* ---------- Tablet & phone: photo band on top, info below ---------- */
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; height: auto; min-height: 0; max-height: none; }
+      .gallery { height: 160px; }
+      .gal-nav { bottom: 12px; }
+      .gal-btn { width: 48px; height: 48px; }
+      .info { padding: var(--s2) var(--s2) var(--s3); }
+      .info-inner { max-width: 440px; }
+      .logo { width: 150px; }
+      .descriptor { margin-top: 4px; font-size: 16px; }
+      .facts { margin-top: var(--s3); gap: 14px; }
+      .hours { font-size: 17px; line-height: 1.35; }
+      .hours .day { display: block; margin: 0; }
+      .hours li + li { margin-top: 4px; }
+      .contact { gap: 12px; }
+      .label { font-size: 14px; margin-bottom: 0; }
+      .text-link { font-size: 17px; }
+      .ctas { margin-top: var(--s2); gap: 10px; max-width: 360px; }
+      .ctas .btn { min-height: 52px; }
+      .apps { margin-top: 12px; gap: 6px; }
+      .find { padding: var(--s5) var(--s2); }
+      .find-inner { grid-template-columns: 1fr; gap: var(--s3); }
+      .find h2 { font-size: 32px; }
+      .map { height: 260px; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+    /* Download menu (PDF) link under MENU / ORDER */
+    .pdf-link {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 44px; padding: 0 12px; margin-top: 4px;
+      font-size: 16px; color: var(--teal-dark);
+      text-decoration: underline; text-decoration-color: rgba(15,110,110,0.45); text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+    }
+    .pdf-link:hover { color: var(--teal); text-decoration-color: var(--teal); }
+    .info .apps { margin-top: 4px; }
+    @media (max-width: 960px) { .pdf-link { margin-top: 2px; } .info .apps { margin-top: 2px; } }
+
+    /* ONPAGE-MENU:START  on-page menu, everything scoped under #menu (matches the PDF menu) */
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    #menu { --m-teal:#0f6e6e; --m-teal-ink:#0b3d3d; --m-gold:#c9a227; --m-ink:#1b2b2b; --m-muted:#5a6b6b; --m-lead:#b7cfcf;
+      background: #fff; color: var(--m-ink); font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 17px; line-height: 1.45; padding: 64px 24px 72px; text-align: left; scroll-margin-top: 0; }
+    #menu * { box-sizing: border-box; margin: 0; padding: 0; }
+    #menu .m-wrap { max-width: 1040px; margin: 0 auto; }
+    #menu .m-head { text-align: center; padding-bottom: 24px; margin-bottom: 40px; border-bottom: 1.5px solid var(--m-gold); }
+    #menu .m-head h2 { font-family: "Inter", sans-serif; font-weight: 500; font-size: 40px; line-height: 1.1; color: var(--m-teal-ink); letter-spacing: -0.01em; }
+    #menu .m-pdf { display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; margin-top: 8px; font-size: 16px; color: var(--m-teal-ink);
+      text-decoration: underline; text-decoration-color: rgba(15,110,110,0.45); text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
+    #menu .m-pdf:hover { color: var(--m-teal); text-decoration-color: var(--m-teal); }
+    #menu .m-cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: 64px; align-items: start; }
+    #menu .sec { break-inside: avoid; margin-bottom: 36px; }
+    #menu h3 { font-family: "Inter", sans-serif; font-weight: 600; font-size: 26px; line-height: 1.15; color: var(--m-teal); letter-spacing: -0.005em; margin-bottom: 8px; }
+    #menu .hq { font-family: "Inter", sans-serif; font-size: 13px; font-weight: 500; color: var(--m-gold); letter-spacing: .08em; text-transform: uppercase; margin-left: 8px; vertical-align: 3px; }
+    #menu .intro { color: var(--m-muted); font-size: 15px; margin-bottom: 12px; }
+    #menu .item { margin: 0 0 8px; break-inside: avoid; }
+    #menu .line { display: flex; align-items: baseline; gap: 8px; }
+    #menu .line .name { font-weight: 500; }
+    #menu .line .lead { flex: 1; border-bottom: 1.5px dotted var(--m-lead); transform: translateY(-4px); min-width: 16px; }
+    #menu .line .price { font-weight: 600; color: var(--m-teal-ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    #menu .line.k .price { width: 88px; text-align: right; }
+    #menu .line.sub { padding-left: 16px; }
+    #menu .line.sub .name { font-weight: 400; font-style: italic; color: var(--m-muted); }
+    #menu .cols2 { display: flex; justify-content: flex-end; gap: 8px; font-size: 13px; color: var(--m-gold); font-weight: 600; letter-spacing: .03em; margin-bottom: 4px; }
+    #menu .cols2 span { width: 88px; text-align: right; white-space: nowrap; }
+    #menu .cols2 span:first-child { flex: 1; }
+    #menu .desc { color: var(--m-muted); font-size: 15px; }
+    #menu .q { font-style: italic; }
+    #menu .tags { font-size: 12px; font-weight: 600; color: var(--m-gold); letter-spacing: .04em; }
+    #menu .rule { font-weight: 500; margin-bottom: 2px; }
+    #menu .choices { margin-top: 8px; }
+    #menu .divider { border-top: 1.5px dotted var(--m-lead); margin: 12px 0; }
+    #menu .foot { color: var(--m-muted); font-style: italic; margin-top: 4px; font-size: 15px; }
+    #menu .m-whats { margin-top: 8px; padding-top: 32px; border-top: 1.5px solid var(--m-gold); }
+    #menu .m-wi-intro { color: var(--m-muted); font-size: 15px; margin: -8px 0 16px; }
+    #menu .m-wigrid { column-count: 2; column-gap: 64px; }
+    #menu .wi { break-inside: avoid; margin-bottom: 10px; font-size: 15px; color: var(--m-muted); }
+    #menu .wi .name { font-weight: 600; color: var(--m-ink); }
+    #menu .m-bottom { margin-top: 8px; padding-top: 24px; border-top: 1.5px solid var(--m-gold); display: flex; justify-content: space-between; gap: 32px; font-size: 15px; }
+    #menu .m-bottom ul { list-style: none; }
+    #menu .m-bottom li { margin-bottom: 4px; }
+    #menu .m-bottom li::before { content: "·"; color: var(--m-gold); font-weight: 700; margin-right: 8px; }
+    #menu .m-legend { text-align: right; color: var(--m-muted); max-width: 360px; }
+    #menu .m-legend b { color: var(--m-teal); font-weight: 600; }
+    #menu .m-pdf-again { text-align: center; margin-top: 24px; }
+    @media (max-width: 760px) {
+      #menu { padding: 40px 16px 48px; }
+      #menu .m-head { margin-bottom: 28px; padding-bottom: 16px; }
+      #menu .m-head h2 { font-size: 32px; }
+      #menu .m-cols { grid-template-columns: 1fr; }
+      #menu .m-wigrid { column-count: 1; }
+      #menu .sec { margin-bottom: 28px; }
+      #menu h3 { font-size: 24px; }
+      #menu .line.k .price, #menu .cols2 span { width: 74px; }
+      #menu .cols2 { font-size: 12px; letter-spacing: 0; }
+      #menu .m-bottom { flex-direction: column; gap: 12px; }
+      #menu .m-legend { text-align: left; max-width: none; }
+    }
+    /* ONPAGE-MENU:END */
+
+    /* =========================================================
+       Order popup (all selectors prefixed .op / #op- so the
+       landing page above is untouched when the popup is closed)
+       ========================================================= */
+    body.op-lock { overflow: hidden; }
+    .op, .op-mback {
+      --op-bg: #9fd6d6;
+      --op-teal: #0f6e6e;
+      --op-teal-deep: #0a4f4f;
+      --op-gold: #c9a227;
+      --op-card: #e4f2f2;
+      --op-error: #9b2c2c;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      font-weight: 400;
+      color: #000;
+    }
+    .op button, .op input, .op select, .op textarea,
+    .op-mback button, .op-mback input, .op-mback textarea { font: inherit; color: inherit; }
+    .op h2, .op h3, .op-mback h3, .op-mback h4 { font-weight: 500; }
+
+    .op {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .op.op-open { display: flex; }
+    .op-panel {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+    }
+    .op .op-x {
+      position: absolute;
+      top: 0.6rem;
+      left: 0.7rem;
+      z-index: 30;
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border-radius: 10px;
+      border: none;
+      background: none;
+      color: #808080;
+      font-size: 2.8rem;
+      font-weight: 400;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .op .op-x:hover { color: #555; }
+    .op .op-x:focus, .op .op-x:focus-visible { outline: none; }
+    .op-scroll {
+      flex: 1;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 2rem 1.25rem;
+      scrollbar-width: none;
+    }
+    .op-scroll::-webkit-scrollbar { display: none; }
+    .op-layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 1.25rem;
+      align-items: start;
+    }
+    .op-card {
+      background: var(--op-card);
+      border-radius: 22px;
+      box-shadow: 0 18px 40px rgba(20, 51, 51, 0.16);
+    }
+    .op-inner { background: #fff; border-radius: 12px; }
+
+    /* Buttons */
+    .op-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 46px;
+      padding: 0 1.25rem;
+      border-radius: 999px;
+      border: none;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.05em;
+      color: #fff !important;
+      cursor: pointer;
+      width: 100%;
+    }
+    .op-btn-primary { background: var(--op-gold); }
+    .op-btn-primary:hover { filter: brightness(1.06); }
+    .op-btn-secondary { background: var(--op-teal); }
+    .op-btn-secondary:hover { background: var(--op-teal-deep); }
+    .op-btn:disabled { opacity: 0.5; cursor: not-allowed; filter: none; }
+
+    /* Menu card */
+    .op-menu-card { position: relative; padding: 1.4rem 1.4rem 1.6rem; }
+    .op-menu-top { display: flex; justify-content: center; align-items: center; padding: 0.25rem 0 0.9rem; }
+    .op-logo { width: min(200px, 55vw); height: auto; display: block; }
+    .op-intro { text-align: center; font-size: 0.95rem; line-height: 1.45; margin-bottom: 0.4rem; }
+    .op-label {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.25rem;
+    }
+    .op-pills {
+      position: sticky;
+      top: -2rem;                  /* sits flush with the top of the scroll area */
+      z-index: 20;
+      background: var(--op-card);
+      display: flex;
+      flex-wrap: wrap;             /* wrap instead of cutting off ("KIDS M…") */
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.75rem 0 0.9rem;
+      margin: 0;
+    }
+    .op-pill {
+      flex: 0 0 auto;
+      height: 34px;
+      padding: 0 0.9rem;
+      border-radius: 999px;
+      border: none;
+      background: #fff;
+      color: #000;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .op-pill:hover { background: #f3fafa; }
+    .op-pill.op-active { background: var(--op-teal); color: #fff; }
+    #op-menu { background: #fff; border-radius: 16px; padding: 0 1rem 1.2rem; margin-top: 0.2rem; }
+    .op-category { background: var(--op-card); border-radius: 14px; padding: 1rem 1rem 1.1rem; margin-top: 1rem; }
+    .op-category .op-item { background: #fff; }
+    .op-info-sec .op-info-tile { cursor: default; }
+    .op-info-tile { display: flex; flex-direction: column; gap: 0.3rem; background: #fff; border-radius: 12px; padding: 0.9rem 1rem; }
+    .op-info-head { display: flex; align-items: center; gap: 0.55rem; }
+    .op-swatch { width: 22px; height: 22px; border-radius: 50%; flex: 0 0 auto; box-sizing: border-box; border: 1px solid #cfcfcf; }
+    .op-category h2 { font-size: 1.25rem; margin-bottom: 0.2rem; }
+    .op-cat-desc { font-size: 0.92rem; line-height: 1.45; margin-bottom: 0.8rem; }
+    .op-items { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.65rem; }
+    .op-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      text-align: left;
+      background: var(--op-card);
+      border: none;
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      cursor: pointer;
+      min-height: 92px;
+      transition: transform 0.12s ease;
+    }
+    .op-item:hover { transform: translateY(-1px); }
+    .op-item:focus-visible, .op-pill:focus-visible, .op-btn:focus-visible { outline: 2px solid var(--op-teal); outline-offset: 2px; }
+    .op-item-name { font-size: 0.98rem; font-weight: 500; }
+    .op-item-desc { font-size: 0.86rem; line-height: 1.4; color: #333; }
+    .op-item-price { margin-top: auto; font-size: 0.95rem; padding-top: 0.2rem; }
+
+    /* Cart card */
+    .op-cart-card {
+      position: sticky;
+      top: 0;
+      max-height: calc(100dvh - 4rem);
+      overflow-y: auto;
+      padding: 1.25rem 1.1rem 1.3rem;
+    }
+    .op-cart-card h2 { font-size: 1.2rem; text-align: center; margin: 0 2.2rem 0.2rem; }
+    .op-cart-sub { text-align: center; font-size: 0.88rem; margin-bottom: 0.9rem; }
+    .op-cart-card a.op-info-link { color: #000; text-decoration: underline; text-underline-offset: 3px; }
+    .op-cart-card a.op-info-link:hover { opacity: 0.7; }
+    .op-cart-box { padding: 0.9rem 0.95rem; margin-bottom: 0.8rem; }
+    .op-empty { text-align: center; font-size: 0.92rem; color: #333; padding: 0.6rem 0; }
+    .op-line { padding: 0.65rem 0; }
+    .op-line + .op-line { margin-top: 0.15rem; }
+    .op-line-top { display: flex; justify-content: space-between; gap: 0.75rem; font-size: 0.95rem; }
+    .op-line-name { font-weight: 500; }
+    .op-line-opts { font-size: 0.82rem; line-height: 1.4; color: #333; margin-top: 0.2rem; }
+    .op-line-note { font-size: 0.82rem; color: #333; margin-top: 0.15rem; font-style: italic; }
+    .op-line-ctrl { display: flex; align-items: center; justify-content: space-between; margin-top: 0.45rem; }
+    .op-stepper { display: inline-flex; align-items: center; gap: 0.15rem; background: var(--op-card); border-radius: 999px; padding: 3px; }
+    .op-stepper button { width: 30px; height: 30px; border-radius: 50%; border: none; background: #fff; cursor: pointer; font-size: 1.05rem; line-height: 1; }
+    .op-stepper button:hover { background: #f3fafa; }
+    .op-stepper span { min-width: 1.8rem; text-align: center; font-size: 0.92rem; }
+    .op-stepper.op-lg button { width: 38px; height: 38px; }
+    .op-remove, .op-edit { border: none; background: none; cursor: pointer; color: var(--op-teal) !important; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .op-remove:hover, .op-edit:hover { color: var(--op-teal-deep) !important; }
+    .op-line-acts { display: flex; align-items: center; gap: 4px; }
+    .op-totals { padding: 0.8rem 0.95rem; margin-bottom: 0.8rem; font-size: 0.92rem; }
+    .op-totals div { display: flex; justify-content: space-between; padding: 0.15rem 0; }
+    .op-totals .op-total { font-size: 1.05rem; font-weight: 500; padding-top: 0.4rem; }
+    .op-section-box { padding: 0.9rem 0.95rem; margin-bottom: 0.8rem; }
+    .op-field { display: flex; flex-direction: column; gap: 0.2rem; margin-bottom: 0.65rem; }
+    .op-field:last-child { margin-bottom: 0; }
+    .op-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .op-field label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .op-field input, .op-field select, .op-field textarea {
+      height: 42px;
+      border: none;
+      border-radius: 10px;
+      background: var(--op-card);
+      padding: 0 0.75rem;
+      font-size: 0.95rem;
+      width: 100%;
+    }
+    .op-field textarea { height: auto; min-height: 70px; padding: 0.6rem 0.75rem; resize: vertical; }
+    .op-field input:focus, .op-field select:focus, .op-field textarea:focus { outline: 2px solid var(--op-teal); outline-offset: 0; }
+    .op-field input.op-invalid, .op-field select.op-invalid { outline: 2px solid var(--op-error); }
+    .op-pay-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; text-transform: none !important; letter-spacing: 0 !important; }
+    .op-pay-row input { accent-color: var(--op-teal); width: 18px; height: 18px; }
+    .op-hint { font-size: 0.8rem; color: #333; line-height: 1.4; margin-top: 0.35rem; }
+    .op-msg { font-size: 0.82rem; color: var(--op-error); line-height: 1.35; }
+    .op-msg:empty { display: none; }
+    .op-form-msg { text-align: center; margin-top: 0.6rem; }
+    .op-confirm { text-align: center; padding: 1.2rem 1rem; }
+    .op-confirm h3 { font-size: 1.2rem; margin-bottom: 0.4rem; }
+    .op-confirm p { font-size: 0.93rem; line-height: 1.5; margin-bottom: 0.4rem; }
+    .op-order-no { font-size: 1.5rem; font-weight: 500; letter-spacing: 0.05em; margin: 0.3rem 0 0.6rem; }
+    .op-confirm ul { list-style: none; text-align: left; margin: 0.8rem 0; font-size: 0.88rem; line-height: 1.5; }
+    .op-confirm ul li { display: flex; justify-content: space-between; gap: 0.75rem; }
+
+    /* Item-options modal (sits above the order panel) */
+    .op-mback {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(0, 0, 0, 0.45);
+      display: none;
+      align-items: center; justify-content: center;
+      padding: 1rem;
+    }
+    .op-mback.op-open { display: flex; }
+    .op-modal {
+      background: #fff;
+      border-radius: 18px;
+      width: min(560px, 100%);
+      max-height: min(88vh, 820px);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .op-modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 1.2rem 1.25rem 0.4rem; }
+    .op-modal-head h3 { font-size: 1.3rem; }
+    .op-m-price { font-size: 0.95rem; margin-top: 0.15rem; }
+    .op-close {
+      flex: 0 0 auto;
+      width: 36px; height: 36px; border-radius: 50%;
+      border: none; background: var(--op-card); cursor: pointer;
+      font-size: 1.2rem; line-height: 1;
+    }
+    .op-close:hover { background: #d6ebeb; }
+    .op-modal-body { overflow-y: auto; padding: 0.4rem 1.25rem 1rem; }
+    .op-m-desc { font-size: 0.93rem; line-height: 1.45; color: #333; margin-bottom: 0.9rem; }
+    .op-group { background: var(--op-card); border-radius: 12px; padding: 0.8rem 0.8rem 0.6rem; margin-bottom: 0.75rem; }
+    .op-group-head { display: flex; justify-content: space-between; align-items: baseline; gap: 0.75rem; margin-bottom: 0.5rem; padding: 0 0.2rem; }
+    .op-group-head h4 { font-size: 1rem; }
+    .op-group-rule { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; }
+    .op-group-rule.op-req { color: var(--op-teal-deep); }
+    .op-opts { background: #fff; border-radius: 10px; padding: 0.2rem 0; }
+    .op-opt { display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 0.75rem; cursor: pointer; font-size: 0.93rem; }
+    .op-opt input { accent-color: var(--op-teal); width: 18px; height: 18px; flex: 0 0 auto; }
+    .op-opt-name { flex: 1; }
+    .op-opt-price { font-size: 0.88rem; color: #333; }
+    .op-opt.op-disabled { opacity: 0.45; cursor: not-allowed; }
+    .op-group .op-msg { padding: 0.45rem 0.2rem 0.1rem; }
+    .op-modal-foot {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.85rem 1.25rem 1rem;
+      background: #fff;
+      box-shadow: 0 -6px 14px rgba(0,0,0,0.05);
+    }
+    .op-modal-foot .op-btn { flex: 1; }
+
+    /* Mobile VIEW CART bar (inside the panel) */
+    .op-mobile-bar { display: none; }
+
+    @media (min-width: 821px) {
+      /* Desktop: the boxes fill the screen height; only the menu list scrolls */
+      .op-scroll { overflow: hidden; }
+      .op-layout { height: calc(100vh - 4rem); height: calc(100dvh - 4rem); align-items: stretch; }
+      .op-menu-card { display: flex; flex-direction: column; min-height: 0; overflow: hidden; padding-bottom: 0; }
+      .op-pills { position: static; }
+      #op-menu { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+      .op-menu-card { padding-bottom: 1.4rem; }
+      .op-cart-card { align-self: start; max-height: 100%; }
+    }
+    @media (max-width: 820px) {
+      .op { padding: 0; }
+      .op-scroll { padding: 0.75rem 0.75rem 84px; }
+      .op-pills { top: -0.75rem; }
+      .op-layout { grid-template-columns: 1fr; }
+      .op-cart-card { position: static; max-height: none; overflow: visible; }
+      .op-items { grid-template-columns: 1fr; }
+      .op .op-x { top: 0.4rem; left: 0.5rem; }
+      .op-pills { gap: 0.35rem; }
+      .op-pill { height: 30px; padding: 0 0.7rem; font-size: 0.7rem; }
+      .op-mobile-bar {
+        display: block;
+        position: absolute; left: 0; right: 0; bottom: 0; z-index: 25;
+        padding: 0.65rem 0.9rem calc(0.65rem + env(safe-area-inset-bottom));
+        background: var(--op-card);
+      }
+      .op-modal { max-height: 92vh; }
+    }
+    @media (max-width: 420px) {
+      .op-menu-card { padding: 1.1rem 0.9rem 1.3rem; }
+      .op-field-row { grid-template-columns: 1fr; gap: 0; }
+      .op-field-row .op-field { margin-bottom: 0.65rem; }
+    }
+
+    /* WALL-LEFT: wallpaper behind the photo side, photo inset as a framed image */
+    .gallery { background: var(--teal) url("teal-wall-bg.jpg") center / cover; }
+    .gallery img { inset: 36px; width: calc(100% - 72px); height: calc(100% - 72px); border-radius: 18px; object-fit: cover; }
+    .gal-nav { bottom: 52px; }
+    @media (max-width: 960px) {
+      .gallery img { inset: 12px; width: calc(100% - 24px); height: calc(100% - 24px); border-radius: 14px; }
+      .gal-nav { bottom: 22px; }
+    }
+    /* Find us: plain pale teal so the wallpaper is used once */
+    .find { background: var(--pale); }
+    .find-copy { color: var(--teal-ink); }
+    .find .btn-light { background: var(--teal); color: #fff; }
+    .find .btn-light:hover { background: var(--teal-dark); }
+    .find .map { background: var(--white); }
+
+    /* SMALLER-INFO: desktop info stack scaled down ~12% */
+    @media (min-width: 961px) {
+      .info-inner { max-width: 400px; }
+      .logo { width: 176px; }
+      .facts { margin-top: 26px; gap: 16px; }
+      .label { font-size: 13px; }
+      .status { font-size: 12px; padding: 2px 9px; }
+      .hours { font-size: 17px; line-height: 1.45; }
+      .contact { gap: 12px; }
+      .text-link { font-size: 17px; text-underline-offset: 4px; }
+      .ctas { max-width: 300px; margin-top: 20px; gap: 10px; }
+      .ctas .btn { min-height: 46px; font-size: 16px; }
+      .pdf-link { font-size: 15px; min-height: 40px; }
+      .apps-label { font-size: 14px; }
+      .apps-row { gap: 14px; }
+      .app img { width: 50px; height: 50px; }
+    }
+
+    /* SMALLER-PHOTO: desktop photo frame at 75% of its previous size, centred on the wall */
+    @media (min-width: 961px) {
+      .gallery img {
+        width: calc(0.75 * (100% - 72px)); height: calc(0.75 * (100% - 72px));
+        left: 50%; top: 50%; right: auto; bottom: auto; inset: auto;
+        left: 50%; top: 50%; transform: translate(-50%, -50%);
+      }
+      .gal-nav { bottom: calc((100% - 0.75 * (100% - 72px)) / 2 + 16px); }
+    }
+
+    /* SIMPLE: one centred white column */
+    .s-top { max-width: 440px; margin: 0 auto; padding: 20px 20px 28px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .s-logo { width: 170px; height: auto; display: block; }
+    .s-photo { width: 100%; height: 220px; object-fit: cover; border-radius: 16px; display: block; margin-top: 14px; }
+    .s-hours { margin-top: 14px; font-size: 17px; line-height: 1.45; color: var(--ink); }
+    .s-hours .status { margin-bottom: 4px; }
+    .s-link { margin-top: 6px; font-size: 17px; line-height: 1.5; color: var(--ink); text-decoration: underline; text-decoration-color: rgba(15,110,110,0.45); text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
+    .s-hours + .s-link { margin-top: 10px; }
+    .s-link:hover { color: var(--teal); }
+    .s-btns { width: 100%; max-width: 320px; margin-top: 14px; display: grid; gap: 10px; }
+    .s-btns .btn { min-height: 48px; font-size: 16px; }
+    .s-pdf { margin-top: 4px; min-height: 40px; display: inline-flex; align-items: center; font-size: 16px; color: var(--teal-dark); text-decoration: underline; text-decoration-color: rgba(15,110,110,0.45); text-underline-offset: 4px; }
+    .s-pdf:hover { color: var(--teal); }
+    .s-apps { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 16px; color: var(--muted); }
+    .s-apps-row { display: flex; gap: 14px; }
+    .s-apps-row a { display: block; line-height: 0; border-radius: 50%; }
+    .s-apps-row img { width: 48px; height: 48px; border-radius: 50%; }
+    .s-apps-row a:hover img { opacity: 0.82; }
+    body > footer { background: none; color: var(--muted); border: 0; }
+    @media (min-width: 961px) { .s-top { padding-top: 0; } }
+    /* SIDE-BY-SIDE: phone keeps the original order via display:contents */
+    .s-info { display: contents; }
+    .s-logo { order: 0; } .s-media { order: 1; width: 100%; display: flex; flex-direction: column; align-items: center; } .s-info > :not(.s-logo) { order: 2; }
+    .s-photo { width: 100%; }
+    @media (min-width: 961px) {
+      /* photo + info side by side, centred as a pair with 64px gap */
+      .s-top {
+        display: grid; grid-template-columns: 472px 400px; grid-template-areas: "photo info";
+        justify-content: center; align-content: center; align-items: start; column-gap: 64px;
+        max-width: 960px; margin: 0 auto; padding: 0 20px; min-height: 100vh; min-height: 100svh; box-sizing: border-box;
+      }
+      .s-info { display: flex; flex-direction: column; align-items: center; width: 400px; grid-area: info; }
+      .s-media { grid-area: photo; width: 472px; padding: 0 56px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
+      .s-photo { width: 360px; height: 532px; margin-top: 0; flex: none; }
+    }
+    /* GALLERY: instant snap; arrows at the photo sides */
+    .s-gal { position: relative; overflow: hidden; background: transparent; }
+    .s-gal img {
+      position: absolute; inset: 0; width: 100%; height: 100%; margin: auto;
+      object-fit: contain; object-position: center; opacity: 0;
+      transition: none; animation: none;
+    }
+    .s-gal img.is-on { opacity: 1; }
+    .s-gal:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+    .s-media { position: relative; }
+    /* arrows at the photo's sides, vertically centred on the slot */
+    .s-nav {
+      position: absolute; top: 0; left: 0; right: 0; height: 100%;
+      display: flex; justify-content: space-between; align-items: center;
+      margin: 0; z-index: 2; transform: none; pointer-events: none;
+    }
+    .s-nav .s-arrow { pointer-events: auto; }
+    @media (max-width: 960px) {
+      /* overlay on the photo edges when there's no room outside */
+      .s-media .s-nav { top: 14px; height: 220px; left: 8px; right: 8px; }
+    }
+    .s-arrow {
+      width: 40px; height: 40px; border-radius: 50%; border: 1px solid #ddd; background: #fff; color: var(--teal-ink);
+      display: grid; place-items: center; cursor: pointer; padding: 0; transition: background-color 0.15s ease;
+    }
+    .s-arrow:hover { background: #f3f5f5; }
+    .s-arrow:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+    .s-arrow svg { width: 16px; height: 16px; }
+
+    /* Back to top — same family as gallery arrows */
+    .to-top {
+      position: fixed; right: 24px; bottom: 24px; z-index: 45;
+      width: 42px; height: 42px; border-radius: 50%; border: 1px solid #ddd; background: #fff; color: var(--teal-ink);
+      display: grid; place-items: center; cursor: pointer; padding: 0;
+      opacity: 0; pointer-events: none; visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s ease, background-color 0.15s ease;
+    }
+    .to-top.is-on { opacity: 1; pointer-events: auto; visibility: visible; }
+    .to-top:hover { background: #f3f5f5; }
+    .to-top:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+    .to-top svg { width: 16px; height: 16px; }
+    .op-panel { position: relative; }
+    .op .to-top { position: absolute; right: 24px; bottom: 24px; z-index: 8; }
+    @media (max-width: 900px) {
+      /* clear the View order bar */
+      .op .to-top { bottom: calc(72px + 24px + env(safe-area-inset-bottom, 0px)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .to-top { transition: none; }
+    }
+    /* WARM-TEAL background, whole page incl. menu */
+    html, body { background: #ffffff; }
+    #menu { background: transparent; }
+
+
+    /* ===== ORDER v2: white full-screen ordering page (8px spacing scale) ===== */
+    .op, .op-mback { --op-card: #fff; --op-line: #eee; --op-soft: #f5f7f7; --op-ink: #111; --op-mute: #5c6466; color: var(--op-ink); font-family: var(--body); }
+    .op { background: #fff; backdrop-filter: none; -webkit-backdrop-filter: none; align-items: stretch; }
+    .op-panel { background: #fff; height: 100%; display: flex; flex-direction: column; }
+    .op-vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .op h1, .op h2, .op h3, .op h4, .op-mback h3, .op-mback h4 { font-family: var(--display); font-weight: 500; color: var(--op-ink); letter-spacing: -0.005em; }
+
+    /* Top bar */
+    .op-top { flex: none; border-bottom: 1px solid var(--op-line); background: #fff; }
+    .op-top-in { max-width: 1280px; margin: 0 auto; height: 72px; padding: 0 32px; display: flex; align-items: center; gap: 24px; }
+    .op-home { border: 0; background: none; padding: 4px; margin: -4px; border-radius: 8px; cursor: pointer; line-height: 0; transition: opacity 0.15s ease; }
+    .op-home:hover { opacity: 0.75; }
+    .op-home:focus-visible { outline: 2px solid var(--op-teal); outline-offset: 2px; }
+    .op-top-logo { width: 112px; height: auto; display: block; }
+    .op-top-pick { display: flex; align-items: center; gap: 8px; font-size: 16px; padding-left: 24px; border-left: 1px solid var(--op-line); line-height: 40px; }
+    .op-top-title { color: var(--op-ink); font-family: var(--display); font-weight: 500; font-size: 18px; letter-spacing: -0.01em; }
+    .op-item.op-item-unavail { opacity: 0.55; cursor: not-allowed; }
+    .op-item.op-item-unavail .op-item-price { text-decoration: none; }
+    .op-item-note { display: block; font-size: 13px; color: var(--op-mute); margin-top: 2px; }
+    .op .op-x {
+      position: static; flex: none; margin-left: auto; width: 48px; height: 48px; border-radius: 50%; background: #fff; color: var(--op-ink);
+      font-size: 30px; line-height: 1; display: grid; place-items: center; padding: 0 0 3px;
+    }
+    .op .op-x:hover { background: var(--op-soft); color: var(--op-ink); }
+    .op .op-x:focus-visible { outline: 2px solid var(--op-teal); outline-offset: 2px; }
+
+    /* Scroll area + 3-column layout */
+    .op-scroll { flex: 1; overflow-y: auto !important; padding: 32px 32px 48px !important; scrollbar-width: thin; }
+    .op-scroll::-webkit-scrollbar { display: initial; }
+    .op-layout {
+      max-width: 1216px; margin: 0 auto; height: auto !important;
+      display: grid; grid-template-columns: 184px minmax(0, 1fr) 360px; gap: 40px; align-items: start;
+    }
+    .op-card { background: #fff; box-shadow: none; border-radius: 0; }
+    .op-menu-card { display: block !important; overflow: visible !important; padding: 0 !important; min-width: 0; background: none; }
+    .op-title { font-size: 32px; line-height: 1.15; margin: 0 0 8px; }
+    #op-menu { overflow: visible !important; flex: none; background: none; border-radius: 0; padding: 0; margin: 0; }
+
+    /* Category nav: vertical sticky list on wide screens */
+    .op-pills {
+      position: sticky !important; top: 0; z-index: 5; background: #fff;
+      display: flex; flex-direction: column; flex-wrap: nowrap; align-items: stretch; justify-content: flex-start; gap: 2px; padding: 4px 0 0; margin: 0; border: 0;
+    }
+    .op-pill {
+      height: auto; min-height: 44px; padding: 10px 16px; border-radius: 10px; background: none; color: var(--op-ink); text-align: left;
+      font-size: 15px; text-transform: none; letter-spacing: 0; white-space: normal; line-height: 1.3;
+    }
+    .op-pill:hover { background: var(--op-soft); }
+    .op-pill.op-active { background: var(--op-teal); color: #fff; }
+
+    /* Categories + items */
+    .op-category { background: none; border-radius: 0; padding: 32px 0 0; margin: 0; scroll-margin-top: 0; }
+    .op-category h2 { font-size: 24px; line-height: 1.2; margin: 0 0 4px; text-align: left; }
+    .op-cat-desc { font-size: 15px; line-height: 1.5; color: var(--op-mute); margin: 0 0 16px; max-width: 640px; text-align: left; }
+    .op-items { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important; gap: 16px; }
+    .op-item, .op-category .op-item {
+      position: relative; display: flex; flex-direction: column; gap: 4px; text-align: left;
+      background: #fff; border: 1px solid var(--op-line); border-radius: 14px; padding: 16px 64px 16px 16px; min-height: 104px;
+      transform: none !important; transition: border-color 0.15s ease, background-color 0.15s ease; color: var(--op-ink);
+    }
+    .op-item:hover { border-color: #cddede; background: #fcfdfd; }
+    .op-item::after {
+      content: "+"; position: absolute; right: 16px; bottom: 16px; width: 36px; height: 36px; border-radius: 50%;
+      background: var(--op-teal); color: #fff; font-size: 22px; line-height: 34px; text-align: center; font-weight: 400;
+    }
+    .op-item:hover::after { background: var(--op-teal-deep); }
+    .op-item-name { font-size: 17px; font-weight: 500; line-height: 1.3; }
+    .op-item-desc { font-size: 14px; line-height: 1.45; color: var(--op-mute); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .op-item-price { margin-top: auto; padding-top: 8px; font-size: 16px; }
+    .op-info-sec .op-items { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important; gap: 8px 16px; }
+    .op-info-tile { background: #fff; border: 0; border-top: 1px solid var(--op-line); border-radius: 0; padding: 12px 0; }
+    .op-info-tile .op-item-desc { -webkit-line-clamp: unset; display: block; }
+    .op-swatch { border-color: #ddd; }
+
+    /* Buttons */
+    .op-btn { height: 52px; border-radius: 999px; font-family: var(--display); font-weight: 500; font-size: 15px; letter-spacing: 0.04em; }
+    .op-btn-primary, .op-btn-secondary { background: var(--op-teal); filter: none; }
+    .op-btn-primary:hover, .op-btn-secondary:hover { background: var(--op-teal-deep); filter: none; }
+    .op-btn:disabled { background: #c9d3d3; opacity: 1; }
+
+    /* Order summary column (sticky) */
+    .op-cart-card {
+      position: sticky !important; top: 0; max-height: calc(100vh - 72px - 64px) !important; max-height: calc(100dvh - 72px - 64px) !important; overflow-y: auto !important;
+      border: 1px solid var(--op-line); border-radius: 16px; padding: 24px !important; background: #fff; scrollbar-width: thin;
+    }
+    .op-cart-h { font-size: 22px !important; text-align: left !important; margin: 0 0 8px !important; }
+    .op-cart-box { padding: 0; margin: 0 0 16px; }
+    .op-empty { text-align: left; font-size: 15px; color: var(--op-mute); padding: 8px 0; }
+    .op-line { padding: 16px 0; border-top: 1px solid var(--op-line); }
+    .op-line + .op-line { margin-top: 0; }
+    .op-line-top { font-size: 16px; }
+    .op-line-name { font-weight: 500; }
+    .op-line-opts, .op-line-note { color: var(--op-mute); font-size: 14px; }
+    .op-line-ctrl { margin-top: 8px; }
+    .op-stepper { background: #fff; border: 1px solid #ddd; padding: 2px; }
+    .op-stepper button { width: 40px; height: 40px; background: #fff; color: var(--op-ink); }
+    .op-stepper button:hover { background: var(--op-soft); }
+    .op-stepper.op-lg button { width: 44px; height: 44px; }
+    .op-remove, .op-edit { min-height: 44px; padding: 0 8px; font-size: 13px; }
+    .op-totals { padding: 16px 0 0; margin: 0 0 16px; border-top: 1px solid var(--op-line); font-size: 15px; color: var(--op-mute); }
+    .op-totals div { padding: 4px 0; }
+    .op-totals .op-total { color: var(--op-ink); font-size: 18px; font-weight: 500; padding-top: 8px; }
+    .op-closed-note { font-size: 15px; line-height: 1.45; color: #6d5710; background: #faf6e8; border-radius: 10px; padding: 12px 16px; margin: 0 0 16px; }
+    .op-closed-note strong { font-weight: 500; }
+
+    /* Checkout step */
+    .op-step-checkout .op-pills, .op-step-checkout .op-menu-card, .op-step-checkout .op-cart-h, .op-step-checkout .op-mobile-bar { display: none !important; }
+    .op-step-checkout .op-layout { grid-template-columns: minmax(0, 1fr); max-width: 1040px; }
+    .op-step-checkout .op-cart-card { position: static !important; max-height: none !important; overflow: visible !important; border: 0; padding: 0 !important; }
+    .op-co { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 48px; align-items: start; }
+    .op-back { border: 0; background: none; color: var(--op-teal); font-size: 15px; min-height: 44px; padding: 0; cursor: pointer; }
+    .op-back:hover { color: var(--op-teal-deep); text-decoration: underline; text-underline-offset: 4px; }
+    .op-co .op-co-title { text-align: left; font-size: 32px; line-height: 1.15; margin: 8px 0 8px; outline: none; }
+    .op-co-sec { padding: 24px 0; border-top: 1px solid var(--op-line); }
+    .op-co-sec:first-of-type { border-top: 0; }
+    .op-co-sec h3 { font-size: 18px; margin: 0 0 16px; }
+    .op-co-where { font-size: 15px; color: var(--op-mute); margin: -8px 0 16px; }
+    .op-co-sum { position: sticky; top: 0; border: 1px solid var(--op-line); border-radius: 16px; padding: 24px; }
+    .op-co-sum h3 { font-size: 20px; margin: 0 0 8px; }
+    .op-field { gap: 8px; margin-bottom: 16px; }
+    .op-field label { font-size: 14px; text-transform: none; letter-spacing: 0; color: var(--op-mute); }
+    .op-field-row { gap: 16px; }
+    .op-field input, .op-field select, .op-field textarea { height: 52px; border: 1px solid #ddd; border-radius: 12px; background: #fff; color: var(--op-ink); font-size: 16px; padding: 0 16px; }
+    .op-field textarea { height: auto; min-height: 96px; padding: 12px 16px; }
+    .op-field input:focus, .op-field select:focus, .op-field textarea:focus { outline: 2px solid var(--op-teal); outline-offset: 0; border-color: transparent; }
+    .op-hint { font-size: 14px; color: var(--op-mute); }
+    .op-pay-row { font-size: 16px; min-height: 44px; }
+    .op-label { color: var(--op-mute); }
+    .op-confirm { text-align: center; max-width: 520px; margin: 0 auto; padding: 32px 0; }
+    .op-confirm h3 { font-size: 28px; }
+    .op-confirm ul { border-top: 1px solid var(--op-line); padding-top: 16px; }
+    .op-confirm-act { margin-top: 24px; }
+
+    /* Bottom bar (View order) for medium and phone */
+    .op-mobile-bar {
+      display: none; position: absolute; left: 0; right: 0; bottom: 0; z-index: 25;
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: #fff; border-top: 1px solid var(--op-line);
+    }
+    .op-mobile-bar .op-btn { display: flex; max-width: 560px; margin: 0 auto; }
+
+    /* Item options: clean white side sheet on wide screens */
+    .op-mback { background: rgba(255, 255, 255, 0.72); padding: 0; justify-content: flex-end; align-items: stretch; }
+    .op-modal { width: min(520px, 100%); max-height: none !important; height: 100%; border-radius: 0; background: #fff; border-left: 1px solid var(--op-line); }
+    .op-modal-head { padding: 24px 24px 8px; align-items: flex-start; }
+    .op-modal-head h3 { font-size: 26px; line-height: 1.2; }
+    .op-m-price { font-size: 16px; color: var(--op-mute); margin-top: 4px; }
+    .op-close { width: 48px; height: 48px; background: #fff; font-size: 32px; padding-bottom: 3px; color: var(--op-ink); }
+    .op-close:hover { background: var(--op-soft); }
+    .op-modal-body { flex: 1; padding: 8px 24px 24px; }
+    .op-m-desc { color: var(--op-mute); font-size: 15px; }
+    .op-group { background: none; border-radius: 0; padding: 16px 0 8px; margin: 0; border-top: 1px solid var(--op-line); }
+    .op-group-head { padding: 0; margin-bottom: 8px; }
+    .op-group-head h4 { font-size: 17px; }
+    .op-group-rule { color: var(--op-mute); font-size: 12px; }
+    .op-group-rule.op-req { color: var(--op-teal); }
+    .op-opts { background: none; border-radius: 0; padding: 0; }
+    .op-opt { min-height: 48px; padding: 4px 8px; margin: 0 -8px; border-radius: 10px; font-size: 16px; }
+    .op-opt:hover { background: var(--op-soft); }
+    .op-opt input { accent-color: var(--op-teal); width: 20px; height: 20px; }
+    .op-modal-foot { box-shadow: none; border-top: 1px solid var(--op-line); padding: 16px 24px calc(16px + env(safe-area-inset-bottom)); gap: 16px; }
+
+    /* Medium: category tabs on top, 2-column items, order below + bottom bar */
+    @media (max-width: 1199px) {
+      .op-layout { grid-template-columns: minmax(0, 1fr); gap: 32px; max-width: 960px; }
+      .op-pills {
+        top: -32px !important; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center;
+        overflow: visible; gap: 8px; row-gap: 8px; padding: 12px 0; margin: -8px 0 0; border-bottom: 1px solid var(--op-line);
+        width: 100%; max-width: 100%; box-sizing: border-box;
+      }
+      .op-pill { flex: 0 0 auto; white-space: nowrap; border-radius: 999px; background: var(--op-soft); min-height: 44px; padding: 0 16px; }
+      .op-items { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+      .op-cart-card { position: static !important; max-height: none !important; overflow: visible !important; scroll-margin-top: 16px; }
+      .op-scroll { padding-bottom: 104px !important; }
+      .op-mobile-bar { display: block; }
+      .op-co { grid-template-columns: minmax(0, 1fr) 340px; gap: 32px; }
+    }
+    /* Phone: single column, compact top bar, full-screen options */
+    @media (max-width: 820px) {
+      .op-top-in { height: auto; min-height: 64px; padding: 8px 16px; gap: 8px 12px; flex-wrap: wrap; }
+      .op-top-logo { width: 88px; }
+      .op-top-pick { padding-left: 12px; font-size: 14px; line-height: 1.3; flex-direction: column; gap: 0; }
+      .op-scroll { padding: 16px 16px 96px !important; }
+      .op-pills { top: -16px !important; margin: 0; }
+      .op-title { font-size: 26px; }
+      .op-items, .op-info-sec .op-items { grid-template-columns: minmax(0, 1fr) !important; gap: 12px; }
+      .op-category { padding-top: 24px; }
+      .op-category h2 { font-size: 22px; }
+      .op-co { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+      .op-co-sum { position: static; }
+      .op-cart-card { padding: 16px !important; }
+      .op-mback { justify-content: stretch; }
+      .op-modal { width: 100%; border-left: 0; }
+      .op-field-row { grid-template-columns: 1fr; gap: 0; }
+    }
+    .op-opt-price { margin-left: auto; text-align: right; white-space: nowrap; }
+    .op-qopt { display: flex; cursor: default; gap: 12px; min-height: 52px; align-items: center; }
+    .op-qopt:hover { background: none; }
+    .op-qchk { cursor: pointer; }
+    .op-qchk:hover { background: var(--op-soft); }
+    .op-qbox { flex: 0 0 20px; width: 20px; }
+    .op-qopt .op-opt-price { margin-left: auto; text-align: right; }
+    .op-qstep { flex: none; }
+    .op-qstep button { width: 40px; height: 40px; }
+    .op-qstep button:disabled { color: #c4cccc; cursor: default; background: #fff; }
+
+    /* ===== BOOK A TABLE: white full-screen mockup ===== */
+    body.bk-lock { overflow: hidden; }
+    .bk {
+      position: fixed; inset: 0; z-index: 200; display: none; align-items: stretch;
+      background: #fff; color: #111; font-family: var(--body);
+    }
+    .bk.bk-open { display: flex; }
+    .bk-panel { background: #fff; width: 100%; height: 100%; display: flex; flex-direction: column; }
+    .bk-top { flex: none; border-bottom: 1px solid #eee; background: #fff; }
+    .bk-top-in { max-width: 960px; margin: 0 auto; height: 72px; padding: 0 32px; display: flex; align-items: center; gap: 24px; }
+    .bk-home { border: 0; background: none; padding: 4px; margin: -4px; border-radius: 8px; cursor: pointer; line-height: 0; transition: opacity 0.15s ease; }
+    .bk-home:hover { opacity: 0.75; }
+    .bk-home:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+    .bk-logo { width: 112px; height: auto; display: block; }
+    .bk-pick { display: flex; align-items: baseline; gap: 8px; font-size: 16px; padding-left: 24px; border-left: 1px solid #eee; line-height: 40px; }
+    .bk-k { color: #5c6466; }
+    .bk-addr { color: #111; text-decoration: underline; text-decoration-color: #cfd8d8; text-underline-offset: 4px; }
+    .bk-addr:hover { color: var(--teal); }
+    .bk-x {
+      margin-left: auto; width: 48px; height: 48px; border-radius: 50%; border: none; background: #fff;
+      color: #111; font-size: 30px; line-height: 1; display: grid; place-items: center; cursor: pointer; padding: 0 0 3px;
+    }
+    .bk-x:hover { background: #f5f7f7; }
+    .bk-x:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+    .bk-scroll { flex: 1; overflow-y: auto; padding: 40px 24px 56px; }
+    .bk-wrap { max-width: 520px; margin: 0 auto; }
+    .bk-title { font-family: var(--display); font-weight: 500; font-size: 32px; line-height: 1.15; margin: 0 0 8px; letter-spacing: -0.005em; text-align: center; }
+    .bk-sub { text-align: center; color: #5c6466; font-size: 15px; margin: 0 0 28px; line-height: 1.45; }
+    .bk-field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+    .bk-field label { font-size: 14px; color: #5c6466; }
+    .bk-field input, .bk-field select, .bk-field textarea {
+      height: 52px; border: 1px solid #ddd; border-radius: 12px; background: #fff; color: #111;
+      font: inherit; font-size: 16px; padding: 0 16px; width: 100%; box-sizing: border-box;
+    }
+    .bk-field textarea { height: auto; min-height: 96px; padding: 12px 16px; resize: vertical; }
+    .bk-field input:focus, .bk-field select:focus, .bk-field textarea:focus { outline: 2px solid var(--teal); outline-offset: 0; border-color: transparent; }
+    .bk-field input.bk-invalid, .bk-field select.bk-invalid { outline: 2px solid #9b2c2c; border-color: transparent; }
+    .bk-hint { font-size: 14px; color: #5c6466; line-height: 1.4; margin-top: -4px; }
+    .bk-msg { font-size: 14px; color: #9b2c2c; line-height: 1.35; min-height: 0; }
+    .bk-msg:empty { display: none; }
+    .bk-party { display: flex; align-items: center; gap: 12px; }
+    .bk-stepper { display: inline-flex; align-items: center; gap: 2px; border: 1px solid #ddd; border-radius: 999px; padding: 2px; background: #fff; }
+    .bk-stepper button {
+      width: 44px; height: 44px; border: none; border-radius: 50%; background: #fff; color: #111;
+      font-size: 1.2rem; line-height: 1; cursor: pointer;
+    }
+    .bk-stepper button:hover { background: #f5f7f7; }
+    .bk-stepper button:disabled { color: #c4cccc; cursor: default; background: #fff; }
+    .bk-stepper span { min-width: 2rem; text-align: center; font-size: 16px; }
+    .bk-submit {
+      display: inline-flex; align-items: center; justify-content: center; width: 100%; height: 52px;
+      margin-top: 8px; border: none; border-radius: 999px; background: var(--gold); color: #fff;
+      font-family: var(--display); font-weight: 500; font-size: 15px; letter-spacing: 0.04em;
+      text-transform: uppercase; cursor: pointer;
+    }
+    .bk-submit:hover { background: var(--gold-dark); }
+    .bk-submit:disabled { background: #c9d3d3; cursor: not-allowed; }
+    .bk-confirm { text-align: center; padding: 24px 0; }
+    .bk-confirm h2 { font-family: var(--display); font-weight: 500; font-size: 28px; margin: 0 0 12px; }
+    .bk-confirm p { font-size: 16px; line-height: 1.5; color: #333; margin: 0 0 8px; }
+    .bk-confirm .bk-sum { margin: 20px auto; max-width: 360px; text-align: left; border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 16px 0; }
+    .bk-confirm .bk-sum div { display: flex; justify-content: space-between; gap: 16px; padding: 4px 0; font-size: 15px; }
+    .bk-confirm .bk-sum span:first-child { color: #5c6466; }
+    .bk-home-btn {
+      display: inline-flex; align-items: center; justify-content: center; width: 100%; max-width: 320px; height: 52px;
+      margin-top: 24px; border: none; border-radius: 999px; background: var(--teal); color: #fff;
+      font-family: var(--display); font-weight: 500; font-size: 15px; letter-spacing: 0.04em;
+      text-transform: uppercase; cursor: pointer; text-decoration: none;
+    }
+    .bk-home-btn:hover { background: var(--teal-dark); }
+    @media (max-width: 820px) {
+      .bk-top-in { height: auto; min-height: 64px; padding: 8px 16px; gap: 12px; }
+      .bk-logo { width: 88px; }
+      .bk-pick { padding-left: 12px; font-size: 14px; line-height: 1.3; flex-direction: column; gap: 0; }
+      .bk-scroll { padding: 24px 16px 40px; }
+      .bk-title { font-size: 26px; }
+    }
+    /* Square photo corners; slot stays fixed, image contained at natural ratio */
+    .s-photo, .s-gal, .s-gal img { border-radius: 0 !important; }
+
+    /* MOBILE (<=960px): one phone shape for photo, overlaid arrows, wrapped hours, centred stack */
+    @media (max-width: 960px) {
+      .s-top {
+        box-sizing: border-box;
+        min-height: 100vh; min-height: 100svh; min-height: 100dvh;
+        justify-content: center;
+        padding: 24px 20px;
+      }
+      .s-media {
+        width: min(360px, calc(100vw - 48px));
+        margin-top: 14px;
+      }
+      .s-photo { width: 100%; height: 340px; margin-top: 0; }
+      .s-gal img[src="front-cropped.jpg"] { object-fit: contain; object-position: center; }
+      .s-media .s-nav { top: 0; height: 100%; left: 8px; right: 8px; }
+      .s-hcomma { display: inline; }
+      .s-hours .s-hcomma { display: none; }
+      .s-hours .s-htimes { display: block; }
+    }
+    /* Buttons in sentence case, no all-caps (2026-11-11) */
+    .btn, .op-btn, .op-remove, .op-edit, .op-pill, .bk-submit, .bk-home-btn, .op button, .bk button { text-transform: none !important; letter-spacing: 0.01em !important; }
+    
+    /* MOBILE layout C (2026-11-11): landscape shopfront edge to edge at the very top, logo below */
+    @media (max-width: 960px) {
+      .s-top { justify-content: flex-start !important; padding-top: 0 !important; }
+      .s-media { order: -1 !important; width: calc(100% + 40px) !important; margin: 0 -20px 18px; }
+      .s-photo { height: auto !important; aspect-ratio: 4 / 3; width: 100% !important; }
+      .s-gal img.s-front { object-fit: cover !important; object-position: center; }
+      .s-media .s-nav { top: 0; height: 100%; left: 8px; right: 8px; }
+    }
+</style>
+</head>
+<body id="top">
+
+  <main>
+    <section class="s-top" aria-label="Cafe Turquoise">
+      <div class="s-info">
+      <img class="s-logo" src="logo-clean.png" alt="Café Turquoise – Turkish Cuisine" width="1024" height="437" />
+      <div class="s-hours">
+        <span class="status" id="openStatus" aria-live="polite"></span>
+        <p>Mon–Thu 11:00 am–3:00 pm<span class="s-hcomma">,</span> <span class="s-htimes">4:30–9:00 pm</span></p>
+        <p>Fri–Sun 11:00 am–9:00 pm</p>
+      </div>
+      <a class="s-link" href="https://www.google.com/maps/search/?api=1&amp;query=Cafe+Turquoise+81+Devon+Street+West+New+Plymouth+4310" target="_blank" rel="noopener">81 Devon Street West, New Plymouth</a>
+      <a class="s-link" href="tel:+6467578921">06 757 8921</a>
+      <div class="s-btns">
+        <a class="btn btn-menu" href="#menu">Menu</a>
+        <a class="btn btn-order" href="#order" aria-haspopup="dialog">Order for pickup</a>
+        <a class="btn btn-book" href="#book" aria-haspopup="dialog">Book a table</a>
+      </div>
+      <a class="s-pdf" href="cafe-turquoise-menu.pdf" target="_blank" rel="noopener">Download menu (PDF)</a>
+      <div class="s-apps">
+        <span>Delivery on</span>
+        <div class="s-apps-row">
+          <a href="https://www.delivereasy.co.nz/" target="_blank" rel="noopener" aria-label="Order on Delivereasy"><img src="delivereasy.png" alt="Delivereasy" width="225" height="225" /></a>
+          <a href="https://www.ubereats.com/nz/search?q=Cafe%20Turquoise%20New%20Plymouth" target="_blank" rel="noopener" aria-label="Order on Uber Eats"><img src="ubereats.png" alt="Uber Eats" width="224" height="224" /></a>
+        </div>
+      </div>
+      </div>
+      <div class="s-media">
+        <div class="s-photo s-gal" role="region" aria-roledescription="carousel" aria-label="Photos" tabindex="0">
+          <img class="is-on s-front" src="front-cropped.jpg" data-desktop="front-cropped.jpg" data-mobile="front-landscape.jpg" alt="Cafe Turquoise storefront on Devon Street West" width="720" height="1064" />
+          <img src="kebab.jpg" alt="Kebab from Cafe Turquoise" width="1024" height="1024" loading="lazy" />
+        </div>
+        <div class="s-nav">
+          <button class="s-arrow s-prev" type="button" aria-label="Previous photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <button class="s-arrow s-next" type="button" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+<!-- ONPAGE-MENU:START (generated from menu-data.json by build_menu.py) -->
+    <section class="ct-menu" id="menu" aria-labelledby="menu-title">
+      <div class="m-wrap">
+        <div class="m-head">
+          <h2 id="menu-title">Menu</h2>
+          <a class="m-pdf" href="cafe-turquoise-menu.pdf" target="_blank" rel="noopener">Download menu (PDF)</a>
+        </div>
+        <div class="m-cols"><div class="m-col"><section class="sec" id="kebabs"><h3>Kebabs</h3><p class="intro">Served in a wrap with homemade seasonal salads, two sauces of your choice and one homemade meze of your choice</p><div class="cols2"><span></span><span>10" Medium</span><span>12" Large</span></div><div class="item"><div class="line k"><span class="name">Chicken</span><span class="lead"></span><span class="price">$19</span><span class="price">$21</span></div></div><div class="item"><div class="line k"><span class="name">Lamb</span><span class="lead"></span><span class="price">$19</span><span class="price">$21</span></div></div><div class="item"><div class="line k"><span class="name">Mixed Meat</span><span class="lead"></span><span class="price">$19</span><span class="price">$21</span></div><div class="desc">Chicken &amp; Lamb</div></div><div class="item"><div class="line k"><span class="name">Falafel</span><span class="lead"></span><span class="price">$19</span><span class="price">$21</span></div></div><div class="item"><div class="line k"><span class="name">Mujver</span><span class="lead"></span><span class="price">$19</span><span class="price">$21</span></div></div><div class="item"><div class="line k"><span class="name">Mixed Vegetarian</span><span class="lead"></span><span class="price">$19</span><span class="price">$21</span></div><div class="desc">Falafel &amp; Mujver</div></div><div class="item"><div class="line k"><span class="name">Chicken &amp; Falafel</span><span class="lead"></span><span class="price"></span><span class="price">$23</span></div></div><div class="item"><div class="line k"><span class="name">Chicken &amp; Mujver</span><span class="lead"></span><span class="price"></span><span class="price">$23</span></div></div><div class="item"><div class="line k"><span class="name">Lamb &amp; Falafel</span><span class="lead"></span><span class="price"></span><span class="price">$23</span></div></div><div class="item"><div class="line k"><span class="name">Lamb &amp; Mujver</span><span class="lead"></span><span class="price"></span><span class="price">$23</span></div></div><div class="item"><div class="line k"><span class="name">Combination</span><span class="lead"></span><span class="price"></span><span class="price">$25</span></div><div class="desc">Chicken, Lamb, Falafel and Mujver</div></div></section><section class="sec" id="burgers"><h3>Burgers</h3><p class="intro">On homemade Turkish bread with seasonal salads, up to two sauces of your choice and one meze on the house</p><div class="item"><div class="line"><span class="name">Chicken</span><span class="lead"></span><span class="price">$21</span></div></div><div class="item"><div class="line"><span class="name">Lamb</span><span class="lead"></span><span class="price">$21</span></div></div><div class="item"><div class="line"><span class="name">Mixed Meat</span><span class="lead"></span><span class="price">$21</span></div><div class="desc">Chicken &amp; Lamb</div></div><div class="item"><div class="line"><span class="name">Falafel</span><span class="lead"></span><span class="price">$21</span></div></div><div class="item"><div class="line"><span class="name">Mujver</span><span class="lead"></span><span class="price">$21</span></div></div><div class="item"><div class="line"><span class="name">Mixed Vegetarian</span><span class="lead"></span><span class="price">$21</span></div><div class="desc">Falafel &amp; Mujver</div></div><div class="item"><div class="line"><span class="name">Add medium chips to any burger</span><span class="lead"></span><span class="price">$6.50</span></div></div></section><section class="sec" id="combo"><h3>Combo</h3><div class="item"><div class="line"><span class="name">Selected 330ml drink &amp; medium fries</span><span class="lead"></span><span class="price">$9</span></div></div><div class="item"><div class="line"><span class="name">Selected 330ml drink &amp; large fries</span><span class="lead"></span><span class="price">$12.50</span></div></div></section><section class="sec" id="grilled-meals"><h3>Grilled Meals</h3><p class="intro">Served with two slices of bread, seasonal salads, cacik, hummus, spicy walnut plus your choice of meat, rice &amp; up to two sauces of your choice</p><div class="item"><div class="line"><span class="name">Chicken Skewers (360g)</span><span class="lead"></span><span class="price">$32</span></div><div class="desc">3 Grilled Chicken Skewers</div></div><div class="item"><div class="line"><span class="name">Lamb Skewers (270g)</span><span class="lead"></span><span class="price">$35</span></div><div class="desc">3 Grilled Lamb Skewers</div></div><div class="item"><div class="line"><span class="name">Mixed Grill</span><span class="lead"></span><span class="price">$35</span></div><div class="desc">1 Lamb Skewer (90g), 2 Chicken Skewers (240g)</div></div></section><section class="sec" id="on-fries"><h3>On Fries</h3><p class="intro">Served with fries, seasonal salad, hummus, cacik, beetroot &amp; up to two sauces of your choice</p><div class="item"><div class="line"><span class="name">Chicken</span><span class="lead"></span><span class="price">$27.50</span></div></div><div class="item"><div class="line"><span class="name">Lamb</span><span class="lead"></span><span class="price">$27.50</span></div></div><div class="item"><div class="line"><span class="name">Mixed Meat</span><span class="lead"></span><span class="price">$27.50</span></div><div class="desc">Chicken &amp; Lamb</div></div><div class="item"><div class="line"><span class="name">Falafel</span><span class="lead"></span><span class="price">$27.50</span></div></div><div class="item"><div class="line"><span class="name">Mujver</span><span class="lead"></span><span class="price">$27.50</span></div></div><div class="item"><div class="line"><span class="name">Mixed Vegetarian</span><span class="lead"></span><span class="price">$27.50</span></div><div class="desc">Falafel &amp; Mujver</div></div></section><section class="sec" id="sharing-platters"><h3>Sharing Platters</h3><div class="item"><div class="line"><span class="name">Meat Platter For Two</span><span class="lead"></span><span class="price">$80</span></div><div class="desc">2 Chicken Skewers, 2 Lamb Skewers, olives, hummus, cacik, beetroot, spicy walnut, tabouleh, dolma, 1 Turkish bread, 2 sigara borek.</div></div><div class="item"><div class="line"><span class="name">Vegetarian Platter For Two</span><span class="lead"></span><span class="price">$80</span></div><div class="desc">2 Falafel, 2 Mujver, salad, olives, hummus, cacik, beetroot, spicy walnut, tabouleh, 2 dolma, 1 Turkish bread, 2 sigara borek.</div></div><div class="item"><div class="line"><span class="name">Meze Platter For One (Half Size)</span><span class="lead"></span><span class="price">$45</span></div></div><p class="foot">Please refer to extras for any top ups.</p></section><section class="sec" id="sauces"><h3>Sauces</h3><p class="rule">Please choose up to two sauces</p><p class="choices">Tomato · Yoghurt · Garlic Yoghurt · Mild Chilli · Hot Chilli · Avocado · Satay · Barbeque · Mint · Mayonnaise</p></section><section class="sec" id="mezes"><h3>Mezes</h3><p class="rule">All our mezes are made in-house.</p><p class="rule">Your first is complimentary; each additional meze is $3.00.</p><p class="choices">Hummus · Cacik · Beetroot · Spicy Walnut · Tabouli · Cheese · Olives · Jalapenos</p></section><section class="sec" id="sides"><h3>Sides</h3><div class="item"><div class="line"><span class="name">Fries With Aioli</span><span class="price"></span></div><div class="line sub"><span class="name">Medium</span><span class="lead"></span><span class="price">$6.50</span></div><div class="line sub"><span class="name">Large</span><span class="lead"></span><span class="price">$10</span></div><div class="line sub"><span class="name">Extra Aioli</span><span class="lead"></span><span class="price">$2</span></div></div><div class="item"><div class="line"><span class="name">Marinated Olives with warm Turkish Bread</span><span class="lead"></span><span class="price">$13</span></div></div><div class="item"><div class="line"><span class="name">Two Dips with warm Turkish Bread</span><span class="lead"></span><span class="price">$13</span></div></div><div class="item"><div class="line"><span class="name">Turkish Bread</span><span class="lead"></span><span class="price">$5</span></div></div><div class="item"><div class="line"><span class="name">Turkish Garlic Bread</span><span class="lead"></span><span class="price">$9</span></div><div class="desc"><span class="q">After 4pm</span> · With garlic butter</div></div></section></div><div class="m-col"><section class="sec" id="iskenders"><h3>Iskenders</h3><p class="intro">Served with two slices of bread, rice, seasonal salads, hummus, cacik, beetroot &amp; up to two sauces of your choice</p><div class="item"><div class="line"><span class="name">Chicken</span><span class="lead"></span><span class="price">$26.50</span></div></div><div class="item"><div class="line"><span class="name">Lamb</span><span class="lead"></span><span class="price">$26.50</span></div></div><div class="item"><div class="line"><span class="name">Mixed Meat</span><span class="lead"></span><span class="price">$26.50</span></div><div class="desc">Chicken &amp; Lamb</div></div><div class="item"><div class="line"><span class="name">Falafel</span><span class="lead"></span><span class="price">$26.50</span></div></div><div class="item"><div class="line"><span class="name">Mujver</span><span class="lead"></span><span class="price">$26.50</span></div></div><div class="item"><div class="line"><span class="name">Mixed Vegetarian</span><span class="lead"></span><span class="price">$26.50</span></div><div class="desc">Falafel &amp; Mujver</div></div><div class="item"><div class="line"><span class="name">Chicken &amp; Falafel</span><span class="lead"></span><span class="price">$28.50</span></div></div><div class="item"><div class="line"><span class="name">Chicken &amp; Mujver</span><span class="lead"></span><span class="price">$28.50</span></div></div><div class="item"><div class="line"><span class="name">Lamb &amp; Falafel</span><span class="lead"></span><span class="price">$28.50</span></div></div><div class="item"><div class="line"><span class="name">Lamb &amp; Mujver</span><span class="lead"></span><span class="price">$28.50</span></div></div></section><section class="sec" id="salads"><h3>Salads</h3><p class="intro">Served with homemade seasonal salads, hummus, beetroot, tabouli, cacik, &amp; up to two sauces of your choice</p><div class="item"><div class="line"><span class="name">Chicken Doner</span><span class="lead"></span><span class="price">$26</span></div></div><div class="item"><div class="line"><span class="name">Lamb Doner</span><span class="lead"></span><span class="price">$26</span></div></div><div class="item"><div class="line"><span class="name">Mixed Meat Doner</span><span class="lead"></span><span class="price">$26</span></div><div class="desc">Chicken &amp; Lamb</div></div><div class="item"><div class="line"><span class="name">Falafel</span><span class="lead"></span><span class="price">$26</span></div></div><div class="item"><div class="line"><span class="name">Mujver</span><span class="lead"></span><span class="price">$26</span></div></div><div class="item"><div class="line"><span class="name">Mixed Vegetarian</span><span class="lead"></span><span class="price">$26</span></div><div class="desc">Falafel &amp; Mujver</div></div><div class="item"><div class="line"><span class="name">Chicken &amp; Falafel</span><span class="lead"></span><span class="price">$27</span></div></div><div class="item"><div class="line"><span class="name">Chicken &amp; Mujver</span><span class="lead"></span><span class="price">$27</span></div></div><div class="item"><div class="line"><span class="name">Lamb &amp; Falafel</span><span class="lead"></span><span class="price">$27</span></div></div><div class="item"><div class="line"><span class="name">Lamb &amp; Mujver</span><span class="lead"></span><span class="price">$27</span></div></div><div class="item"><div class="line"><span class="name">Chicken Skewers</span><span class="lead"></span><span class="price">$29</span></div><div class="desc">2 Grilled Chicken Skewers (240g)</div></div><div class="item"><div class="line"><span class="name">Lamb Skewers</span><span class="lead"></span><span class="price">$29</span></div><div class="desc">2 Grilled Lamb Skewers (180g)</div></div><div class="item"><div class="line"><span class="name">Mixed Skewers</span><span class="lead"></span><span class="price">$29</span></div><div class="desc">1 Chicken Skewer (120g), 1 Lamb Skewer (90g)</div></div></section><section class="sec" id="small-meals"><h3>Small Meals</h3><p class="intro">Served with homemade hummus, and a choice of rice or fries or homemade salad</p><div class="item"><div class="line"><span class="name">Chicken</span><span class="lead"></span><span class="price">$18.50</span></div></div><div class="item"><div class="line"><span class="name">Lamb</span><span class="lead"></span><span class="price">$18.50</span></div></div><div class="item"><div class="line"><span class="name">Mixed Meat</span><span class="lead"></span><span class="price">$18.50</span></div><div class="desc">Chicken &amp; Lamb</div></div><div class="item"><div class="line"><span class="name">Chicken Skewer</span><span class="lead"></span><span class="price">$18.50</span></div><div class="desc">1 Grilled Chicken Skewer (120g)</div></div><div class="item"><div class="line"><span class="name">Chicken Skewers</span><span class="lead"></span><span class="price">$23</span></div><div class="desc">2 Grilled Chicken Skewers (240g)</div></div><div class="item"><div class="line"><span class="name">Lamb Skewer</span><span class="lead"></span><span class="price">$19.50</span></div><div class="desc">1 Grilled Lamb Skewer (90g)</div></div><div class="item"><div class="line"><span class="name">Lamb Skewers</span><span class="lead"></span><span class="price">$25</span></div><div class="desc">2 Grilled Lamb Skewers (180g)</div></div><div class="item"><div class="line"><span class="name">Mixed Skewers</span><span class="lead"></span><span class="price">$24</span></div><div class="desc">1 Chicken Skewer (120g), 1 Lamb Skewer (90g)</div></div><div class="divider"></div><div class="item"><div class="line"><span class="name">Chicken Nuggets and Fries</span><span class="lead"></span><span class="price">$15</span></div><div class="desc">with tomato sauce</div></div><div class="item"><div class="line"><span class="name">Kid&#x27;s Size Kebab</span><span class="lead"></span><span class="price">$18</span></div><div class="desc">Your choice of kebab filling with lettuce, cabbage, onion &amp; carrot, 2 sauces and 1 meze of your choice</div></div></section><section class="sec" id="extras"><h3>Extras</h3><div class="item"><div class="line"><span class="name">Extra Chicken Doner</span><span class="lead"></span><span class="price">$8.50</span></div><div class="desc"><span class="q">Top up only, not sold separately</span></div></div><div class="item"><div class="line"><span class="name">Extra Lamb Doner</span><span class="lead"></span><span class="price">$8.50</span></div><div class="desc"><span class="q">Top up only, not sold separately</span></div></div><div class="item"><div class="line"><span class="name">Chicken Skewer (120g)</span><span class="lead"></span><span class="price">$9</span></div></div><div class="item"><div class="line"><span class="name">Lamb Skewer (90g)</span><span class="lead"></span><span class="price">$10</span></div></div><div class="item"><div class="line"><span class="name">Mujver</span><span class="lead"></span><span class="price">$4.50</span></div></div><div class="item"><div class="line"><span class="name">Falafel</span><span class="lead"></span><span class="price">$4.50</span></div></div><div class="item"><div class="line"><span class="name">Extra Meze / Dip</span><span class="lead"></span><span class="price">$3</span></div><div class="desc"><span class="q">Top up only, not sold separately</span></div></div><div class="item"><div class="line"><span class="name">Punnet of Meze</span><span class="lead"></span><span class="price">$7.50</span></div><div class="desc">Your choice of one meze</div></div><div class="item"><div class="line"><span class="name">Extra Salad</span><span class="lead"></span><span class="price">$3</span></div><div class="desc"><span class="q">Top up only, not sold separately</span></div></div><div class="item"><div class="line"><span class="name">Salad</span><span class="lead"></span><span class="price">$8</span></div></div><div class="item"><div class="line"><span class="name">Extra Rice</span><span class="lead"></span><span class="price">$3</span></div><div class="desc"><span class="q">Top up only, not sold separately</span></div></div><div class="item"><div class="line"><span class="name">Rice</span><span class="lead"></span><span class="price">$7.50</span></div></div></section><section class="sec" id="desserts"><h3>Desserts</h3><div class="item"><div class="line"><span class="name">Baklava with Ice Cream</span><span class="lead"></span><span class="price">$13</span></div><div class="desc"><span class="q">Eat in only</span> · Walnut filled filo pastry, cooked in the oven and drizzled with homemade syrup</div></div><div class="item"><div class="line"><span class="name">Baklava</span><span class="lead"></span><span class="price">$8</span></div><div class="desc">Without ice cream</div></div><div class="item"><div class="line"><span class="name">Honey Pumpkin Dessert with Ice Cream</span><span class="lead"></span><span class="price">$13</span></div><div class="desc"><span class="q">Eat in only</span></div></div><div class="item"><div class="line"><span class="name">Ice Cream</span><span class="lead"></span><span class="price">$8</span></div><div class="desc"><span class="q">Eat in only</span> · 3 scoops sprinkled with chopped walnuts</div></div><div class="item"><div class="line"><span class="name">Turkish Delight (2 pieces)</span><span class="lead"></span><span class="price">$3</span></div><div class="desc">Imported from Türkiye</div></div></section><section class="sec" id="hot-drinks"><h3>Hot Drinks</h3><div class="item"><div class="line"><span class="name">Coffee</span><span class="lead"></span><span class="price">$6.50</span></div><div class="desc">Latte, flat white, cappucino, mocha, long black, short black, hot chocolate, Turkish coffee</div></div><div class="item"><div class="line"><span class="name">Teas</span><span class="lead"></span><span class="price">$6</span></div></div><div class="item"><div class="line"><span class="name">Apple Tea</span><span class="lead"></span><span class="price">$5</span></div></div></section></div></div>
+        <section class="sec m-whats" aria-labelledby="whats-title"><h3 id="whats-title">What is it and what&#8217;s in it?</h3><p class="m-wi-intro">Everything here is made in-house.</p><div class="m-wigrid"><p class="wi"><span class="name">Falafel:</span> Chickpeas, onion, capsicum, celery, coriander and spices <span class="tags">GF, DF, V</span></p><p class="wi"><span class="name">Mujver:</span> Zucchini, pumpkin, carrot, onion, corn, eggs, herbs, spices and flour <span class="tags">DF</span></p><p class="wi"><span class="name">Chicken Doner:</span> We use Tegel chicken breast and boneless chicken thighs finely sliced and marinated overnight in homemade marinade with a yoghurt base, skewered on doner skewer and cooked doner style <span class="tags">GF</span></p><p class="wi"><span class="name">Lamb Doner:</span> We use premium halal lamb mince finely ground and marinated overnight in homemade marinade <span class="tags">GF, DF</span></p><p class="wi"><span class="name">Chicken Skewer:</span> We use Tegel chicken boneless chicken thighs cut into cubes and marinated overnight in homemade marinade then skewered (120g each skewer) <span class="tags">GF</span></p><p class="wi"><span class="name">Lamb Skewer:</span> We use AFFCO or Southern Halal Lamb Loin (lamb backstrap) cut into cubes and marinated overnight in homemade marinade with a yoghurt base, then skewered (90g each skewer) <span class="tags">GF</span></p><p class="wi"><span class="name">Turkish Bread:</span> Yoghurt in dough and egg used for glazing, sprinkled with sesame seeds</p><p class="wi"><span class="name">Baklava:</span> Walnut filled filo pastry, cooked in oven and drizzled with homemade syrup. Contains butter.</p><p class="wi"><span class="name">Honey Pumpkin Dessert:</span> Peeled pumpkin cooked in a herb syrup and topped with tahini and served with ice cream or cream</p><p class="wi"><span class="name">Hummus:</span> Made from chickpeas, tahini, olive oil, lemon juice, garlic and spices <span class="tags">GF, DF, V</span></p><p class="wi"><span class="name">Beetroot:</span> Yoghurt drained overnight and mixed with beetroot, garlic, olive oil and spices <span class="tags">GF</span></p><p class="wi"><span class="name">Cacik:</span> Yoghurt drained overnight and mixed with cucumber, mint, garlic, olive oil, and spices <span class="tags">GF</span></p><p class="wi"><span class="name">Tabbouleh (Kisir):</span> Made from bulgur wheat cooked in olive oil with tomato paste, vegetables and spices and finished with fresh parsley, tomato, cucumber <span class="tags">DF, V</span></p><p class="wi"><span class="name">Spicy Walnut (Muhammara):</span> Made from roasted red peppers, sun dried tomato, tahini, garlic, herbs, spices and olive oil.</p><p class="wi"><span class="name">Sigara Borek:</span> Filo pastry filled with feta and parsley then fried until golden.</p></div></section>
+        <div class="m-bottom"><ul><li>Please order and pay at the counter</li><li>We accept cash, eftpos, Visa &amp; Mastercard</li><li>Please ask for dairy free or gluten free or vegan if required</li><li>BYO Wine Only. Corkage $8 (per Bottle)</li></ul><p class="m-legend"><b>GF</b> Gluten Free · <b>DF</b> Dairy Free · <b>V</b> Vegan</p></div>
+        <p class="m-pdf-again"><a class="m-pdf" href="cafe-turquoise-menu.pdf" target="_blank" rel="noopener">Download menu (PDF)</a></p>
+      </div>
+    </section>
+    <!-- ONPAGE-MENU:END -->
+
+
+  </main>
+
+  <footer><span class="nw">Cafe Turquoise</span><span class="sep">·</span><span class="nw">Turkish Cuisine</span><span class="sep">·</span><span class="nw">New Plymouth</span></footer>
+
+
+  <!-- ===== Book a table (opened by BOOK A TABLE / #book) ===== -->
+  <div class="bk" id="bk-overlay" aria-hidden="true">
+    <div class="bk-panel" role="dialog" aria-modal="true" aria-label="Book a table">
+      <header class="bk-top">
+        <div class="bk-top-in">
+          <button class="bk-home" id="bk-home" type="button" aria-label="Back to homepage"><img class="bk-logo" src="logo-clean.png" alt="" width="1024" height="437" /></button>
+          <div class="bk-pick">
+            <span class="bk-k">Book a table</span>
+          </div>
+          <button class="bk-x" id="bk-x" type="button" aria-label="Close booking">×</button>
+        </div>
+      </header>
+      <div class="bk-scroll" id="bk-scroll">
+        <div class="bk-wrap" id="bk-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="to-top" id="to-top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg></button>
+
+  <!-- ===== Order popup (opened by ORDER / #order) ===== -->
+  <div class="op" id="op-overlay" aria-hidden="true">
+    <div class="op-panel" role="dialog" aria-modal="true" aria-label="Order online for pickup">
+      <header class="op-top">
+        <div class="op-top-in">
+          <button class="op-home" id="op-home" type="button" aria-label="Back to homepage"><img class="op-top-logo" src="logo-clean.png" alt="" width="1024" height="437" /></button>
+          <div class="op-top-pick">
+            <span class="op-top-title">Order for pickup</span>
+          </div>
+          <button class="op-x" id="op-x" type="button" aria-label="Close order">×</button>
+        </div>
+      </header>
+      <div class="op-scroll" id="op-scroll">
+        <div class="op-layout">
+          <nav class="op-pills" id="op-pills" aria-label="Menu categories"></nav>
+          <section class="op-menu-card" aria-label="Menu">
+            <div id="op-menu"></div>
+          </section>
+          <aside class="op-cart-card" id="op-cart" aria-label="Your order">
+            <h2 class="op-cart-h">Your order</h2>
+            <div id="op-cartContent"></div>
+          </aside>
+        </div>
+      </div>
+      <div class="op-mobile-bar">
+        <button class="op-btn op-btn-primary" id="op-viewCart" type="button">View order · $0.00</button>
+      </div>
+      <button type="button" class="to-top" id="op-to-top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg></button>
+    </div>
+  </div>
+
+  <!-- Item-options modal (above the order popup) -->
+  <div class="op-mback" id="op-backdrop" aria-hidden="true">
+    <div class="op-modal" role="dialog" aria-modal="true" aria-labelledby="op-mName">
+      <div class="op-modal-head">
+        <div>
+          <h3 id="op-mName"></h3>
+          <div class="op-m-price" id="op-mBase"></div>
+        </div>
+        <button class="op-close" id="op-mClose" type="button" aria-label="Close">×</button>
+      </div>
+      <div class="op-modal-body" id="op-mBody"></div>
+      <div class="op-modal-foot">
+        <div class="op-stepper op-lg" aria-label="Quantity">
+          <button type="button" id="op-mMinus" aria-label="Decrease quantity">−</button>
+          <span id="op-mQty">1</span>
+          <button type="button" id="op-mPlus" aria-label="Increase quantity">+</button>
+        </div>
+        <button class="op-btn op-btn-primary" id="op-mAdd" type="button">Add to cart · $0.00</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  /* Opening hours, NZ time (Pacific/Auckland), minutes from midnight.
+     Single source for the Open/Closed badge and the order pop-up's pickup times. */
+  window.CT_HOURS = (function () {
+    const monThu = [[11 * 60, 15 * 60], [16 * 60 + 30, 21 * 60]]; // 11:00 am–3:00 pm, 4:30–9:00 pm
+    const friSun = [[11 * 60, 21 * 60]];                          // 11:00 am–9:00 pm
+    return { Mon: monThu, Tue: monThu, Wed: monThu, Thu: monThu, Fri: friSun, Sat: friSun, Sun: friSun };
+  })();
+  </script>
+  <script>
+  /* ===== Order popup: everything is inside this IIFE, ids prefixed "op-" ===== */
+  (function () {
+    "use strict";
+
+    // Menu data matches the menu board photo (see menu-data.json)
+    const SAUCES = ["Tomato", "Yoghurt", "Garlic Yoghurt", "Mild Chilli", "Hot Chilli", "Avocado", "Satay", "Barbeque", "Mint", "Mayonnaise", "No Sauce"];
+    const MEZES = ["Hummus", "Cacik", "Beetroot", "Spicy Walnut", "Tabouli", "Cheese", "Olives", "Jalapenos"];
+
+    const OPTION_GROUPS = {
+      size: {
+        name: "Size", required: true, min: 1, max: 1,
+        options: [{ name: "10\" Medium", price: 0 }, { name: "12\" Large", price: 2.00 }]
+      },
+      sauces: {
+        name: "Sauces", rule: "First two complimentary, then $0.50 each", required: true, min: 1, max: SAUCES.length,
+        exclusive: "No Sauce", freeCount: 2, extraEach: 0.50,
+        options: SAUCES.map(n => ({ name: n, price: 0 }))
+      },
+      meze: {
+        name: "Mezes", required: true, min: 1, max: MEZES.length + 1, exclusive: "No Meze", freeCount: 1, extraEach: 3.00,
+        rule: "First one complimentary, then $3.00 each",
+        options: MEZES.concat(["No Meze"]).map(n => ({ name: n, price: 0 }))
+      },
+      // meals that don't include a meze: optional, every pick is $3.00 (no free one)
+      extraMeze: {
+        name: "Extra meze", required: false, min: 0, max: MEZES.length, freeCount: 0, extraEach: 3.00,
+        rule: "$3.00 each",
+        options: MEZES.map(n => ({ name: n, price: 0 }))
+      },
+      extras: {
+        // quantity steppers: sel holds one entry per unit, e.g. ["Extra Mujver", "Extra Mujver", "Extra Mujver"]
+        name: "Extras (top ups)", required: false, min: 0, max: 99, qty: true, maxEach: 10,
+        options: [
+          { name: "Extra Chicken Doner", price: 8.50, max: 1 },
+          { name: "Extra Lamb Doner", price: 8.50, max: 1 },
+          { name: "Extra Salad", price: 3.00, max: 1 },
+          { name: "Extra Rice", price: 3.00, max: 1 },
+          { name: "Extra Chicken Skewer (120g)", price: 9.00 },
+          { name: "Extra Lamb Skewer (90g)", price: 10.00 },
+          { name: "Extra Mujver", price: 4.50 },
+          { name: "Extra Falafel", price: 4.50 }
+        ]
+      },
+      // kebabs: no extra rice or skewers (wraps don't take those)
+      kebabExtras: {
+        name: "Extras (top ups)", required: false, min: 0, max: 99, qty: true, maxEach: 10,
+        options: [
+          { name: "Extra Chicken Doner", price: 8.50, max: 1 },
+          { name: "Extra Lamb Doner", price: 8.50, max: 1 },
+          { name: "Extra Salad", price: 3.00, max: 1 },
+          { name: "Extra Mujver", price: 4.50 },
+          { name: "Extra Falafel", price: 4.50 }
+        ]
+      },
+      burgerChips: {
+        name: "Add medium chips", required: false, min: 0, max: 1,
+        options: [{ name: "Medium chips", price: 6.50 }]
+      },
+      combo: {
+        name: "Combo", required: false, min: 0, max: 1,
+        options: [
+          { name: "Medium combo: 330ml drink & medium fries", price: 9.00 },
+          { name: "Large combo: 330ml drink & large fries", price: 12.50 }
+        ]
+      },
+      kidsSide: {
+        name: "Side", required: true, min: 1, max: 1,
+        options: [{ name: "Rice", price: 0 }, { name: "Fries", price: 0 }, { name: "Homemade Salad", price: 0 }]
+      },
+      kebabFilling: {
+        name: "Filling", required: true, min: 1, max: 1,
+        options: ["Chicken", "Lamb", "Mixed Meat (Chicken & Lamb)", "Falafel", "Mujver", "Mixed Vegetarian (Falafel & Mujver)"].map(n => ({ name: n, price: 0 }))
+      },
+      friesSize: {
+        name: "Size", required: true, min: 1, max: 1,
+        options: [{ name: "Medium", price: 0 }, { name: "Large", price: 3.50 }]
+      },
+      aioli: {
+        name: "Extra Aioli", required: false, min: 0, max: 1,
+        options: [{ name: "Extra Aioli", price: 2.00 }]
+      },
+      punnetMeze: {
+        name: "Meze", rule: "Required · choose 1", required: true, min: 1, max: 1,
+        options: MEZES.map(n => ({ name: n, price: 0 }))
+      },
+      twoDips: {
+        name: "Dips", required: true, min: 2, max: 2,
+        options: MEZES.filter(n => n !== "Cheese" && n !== "Olives" && n !== "Jalapenos").map(n => ({ name: n, price: 0 }))
+      },
+      coffee: {
+        name: "Coffee", required: true, min: 1, max: 1,
+        options: ["Latte", "Flat white", "Cappuccino", "Mocha", "Long black", "Short black", "Hot chocolate", "Turkish coffee"].map(n => ({ name: n, price: 0 }))
+      }
+    };
+
+    const SETS = {
+      kebab: ["size", "sauces", "meze", "combo", "kebabExtras"],
+      kebabOneSize: ["sauces", "meze", "combo", "kebabExtras"],
+      burger: ["sauces", "meze", "burgerChips", "combo", "extras"],
+      plate: ["sauces", "extraMeze", "combo", "extras"],
+      kids: ["kidsSide", "extraMeze"],
+      punnet: ["punnetMeze"],
+      kidsKebab: ["kebabFilling", "sauces", "meze"],
+      fries: ["friesSize", "aioli"],
+      twoDips: ["twoDips"],
+      coffee: ["coffee"],
+      none: []
+    };
+
+    // item: [name, price, note, optionSetKey]
+    const MENU = [
+      { id: "kebabs", name: "Kebabs", desc: "Served in a wrap with homemade seasonal salads, two sauces of your choice and one homemade meze of your choice. 10\" Medium or 12\" Large.", set: "kebab", items: [
+        ["Chicken Kebab", 19.00, ""],
+        ["Lamb Kebab", 19.00, ""],
+        ["Mixed Meat Kebab", 19.00, "Chicken & Lamb"],
+        ["Falafel Kebab", 19.00, ""],
+        ["Mujver Kebab", 19.00, ""],
+        ["Mixed Vegetarian Kebab", 19.00, "Falafel & Mujver"],
+        ["Chicken & Falafel Kebab", 23.00, "One size.", "kebabOneSize"],
+        ["Chicken & Mujver Kebab", 23.00, "One size.", "kebabOneSize"],
+        ["Lamb & Falafel Kebab", 23.00, "One size.", "kebabOneSize"],
+        ["Lamb & Mujver Kebab", 23.00, "One size.", "kebabOneSize"],
+        ["Combination Kebab", 25.00, "Chicken, Lamb, Falafel and Mujver. One size.", "kebabOneSize"]
+      ]},
+      { id: "burgers", name: "Burgers", desc: "On homemade Turkish bread with seasonal salads, up to two sauces of your choice and one meze on the house.", set: "burger", items: [
+        ["Chicken Burger", 21.00, ""],
+        ["Lamb Burger", 21.00, ""],
+        ["Mixed Meat Burger", 21.00, "Chicken & Lamb"],
+        ["Falafel Burger", 21.00, ""],
+        ["Mujver Burger", 21.00, ""],
+        ["Mixed Vegetarian Burger", 21.00, "Falafel & Mujver"]
+      ]},
+      { id: "iskenders", name: "Iskenders", desc: "Served with two slices of bread, rice, seasonal salads, hummus, cacik, beetroot & up to two sauces of your choice.", set: "plate", items: [
+        ["Chicken Iskender", 26.50, ""],
+        ["Lamb Iskender", 26.50, ""],
+        ["Mixed Meat Iskender", 26.50, "Chicken & Lamb"],
+        ["Falafel Iskender", 26.50, ""],
+        ["Mujver Iskender", 26.50, ""],
+        ["Mixed Vegetarian Iskender", 26.50, "Falafel & Mujver"],
+        ["Chicken & Falafel Iskender", 28.50, ""],
+        ["Chicken & Mujver Iskender", 28.50, ""],
+        ["Lamb & Falafel Iskender", 28.50, ""],
+        ["Lamb & Mujver Iskender", 28.50, ""]
+      ]},
+      { id: "salads", name: "Salads", desc: "All homemade. Served with homemade seasonal salads, hummus, beetroot, tabouli, cacik, & up to two sauces of your choice.", set: "plate", items: [
+        ["Chicken Doner Salad", 26.00, ""],
+        ["Lamb Doner Salad", 26.00, ""],
+        ["Mixed Meat Doner Salad", 26.00, "Chicken & Lamb"],
+        ["Falafel Salad", 26.00, ""],
+        ["Mujver Salad", 26.00, ""],
+        ["Mixed Vegetarian Salad", 26.00, "Falafel & Mujver"],
+        ["Chicken & Falafel Salad", 27.00, ""],
+        ["Chicken & Mujver Salad", 27.00, ""],
+        ["Lamb & Falafel Salad", 27.00, ""],
+        ["Lamb & Mujver Salad", 27.00, ""],
+        ["Chicken Skewers Salad", 29.00, "2 Grilled Chicken Skewers (240g)"],
+        ["Lamb Skewers Salad", 29.00, "2 Grilled Lamb Skewers (180g)"],
+        ["Mixed Skewers Salad", 29.00, "1 Chicken Skewer (120g), 1 Lamb Skewer (90g)"]
+      ]},
+      { id: "on-fries", name: "On Fries", desc: "Served with fries, seasonal salad, hummus, cacik, beetroot & up to two sauces of your choice.", set: "plate", items: [
+        ["Chicken on Fries", 27.50, ""],
+        ["Lamb on Fries", 27.50, ""],
+        ["Mixed Meat on Fries", 27.50, "Chicken & Lamb"],
+        ["Falafel on Fries", 27.50, ""],
+        ["Mujver on Fries", 27.50, ""],
+        ["Mixed Vegetarian on Fries", 27.50, "Falafel & Mujver"]
+      ]},
+      { id: "grilled-meals", name: "Grilled Meals", desc: "Served with two slices of bread, seasonal salads, cacik, hummus, spicy walnut plus your choice of meat, rice & up to two sauces of your choice.", set: "plate", items: [
+        ["Chicken Skewers (360g)", 32.00, "3 Grilled Chicken Skewers"],
+        ["Lamb Skewers (270g)", 35.00, "3 Grilled Lamb Skewers"],
+        ["Mixed Grill", 35.00, "1 Lamb Skewer (90g), 2 Chicken Skewers (240g)"]
+      ]},
+      { id: "small-meals", name: "Small Meals", desc: "All homemade. Served with homemade hummus, and a choice of rice or fries or homemade salad.", set: "kids", items: [
+        ["Chicken Small Meal", 18.50, ""],
+        ["Lamb Small Meal", 18.50, ""],
+        ["Mixed Meat Small Meal", 18.50, "Chicken & Lamb"],
+        ["Chicken Skewer Small Meal", 18.50, "1 Grilled Chicken Skewer (120g)"],
+        ["Chicken Skewers Small Meal", 23.00, "2 Grilled Chicken Skewers (240g)"],
+        ["Lamb Skewer Small Meal", 19.50, "1 Grilled Lamb Skewer (90g)"],
+        ["Lamb Skewers Small Meal", 25.00, "2 Grilled Lamb Skewers (180g)"],
+        ["Mixed Skewers Small Meal", 24.00, "1 Chicken Skewer (120g), 1 Lamb Skewer (90g)"],
+        ["Chicken Nuggets and Fries", 15.00, "With tomato sauce.", "none"],
+        ["Kid's Size Kebab", 18.00, "Your choice of kebab filling with lettuce, cabbage, onion & carrot, 2 sauces and 1 meze of your choice.", "kidsKebab"]
+      ]},
+      { id: "sides", name: "Sides", desc: "", set: "none", items: [
+        ["Fries With Aioli", 6.50, "Medium $6.50 · Large $10 · Extra Aioli $2", "fries"],
+        ["Turkish Bread", 5.00, "Homemade. Yoghurt in dough and egg used for glazing, sprinkled with sesame seeds."],
+        ["Turkish Garlic Bread", 9.00, "With garlic butter."]
+      ]},
+      { id: "extras", name: "Extras", desc: "Sold separately. Top ups (extra doner, meze, salad or rice) can be added when you choose a meal.", set: "none", items: [
+        ["Chicken Skewer (120g)", 9.00, ""],
+        ["Lamb Skewer (90g)", 10.00, ""],
+        ["Mujver", 4.50, "Zucchini, pumpkin, carrot, onion, corn, eggs, herbs, spices and flour (DF)"],
+        ["Falafel", 4.50, "Chickpeas, onion, capsicum, celery, coriander and spices (GF, DF, V)"],
+        ["Punnet of Meze", 7.50, "Your choice of one meze.", "punnet"],
+        ["Salad", 8.00, ""],
+        ["Rice", 7.50, ""]
+      ]},
+      { id: "desserts", name: "Desserts", desc: "All homemade. Baklava with ice cream, Honey Pumpkin Dessert and Ice Cream are eat in only.", set: "none", items: [
+        ["Baklava", 8.00, "Without ice cream. Walnut filled filo pastry, cooked in oven and drizzled with homemade syrup. Contains butter."],
+        ["Turkish Delight (2 pieces)", 3.00, "Imported from Türkiye."]
+      ]},
+    ];
+
+    // Opening hours per weekday (NZ time), shared with the Open/Closed badge via window.CT_HOURS
+    const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const HOURS_BY_DAY = window.CT_HOURS || (function () {
+      const monThu = [[11 * 60, 15 * 60], [16 * 60 + 30, 21 * 60]], friSun = [[11 * 60, 21 * 60]];
+      return { Mon: monThu, Tue: monThu, Wed: monThu, Thu: monThu, Fri: friSun, Sat: friSun, Sun: friSun };
+    })();
+    const LEAD_MIN = 20;      // prep time
+    const SLOT_MIN = 15;
+    const STORAGE_KEY = "cafeTurquoiseCart_v2"; // v2: menu board prices
+    const TZ = "Pacific/Auckland";
+
+    /* ---------- Build an item index ---------- */
+    const slug = s => s.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    const ITEMS = {};
+    MENU.forEach(cat => {
+      cat.items = cat.items.map(([name, price, note, setKey]) => {
+        const item = { id: cat.id + "--" + slug(name), name, price, desc: note || "", groups: SETS[setKey || cat.set], category: cat.name };
+        ITEMS[item.id] = item;
+        return item;
+      });
+    });
+
+    /* ---------- Helpers ---------- */
+    const $ = id => document.getElementById("op-" + id);
+    const money = n => "$" + (Math.round(n * 100) / 100).toFixed(2);
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const fmtTime = mins => {
+      let h = Math.floor(mins / 60), m = mins % 60;
+      const ap = h >= 12 ? "pm" : "am";
+      h = h % 12 || 12;
+      return h + ":" + String(m).padStart(2, "0") + " " + ap;
+    };
+    // Current weekday + time in the cafe's time zone (so it's right whatever the visitor's clock zone is)
+    const nowInfo = () => {
+      const d = new Date();
+      try {
+        const parts = new Intl.DateTimeFormat("en-NZ", { timeZone: TZ, weekday: "short", hour: "numeric", minute: "numeric", hourCycle: "h23" }).formatToParts(d);
+        const h = Number(parts.find(p => p.type === "hour").value) % 24;
+        const m = Number(parts.find(p => p.type === "minute").value);
+        const wd = parts.find(p => p.type === "weekday").value.slice(0, 3);
+        if (!isNaN(h) && !isNaN(m) && HOURS_BY_DAY[wd]) return { wd, mins: h * 60 + m };
+      } catch (e) { /* fall back to local clock */ }
+      return { wd: DAYS[d.getDay()], mins: d.getHours() * 60 + d.getMinutes() };
+    };
+    const nowMins = () => nowInfo().mins;
+    const todayHours = () => HOURS_BY_DAY[nowInfo().wd] || [];
+    const tomorrowHours = () => HOURS_BY_DAY[DAYS[(DAYS.indexOf(nowInfo().wd) + 1) % 7]] || [];
+    const windowAt = m => todayHours().find(([a, b]) => m >= a && m < b);
+
+    const AFTER4 = 16 * 60; // garlic bread from 4:00 pm NZ time
+    const isAfter4 = () => nowMins() >= AFTER4;
+    const itemAvailable = item => !(item && item.name === "Turkish Garlic Bread" && !isAfter4());
+
+    /* ---------- State ---------- */
+    let cart = loadCart();
+    let confirmed = null;
+    let formErrors = {};
+    let formMsg = "";
+    let step = "menu"; // "menu" | "checkout"
+    const DETAILS_KEY = "cafeTurquoiseDetails";
+    const form = { time: "asap", name: "", phone: "", notes: "" };
+    try {
+      const saved = JSON.parse(localStorage.getItem(DETAILS_KEY) || "{}");
+      if (saved && typeof saved.name === "string") form.name = saved.name;
+      if (saved && typeof saved.phone === "string") form.phone = saved.phone;
+    } catch (e) { /* ignore */ }
+    function saveDetails() {
+      try { localStorage.setItem(DETAILS_KEY, JSON.stringify({ name: form.name.trim(), phone: form.phone.trim() })); } catch (e) { /* ignore */ }
+    }
+
+    function loadCart() {
+      try {
+        const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        if (!Array.isArray(raw)) return [];
+        // keep only known items, groups and option names (older saved carts load safely; an old extras tick = qty 1)
+        return raw.filter(l => l && ITEMS[l.itemId] && l.qty > 0).map(l => {
+          const item = ITEMS[l.itemId], sel = {};
+          item.groups.forEach(gk => {
+            const names = OPTION_GROUPS[gk].options.map(o => o.name);
+            const g = OPTION_GROUPS[gk];
+            let picks = ((l.sel && l.sel[gk]) || []).filter(n => names.includes(n));
+            if (g.qty) picks = g.options.flatMap(o => Array(Math.min(o.max || g.maxEach || 10, picks.filter(n => n === o.name).length)).fill(o.name));
+            sel[gk] = picks;
+          });
+          return { itemId: l.itemId, sel, note: typeof l.note === "string" ? l.note : "", qty: Math.min(99, Math.floor(l.qty)) };
+        });
+      } catch (e) { return []; }
+    }
+    function saveCart() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(cart)); } catch (e) { /* ignore */ }
+    }
+    function unitPrice(line) {
+      const item = ITEMS[line.itemId];
+      let p = item.price;
+      Object.keys(line.sel || {}).forEach(gk => {
+        const g = OPTION_GROUPS[gk];
+        if (!g || !item.groups.includes(gk)) return;
+        if (g.extraEach) {
+          const n = (line.sel[gk] || []).filter(name => name !== g.exclusive).length;
+          p += Math.max(0, n - (g.freeCount || 0)) * g.extraEach;
+        }
+        (line.sel[gk] || []).forEach(name => {
+          const o = g.options.find(x => x.name === name);
+          if (o) p += o.price;
+        });
+      });
+      return p;
+    }
+    const lineTotal = l => unitPrice(l) * l.qty;
+    const cartTotal = () => cart.reduce((s, l) => s + lineTotal(l), 0);
+    const cartCount = () => cart.reduce((s, l) => s + l.qty, 0);
+    function optSummary(line) {
+      const item = ITEMS[line.itemId];
+      return item.groups.map(gk => {
+        const picks = (line.sel && line.sel[gk]) || [];
+        if (!picks.length) return "";
+        const g = OPTION_GROUPS[gk];
+        if (g.qty) return g.options.map(o => { const n = picks.filter(x => x === o.name).length; return !n ? "" : (o.max === 1 ? o.name : `${n}× ${o.name}`); }).filter(Boolean).join(", ");
+        const label = g.required ? "" : g.name + ": ";
+        return label + picks.join(", ");
+      }).filter(Boolean).join(" · ");
+    }
+
+    /* ---------- Render menu ---------- */
+    const scroller = $("scroll");
+    const menuScrolls = () => getComputedStyle($("menu")).overflowY === "auto";
+    function catBarOffset() {
+      const pills = $("pills");
+      // Side-column nav does not cover the menu; only the wrapped top bar does.
+      if (getComputedStyle(pills).flexDirection === "column") return 16;
+      const stickyTop = parseFloat(getComputedStyle(pills).top) || 0;
+      return Math.max(0, pills.offsetHeight + stickyTop);
+    }
+    function scrollToEl(el, offset) {
+      const scroller = ($("menu").contains(el) && menuScrolls()) ? $("menu") : $("scroll");
+      if (scroller === $("menu")) offset = 16;
+      else if (offset == null) offset = 0;
+      const top = el.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop - (offset || 0);
+      scroller.scrollTo({ top: Math.max(0, top), behavior: "auto" });
+    }
+
+    let clickedCat = null;
+    function renderMenu() {
+      $("pills").innerHTML = MENU.map((c, i) =>
+        `<button type="button" class="op-pill${i === 0 ? " op-active" : ""}" data-target="${c.id}">${esc(c.name)}</button>`).join("");
+      $("menu").innerHTML = MENU.map(c => `
+        <section class="op-category" id="op-cat-${c.id}">
+          <h2>${esc(c.name)}</h2>
+          <p class="op-cat-desc">${esc(c.desc)}</p>
+          <div class="op-items">
+            ${c.items.map(it => {
+              const ok = itemAvailable(it);
+              const note = it.name === "Turkish Garlic Bread"
+                ? `<span class="op-item-note">Available after 4pm</span>`
+                : "";
+              return `
+              <button type="button" class="op-item${ok ? "" : " op-item-unavail"}" data-item="${it.id}"${ok ? "" : " disabled aria-disabled=\"true\""}>
+                <span class="op-item-name">${esc(it.name)}</span>
+                ${it.desc ? `<span class="op-item-desc">${esc(it.desc)}</span>` : ""}
+                ${note}
+                <span class="op-item-price">${money(it.price)}</span>
+              </button>`;
+            }).join("")}
+          </div>
+        </section>`).join("");
+
+      $("pills").addEventListener("click", e => {
+        const b = e.target.closest(".op-pill");
+        if (!b) return;
+        const sec = $("cat-" + b.dataset.target);
+        clickedCat = b.dataset.target;
+        setActivePill(clickedCat);
+        if (sec) scrollToEl(sec, catBarOffset());
+        setTimeout(() => { clickedCat = null; }, 150);
+      });
+      $("menu").addEventListener("click", e => {
+        const b = e.target.closest(".op-item");
+        if (!b || b.disabled) return;
+        openModal(b.dataset.item);
+      });
+    }
+
+    function setActivePill(id) {
+      $("pills").querySelectorAll(".op-pill").forEach(p => p.classList.toggle("op-active", p.dataset.target === id));
+    }
+
+    let spyTick = false;
+    function scrollSpy() {
+      if (spyTick) return;
+      spyTick = true;
+      requestAnimationFrame(() => {
+        spyTick = false;
+        if (clickedCat) { setActivePill(clickedCat); return; }
+        const line = $("pills").getBoundingClientRect().bottom + 24;
+        let current = MENU[0].id;
+        MENU.forEach(c => { if ($("cat-" + c.id).getBoundingClientRect().top <= line) current = c.id; });
+        setActivePill(current);
+      });
+    }
+
+    /* ---------- Pickup times ---------- */
+    // ASAP is offered while open (and the food can be ready before closing);
+    // then every 15-min slot left in today's open windows, at least LEAD_MIN from now.
+    function asapAvailable(now) {
+      const w = windowAt(now);
+      return !!w && now + LEAD_MIN <= w[1];
+    }
+    function pickupSlots(now) {
+      const earliest = now + LEAD_MIN;
+      const slots = [];
+      todayHours().forEach(([open, close]) => {
+        for (let m = open; m <= close - SLOT_MIN; m += SLOT_MIN) if (m >= earliest) slots.push(m);
+      });
+      return slots;
+    }
+    function timeChoices() {
+      const now = nowMins();
+      const asap = asapAvailable(now);
+      const slots = pickupSlots(now);
+      let html = asap ? `<option value="asap">As soon as possible (about ${LEAD_MIN} min)</option>` : "";
+      if (slots.length) html += `<optgroup label="${asap ? "Later today" : "Today"}">` + slots.map(m => `<option value="${m}">${fmtTime(m)}</option>`).join("") + `</optgroup>`;
+      const any = asap || slots.length > 0;
+      if (!any) html = `<option value="" disabled>No pickup times left today</option>`;
+      const note = any
+        ? (asap ? "" : (todayHours().length && now < todayHours()[0][0] ? "We open at " + fmtTime(todayHours()[0][0]) + "." : "The next pickup time is " + fmtTime(slots[0]) + "."))
+        : "Online ordering has closed for today." + (tomorrowHours().length ? " We open again at " + fmtTime(tomorrowHours()[0][0]) + " tomorrow." : "");
+      return { html, any, note };
+    }
+    function applyTimes(sel) {
+      const t = timeChoices();
+      sel.innerHTML = t.html;
+      const keep = Array.from(sel.options).find(o => o.value === String(form.time) && !o.disabled);
+      const first = Array.from(sel.options).find(o => !o.disabled && o.value);
+      sel.value = keep ? keep.value : (first ? first.value : "");
+      sel.disabled = !t.any;
+      form.time = sel.value;
+      const place = $("place");
+      if (place) place.disabled = !t.any;
+      const hint = $("time-hint");
+      if (hint) hint.textContent = t.note;
+      return t;
+    }
+    function timeLabel(val) {
+      if (val === "asap") return "As soon as possible (about " + LEAD_MIN + " minutes, around " + fmtTime(nowMins() + LEAD_MIN) + ")";
+      return "Today at " + fmtTime(Number(val));
+    }
+
+    /* ---------- Render cart ---------- */
+    function renderCart() {
+      const total = cartTotal();
+      const count = cartCount();
+      const t = timeChoices();
+      $("viewCart").textContent = count ? `View order (${count}) · ${money(total)}` : `View order · ${money(total)}`;
+      overlay.classList.toggle("op-step-checkout", step === "checkout");
+
+      if (confirmed) {
+        $("cartContent").innerHTML = `
+          <div class="op-confirm">
+            <span class="op-label">Order received</span>
+            <h3>Thank you, ${esc(confirmed.name)}</h3>
+            <div class="op-order-no">#${esc(confirmed.number)}</div>
+            <p>Pickup: ${esc(confirmed.time)}</p>
+            <p>From 81 Devon Street West, New Plymouth.</p>
+            ${confirmed.notes ? `<p>Notes: ${esc(confirmed.notes)}</p>` : ""}
+            <ul>${confirmed.lines.map(l => `<li><span>${l.qty} × ${esc(l.name)}</span><span>${money(l.total)}</span></li>`).join("")}</ul>
+            <p>Total ${money(confirmed.total)} · Paid online (mock, no payment taken)</p>
+            <div class="op-confirm-act"><button type="button" class="op-btn op-btn-primary" id="op-newOrder">Start a new order</button></div>
+          </div>`;
+        $("newOrder").addEventListener("click", () => { confirmed = null; step = "menu"; renderCart(); scroller.scrollTo({ top: 0 }); });
+        return;
+      }
+
+      const gst = total * 3 / 23;
+      const linesHtml = cart.length ? cart.map((l, i) => {
+        const item = ITEMS[l.itemId];
+        const opts = optSummary(l);
+        return `
+          <div class="op-line">
+            <div class="op-line-top"><span class="op-line-name">${esc(item.name)}</span><span>${money(lineTotal(l))}</span></div>
+            ${opts ? `<div class="op-line-opts">${esc(opts)}</div>` : ""}
+            ${l.note ? `<div class="op-line-note">“${esc(l.note)}”</div>` : ""}
+            <div class="op-line-ctrl">
+              <div class="op-stepper" aria-label="Quantity">
+                <button type="button" data-act="dec" data-i="${i}" aria-label="Decrease quantity">−</button>
+                <span>${l.qty}</span>
+                <button type="button" data-act="inc" data-i="${i}" aria-label="Increase quantity">+</button>
+              </div>
+              <div class="op-line-acts">
+                <button type="button" class="op-edit" data-act="edit" data-i="${i}">Edit</button>
+                <button type="button" class="op-remove" data-act="remove" data-i="${i}">Remove</button>
+              </div>
+            </div>
+          </div>`;
+      }).join("") : `<p class="op-empty">Your order is empty. Choose something from the menu to get started.</p>`;
+
+      const err = k => `<div class="op-msg" id="op-err-${k}">${esc(formErrors[k] || "")}</div>`;
+      const inv = k => formErrors[k] ? "op-invalid" : "";
+      const totalsHtml = `
+        <div class="op-totals">
+          <div><span>Subtotal</span><span>${money(total)}</span></div>
+          <div><span>GST (15% included)</span><span>${money(gst)}</span></div>
+          <div class="op-total"><span>Total</span><span>${money(total)}</span></div>
+        </div>`;
+
+      if (step === "menu") {
+        $("cartContent").innerHTML = `
+          <div class="op-cart-box">${linesHtml}${err("cart")}</div>
+          ${cart.length ? totalsHtml : ""}
+          ${t.any ? "" : `<p class="op-closed-note"><strong>Ordering closed.</strong> ${esc(t.note.replace("Online ordering has closed for today. ", ""))}</p>`}
+          <button type="button" class="op-btn op-btn-primary" id="op-checkout"${cart.length && t.any ? "" : " disabled"}>Checkout${cart.length ? " · " + money(total) : ""}</button>`;
+        $("checkout").addEventListener("click", () => {
+          step = "checkout"; formMsg = ""; renderCart();
+          scroller.scrollTo({ top: 0 });
+          const h = $("coTitle"); if (h) h.focus({ preventScroll: true });
+        });
+        return;
+      }
+
+      $("cartContent").innerHTML = `
+        <div class="op-co">
+          <div class="op-co-main">
+            <button type="button" class="op-back" id="op-back">‹ Back to menu</button>
+            <h2 class="op-co-title" id="op-coTitle" tabindex="-1">Checkout</h2>
+            <section class="op-co-sec">
+              <h3>Pickup</h3>
+              <p class="op-co-where">81 Devon Street West, New Plymouth · <a class="op-info-link" href="tel:+6467578921">06 757 8921</a></p>
+              <div class="op-field">
+                <label for="op-time">Pickup time</label>
+                <select id="op-time" class="${inv("time")}"></select>
+                <p class="op-hint" id="op-time-hint"></p>
+                ${err("time")}
+              </div>
+            </section>
+            <form class="op-co-sec" id="op-contact" novalidate>
+              <h3>Your details</h3>
+              <div class="op-field-row">
+                <div class="op-field"><label for="op-name">Name</label><input id="op-name" class="${inv("name")}" autocomplete="name" value="${esc(form.name)}" />${err("name")}</div>
+                <div class="op-field"><label for="op-phone">Phone (optional)</label><input id="op-phone" type="tel" class="${inv("phone")}" autocomplete="tel" value="${esc(form.phone)}" />${err("phone")}</div>
+              </div>
+              <div class="op-field"><label for="op-notes">Notes (optional)</label><textarea id="op-notes" rows="3" placeholder="Anything we should know?">${esc(form.notes)}</textarea></div>
+            </form>
+            <section class="op-co-sec">
+              <h3>Payment</h3>
+              <label class="op-pay-row"><input type="radio" name="op-pay" checked /> Pay online</label>
+              <p class="op-hint">Mockup only: no payment is taken.</p>
+            </section>
+          </div>
+          <aside class="op-co-sum" aria-label="Order summary">
+            <h3>Order summary</h3>
+            <div class="op-cart-box">${linesHtml}${err("cart")}</div>
+            ${totalsHtml}
+            <button type="button" class="op-btn op-btn-primary" id="op-place">Place pickup order · ${money(total)}</button>
+            <div class="op-msg op-form-msg">${esc(formMsg)}</div>
+          </aside>
+        </div>`;
+
+      const sel = $("time");
+      applyTimes(sel);
+      sel.addEventListener("change", () => { form.time = sel.value; });
+      ["name", "phone"].forEach(k => {
+        $(k).addEventListener("input", e => {
+          form[k] = e.target.value;
+          if (formErrors[k]) { delete formErrors[k]; e.target.classList.remove("op-invalid"); $("err-" + k).textContent = ""; }
+        });
+      });
+      $("notes").addEventListener("input", e => { form.notes = e.target.value; });
+      $("contact").addEventListener("submit", e => { e.preventDefault(); placeOrder(); });
+      $("place").addEventListener("click", placeOrder);
+      $("back").addEventListener("click", () => { step = "menu"; formMsg = ""; formErrors = {}; renderCart(); });
+    }
+
+    $("cartContent").addEventListener("click", e => {
+      const b = e.target.closest("[data-act]");
+      if (!b) return;
+      const i = Number(b.dataset.i);
+      if (!cart[i]) return;
+      if (b.dataset.act === "edit") { openModal(cart[i].itemId, i); return; }
+      if (b.dataset.act === "inc") cart[i].qty = Math.min(99, cart[i].qty + 1);
+      if (b.dataset.act === "dec") { cart[i].qty -= 1; if (cart[i].qty < 1) cart.splice(i, 1); }
+      if (b.dataset.act === "remove") cart.splice(i, 1);
+      saveCart();
+      renderCart();
+    });
+
+    function placeOrder() {
+      formErrors = {};
+      formMsg = "";
+      if (!timeChoices().any) { formMsg = "Sorry, there are no pickup times left today."; renderCart(); return; }
+      if (!cart.length) formErrors.cart = "Add at least one item before placing your order.";
+      if (!form.time) formErrors.time = "Please choose a pickup time.";
+      if (!form.name.trim()) formErrors.name = "Please enter your name.";
+      const digits = form.phone.replace(/\D/g, "");
+      if (form.phone.trim() && (digits.length < 7 || digits.length > 15 || /[^\d\s()+-]/.test(form.phone))) formErrors.phone = "Please enter a valid phone number.";
+
+      if (Object.keys(formErrors).length) {
+        formMsg = "Please check the details above.";
+        renderCart();
+        return;
+      }
+      saveDetails();
+      const number = "CT-" + String(Math.floor(1000 + Math.random() * 9000));
+      confirmed = {
+        number,
+        name: form.name.trim(),
+        time: timeLabel(form.time),
+        total: cartTotal(),
+        lines: cart.map(l => ({ qty: l.qty, name: ITEMS[l.itemId].name, total: lineTotal(l) })),
+        notes: (form.notes || "").trim()
+      };
+      form.notes = "";
+      cart = [];
+      saveCart();
+      renderCart();
+      scroller.scrollTo({ top: 0 });
+    }
+
+    /* =========================================================
+       Item modal
+       ========================================================= */
+    let modal = null; // { item, sel: {gk: [names]}, qty }
+    let lastFocus = null;
+
+    function openModal(itemId, editIndex) {
+      const item = ITEMS[itemId];
+      if (!item) return;
+      const editing = typeof editIndex === "number" && cart[editIndex] && cart[editIndex].itemId === itemId;
+      // New adds respect availability; editing an existing line is always allowed
+      if (!editing && !itemAvailable(item)) return;
+      lastFocus = document.activeElement;
+      modal = { item, sel: {}, qty: 1, tried: false, editIndex: editing ? editIndex : null, note: "" };
+      item.groups.forEach(gk => { modal.sel[gk] = []; });
+      if (editing) {
+        const line = cart[editIndex];
+        item.groups.forEach(gk => { modal.sel[gk] = Array.isArray(line.sel && line.sel[gk]) ? line.sel[gk].slice() : []; });
+        modal.qty = Math.min(99, Math.max(1, line.qty || 1));
+        modal.note = typeof line.note === "string" ? line.note : "";
+      }
+
+      $("mName").textContent = item.name;
+      $("mBase").textContent = money(item.price);
+      $("mBody").innerHTML = `
+        ${item.desc ? `<p class="op-m-desc">${esc(item.desc)}</p>` : `<p class="op-m-desc">${esc(MENU.find(c => c.name === item.category).desc)}</p>`}
+        ${item.groups.map(gk => groupHtml(gk)).join("")}
+        <div class="op-field" style="margin-top:0.2rem">
+          <label for="op-mNote">Special instructions</label>
+          <textarea id="op-mNote" maxlength="200" placeholder="E.g. no onion, extra crispy">${esc(modal.note)}</textarea>
+        </div>`;
+      $("mQty").textContent = String(modal.qty);
+      // Prefill checkbox/radio selections from the line (qty steppers read modal.sel in updateModal)
+      item.groups.forEach(gk => {
+        const g = OPTION_GROUPS[gk];
+        if (g.qty) return;
+        const picks = modal.sel[gk] || [];
+        document.querySelectorAll(`#op-mBody input[data-g="${gk}"]`).forEach(inp => {
+          inp.checked = picks.includes(inp.value);
+        });
+      });
+      $("backdrop").classList.add("op-open");
+      $("backdrop").setAttribute("aria-hidden", "false");
+      $("mBody").scrollTop = 0;
+      updateModal();
+      $("mClose").focus();
+    }
+
+    function groupHtml(gk) {
+      const g = OPTION_GROUPS[gk];
+      if (g.qty) return `
+        <div class="op-group" data-group="${gk}">
+          <div class="op-group-head"><h4>${esc(g.name)}</h4><span class="op-group-rule">Optional</span></div>
+          <div class="op-opts">
+            ${g.options.map((o, i) => o.max === 1 ? `
+              <label class="op-opt op-qopt op-qchk">
+                <input type="checkbox" data-qc="${gk}" data-qi="${i}" />
+                <span class="op-opt-name">${esc(o.name)}</span>
+                <span class="op-opt-price">+${money(o.price)}</span>
+              </label>` : `
+              <div class="op-opt op-qopt">
+                <span class="op-qbox" aria-hidden="true"></span>
+                <span class="op-opt-name">${esc(o.name)}</span>
+                <span class="op-opt-price">+${money(o.price)}</span>
+                <div class="op-stepper op-qstep" role="group" aria-label="${esc(o.name)} quantity">
+                  <button type="button" data-qg="${gk}" data-qi="${i}" data-qd="-1" aria-label="Remove one ${esc(o.name)}">−</button>
+                  <span class="op-qn" id="op-q-${gk}-${i}" aria-live="polite">0</span>
+                  <button type="button" data-qg="${gk}" data-qi="${i}" data-qd="1" aria-label="Add one ${esc(o.name)}">+</button>
+                </div>
+              </div>`).join("")}
+          </div>
+          <div class="op-msg" id="op-gmsg-${gk}"></div>
+        </div>`;
+      const single = g.max === 1;
+      let rule;
+      if (g.rule) rule = g.rule;
+      else if (g.required) rule = single ? "Required · choose 1" : `Required · up to ${g.max}`;
+      else { const ps = Array.from(new Set(g.options.map(o => o.price))); rule = (ps.length === 1 && ps[0] && g.options.length > 1) ? "Optional · +" + money(ps[0]) + " each" : "Optional"; }
+      return `
+        <div class="op-group" data-group="${gk}">
+          <div class="op-group-head"><h4>${esc(g.name)}</h4><span class="op-group-rule${g.required ? " op-req" : ""}">${rule}</span></div>
+          <div class="op-opts">
+            ${g.options.map(o => `
+              <label class="op-opt">
+                <input type="${single ? "radio" : "checkbox"}" name="op-g-${gk}" value="${esc(o.name)}" data-g="${gk}" />
+                <span class="op-opt-name">${esc(o.name)}</span>
+                ${o.price ? `<span class="op-opt-price">+${money(o.price)}</span>` : ""}
+              </label>`).join("")}
+          </div>
+          <div class="op-msg" id="op-gmsg-${gk}"></div>
+        </div>`;
+    }
+
+    function groupError(gk) {
+      const g = OPTION_GROUPS[gk];
+      const n = modal.sel[gk].length;
+      if (g.required && n < g.min) return g.max === 1 ? `Please choose a ${g.name.toLowerCase()}.` : `Please choose at least ${g.min} ${g.name.toLowerCase().replace(/s$/, "")}.`;
+      if (n > g.max) return `Choose up to ${g.max}.`;
+      return "";
+    }
+
+    function updateModal() {
+      if (!modal) return;
+      modal.item.groups.forEach(gk => {
+        const g = OPTION_GROUPS[gk];
+        if (g.qty) {
+          g.options.forEach((o, i) => {
+            const n = modal.sel[gk].filter(x => x === o.name).length;
+            const cb = document.querySelector(`#op-mBody [data-qc="${gk}"][data-qi="${i}"]`); if (cb) { cb.checked = n > 0; return; }
+            const el = $("q-" + gk + "-" + i); if (el) el.textContent = String(n);
+            const minus = document.querySelector(`#op-mBody [data-qg="${gk}"][data-qi="${i}"][data-qd="-1"]`);
+            const plus = document.querySelector(`#op-mBody [data-qg="${gk}"][data-qi="${i}"][data-qd="1"]`);
+            if (minus) minus.disabled = n <= 0;
+            if (plus) plus.disabled = n >= (g.maxEach || 10);
+          });
+          return;
+        }
+        if (g.max === 1) { if (!groupError(gk)) $("gmsg-" + gk).textContent = ""; return; }
+        const counted = (modal.sel[gk] || []).filter(n => n !== g.exclusive).length;
+        const full = modal.sel[gk].length >= g.max;
+        document.querySelectorAll(`#op-mBody input[data-g="${gk}"]`).forEach(inp => {
+          const dis = full && !inp.checked;
+          inp.disabled = dis;
+          inp.closest(".op-opt").classList.toggle("op-disabled", dis);
+          if (g.extraEach) {
+            const lab = inp.closest(".op-opt");
+            let el = lab.querySelector(".op-opt-price");
+            const show = counted >= (g.freeCount || 0) && inp.value !== g.exclusive && !inp.checked;
+            if (show) {
+              if (!el) { el = document.createElement("span"); el.className = "op-opt-price"; lab.appendChild(el); }
+              el.textContent = "+" + money(g.extraEach);
+              el.hidden = false;
+            } else if (el) {
+              el.textContent = "";
+              el.hidden = true;
+            }
+          }
+        });
+        const msgEl = $("gmsg-" + gk);
+        if (!modal.tried || !groupError(gk)) msgEl.textContent = full && g.required && !g.extraEach ? `Maximum of ${g.max} selected.` : "";
+      });
+      if (modal.tried) modal.item.groups.forEach(gk => { const e = groupError(gk); if (e) $("gmsg-" + gk).textContent = e; });
+      const unit = unitPrice({ itemId: modal.item.id, sel: modal.sel });
+      const verb = typeof modal.editIndex === "number" ? "Update order" : "Add to cart";
+      $("mAdd").textContent = `${verb} · ${money(unit * modal.qty)}`;
+      $("mQty").textContent = String(modal.qty);
+    }
+
+    // Optional single-select (e.g. Combo): tap the active option again to clear it
+    $("mBody").addEventListener("click", e => {
+      const lab = e.target.closest("label.op-opt");
+      const inp = (lab && lab.querySelector('input[type="radio"][data-g]')) || (e.target.matches && e.target.matches('input[type="radio"][data-g]') ? e.target : null);
+      if (!inp || !modal) return;
+      const gk = inp.dataset.g, g = OPTION_GROUPS[gk];
+      if (!g || g.max !== 1 || g.required || g.qty) return;
+      if ((modal.sel[gk] || [])[0] === inp.value) {
+        setTimeout(() => {
+          if (!modal) return;
+          inp.checked = false;
+          modal.sel[gk] = [];
+          updateModal();
+        }, 0);
+      }
+    });
+
+    $("mBody").addEventListener("change", e => {
+      const inp = e.target;
+      if (!inp.dataset || !inp.dataset.g || !modal) return;
+      const gk = inp.dataset.g;
+      const g = OPTION_GROUPS[gk];
+      if (g.max === 1) {
+        modal.sel[gk] = [inp.value];
+      } else {
+        let picks = Array.from(document.querySelectorAll(`#op-mBody input[data-g="${gk}"]:checked`)).map(x => x.value);
+        if (g.exclusive && inp.checked) {
+          const uncheck = inp.value === g.exclusive ? picks.filter(v => v !== g.exclusive) : picks.filter(v => v === g.exclusive);
+          uncheck.forEach(v => { const el = document.querySelector(`#op-mBody input[data-g="${gk}"][value="${CSS.escape(v)}"]`); if (el) el.checked = false; });
+          picks = picks.filter(v => !uncheck.includes(v));
+        }
+        if (picks.length > g.max) { inp.checked = false; picks = picks.filter(v => v !== inp.value); }
+        modal.sel[gk] = g.options.map(o => o.name).filter(n => picks.includes(n));
+      }
+      updateModal();
+    });
+
+    $("mBody").addEventListener("click", e => {
+      const b = e.target.closest("[data-qg]");
+      if (!b || !modal) return;
+      const gk = b.dataset.qg, g = OPTION_GROUPS[gk], o = g.options[Number(b.dataset.qi)];
+      setQty(gk, o, modal.sel[gk].filter(x => x === o.name).length + Number(b.dataset.qd));
+    });
+    $("mBody").addEventListener("change", e => {
+      const cb = e.target.closest("[data-qc]");
+      if (!cb || !modal) return;
+      const gk = cb.dataset.qc;
+      setQty(gk, OPTION_GROUPS[gk].options[Number(cb.dataset.qi)], cb.checked ? 1 : 0);
+    });
+    function setQty(gk, o, n) {
+      const g = OPTION_GROUPS[gk];
+      const next = Math.max(0, Math.min(o.max || g.maxEach || 10, n));
+      // rebuild in option order so identical configurations merge in the cart
+      const counts = g.options.map(x => x.name === o.name ? next : modal.sel[gk].filter(y => y === x.name).length);
+      modal.sel[gk] = g.options.flatMap((x, k) => Array(counts[k]).fill(x.name));
+      updateModal();
+    }
+
+    $("mMinus").addEventListener("click", () => { if (modal && modal.qty > 1) { modal.qty--; updateModal(); } });
+    $("mPlus").addEventListener("click", () => { if (modal && modal.qty < 99) { modal.qty++; updateModal(); } });
+
+    $("mAdd").addEventListener("click", () => {
+      if (!modal) return;
+      modal.tried = true;
+      const firstBad = modal.item.groups.find(gk => groupError(gk));
+      updateModal();
+      if (firstBad) {
+        const el = document.querySelector(`#op-mBody .op-group[data-group="${firstBad}"]`);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+      const note = ($("mNote").value || "").trim();
+      const line = { itemId: modal.item.id, sel: modal.sel, note, qty: modal.qty };
+      if (typeof modal.editIndex === "number" && cart[modal.editIndex]) {
+        cart[modal.editIndex] = line;
+      } else {
+        const key = JSON.stringify([line.itemId, line.sel, line.note]);
+        const existing = cart.find(l => JSON.stringify([l.itemId, l.sel, l.note]) === key);
+        if (existing) existing.qty = Math.min(99, existing.qty + line.qty);
+        else cart.push(line);
+      }
+      confirmed = null;
+      if (formErrors.cart) { delete formErrors.cart; formMsg = ""; }
+      saveCart();
+      renderCart();
+      closeModal();
+    });
+
+    function closeModal() {
+      modal = null;
+      $("backdrop").classList.remove("op-open");
+      $("backdrop").setAttribute("aria-hidden", "true");
+      if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+    }
+    $("mClose").addEventListener("click", closeModal);
+    $("backdrop").addEventListener("click", e => { if (e.target === $("backdrop")) closeModal(); });
+
+    /* ---------- Mobile cart bar ---------- */
+    $("viewCart").addEventListener("click", () => scrollToEl($("cart"), 0));
+
+    /* =========================================================
+       Popup open / close
+       ========================================================= */
+    const overlay = $("overlay");
+    const pageParts = [document.querySelector("body > header"), document.querySelector("body > main"), document.querySelector("body > footer")].filter(Boolean);
+    let opener = null;
+    const isOpen = () => overlay.classList.contains("op-open");
+
+    function openOrder() {
+      if (isOpen()) return;
+      opener = document.activeElement;
+      const sbw = window.innerWidth - document.documentElement.clientWidth;
+      if (sbw > 0) document.body.style.paddingRight = sbw + "px";
+      document.body.classList.add("op-lock");
+      pageParts.forEach(el => { el.inert = true; el.setAttribute("aria-hidden", "true"); });
+      overlay.classList.add("op-open");
+      overlay.setAttribute("aria-hidden", "false");
+      applyTimes($("time") || document.createElement("select"));
+      $("x").focus({ preventScroll: true });
+    }
+    function closeOrder() {
+      if (!isOpen()) return;
+      if (modal) closeModal();
+      overlay.classList.remove("op-open");
+      overlay.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("op-lock");
+      document.body.style.paddingRight = "";
+      pageParts.forEach(el => { el.inert = false; el.removeAttribute("aria-hidden"); });
+      if (location.hash === "#order") history.replaceState(null, "", location.pathname + location.search);
+      if (opener && opener.focus) opener.focus({ preventScroll: true });
+    }
+
+    document.querySelectorAll('a[href="#order"]').forEach(a => a.addEventListener("click", e => {
+      e.preventDefault();
+      if (location.hash !== "#order") history.pushState(null, "", "#order");
+      openOrder();
+    }));
+    $("x").addEventListener("click", closeOrder);
+    overlay.addEventListener("click", e => { if (e.target === overlay) closeOrder(); });
+    document.addEventListener("keydown", e => {
+      if (e.key !== "Escape") return;
+      if (modal) closeModal();
+      else if (isOpen()) closeOrder();
+    });
+    // Shared with the hours badge: true while the pop-up can offer at least one pickup time today
+    window.CT_ORDERING_AVAILABLE = () => timeChoices().any;
+    const syncHash = () => { if (location.hash === "#order") openOrder(); else closeOrder(); };
+    window.addEventListener("hashchange", syncHash);
+    window.addEventListener("popstate", syncHash);
+
+    /* ---------- Top-bar pickup time (same slots as checkout) ---------- */
+    /* Logo in the top bar: close ordering and go back to the top of the homepage (same as ×) */
+    $("home").addEventListener("click", () => {
+      closeOrder();
+      const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: smooth ? "smooth" : "auto" });
+    });
+
+    /* ---------- Init ---------- */
+    renderMenu();
+    renderCart();
+    scroller.addEventListener("scroll", scrollSpy, { passive: true });
+    $("menu").addEventListener("scroll", scrollSpy, { passive: true });
+    window.addEventListener("storage", e => { if (e.key === STORAGE_KEY) { cart = loadCart(); renderCart(); } });
+    // refresh time slots every minute so they stay in the future (and the closed note appears on time)
+    let lastAny = timeChoices().any;
+    setInterval(() => {
+      if (confirmed) return;
+      const any = timeChoices().any;
+      if (any !== lastAny) { lastAny = any; if (document.activeElement !== $("time")) { renderCart(); return; } }
+      const sel = $("time");
+      if (!sel || document.activeElement === sel) return;
+      applyTimes(sel);
+    }, 60000);
+    if (location.hash === "#order") openOrder();
+  })();
+  </script>
+  <script>
+  /* v3 extras (separate script; gallery + order scripts above are unchanged) */
+  (function () {
+    /* Gallery: drop the duplicate photo (gallery2.jpg is the same file as kebab.jpg), add arrows + swipe */
+    if (typeof images !== "undefined" && typeof show === "function") {
+      for (let i = images.length - 1; i >= 0; i--) if (images[i].src === "gallery2.jpg") images.splice(i, 1);
+      show(0);
+      const g = document.querySelector(".gallery");
+      const prev = g && g.querySelector(".gal-prev"), next = g && g.querySelector(".gal-next");
+      if (prev) prev.addEventListener("click", () => show(index - 1));
+      if (next) next.addEventListener("click", () => show(index + 1));
+      if (g) {
+        let x0 = null;
+        g.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
+        g.addEventListener("touchend", e => {
+          if (x0 === null) return;
+          const dx = e.changedTouches[0].clientX - x0; x0 = null;
+          if (Math.abs(dx) > 40) show(index + (dx < 0 ? 1 : -1));
+        }, { passive: true });
+      }
+    }
+
+    /* Open now / Closed, from the posted hours, in New Zealand time */
+    const el = document.getElementById("openStatus");
+    if (!el || !window.Intl || !window.CT_HOURS) return;
+    const HOURS_BY_DAY = window.CT_HOURS;     // shared with the order pop-up
+    function update() {
+      try {
+        const parts = new Intl.DateTimeFormat("en-NZ", { timeZone: "Pacific/Auckland", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date());
+        const get = t => (parts.find(p => p.type === t) || {}).value;
+        const wd = get("weekday"), mins = Number(get("hour")) * 60 + Number(get("minute"));
+        const slots = HOURS_BY_DAY[wd.slice(0, 3)] || [];
+        const open = slots.some(([a, b]) => mins >= a && mins < b);
+        // same ordering-availability logic as the order pop-up
+        const canOrder = typeof window.CT_ORDERING_AVAILABLE === "function" ? window.CT_ORDERING_AVAILABLE() : open;
+        const state = !open ? "closed" : (canOrder ? "open" : "ordering-closed");
+        el.textContent = state === "open" ? "Open now" : state === "ordering-closed" ? "Ordering closed" : "Closed now";
+        el.classList.toggle("is-closed", state === "closed");
+        el.classList.toggle("is-ordering-closed", state === "ordering-closed");
+        el.classList.add("ready");
+      } catch (e) { /* leave hidden */ }
+    }
+    update();
+    setInterval(update, 60000);
+  })();
+  </script>
+  <script>
+  /* Photo gallery: arrows, keyboard and swipe — instant snap, no autoplay */
+  (function () {
+    const g = document.querySelector(".s-gal"); if (!g) return;
+    const root = g.closest(".s-media") || g;
+    const imgs = Array.from(g.querySelectorAll("img")); let i = 0;
+    const show = n => { i = (n + imgs.length) % imgs.length; imgs.forEach((im, k) => im.classList.toggle("is-on", k === i)); };
+    root.querySelector(".s-prev").addEventListener("click", () => show(i - 1));
+    root.querySelector(".s-next").addEventListener("click", () => show(i + 1));
+    document.addEventListener("keydown", e => {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      if (e.altKey || e.ctrlKey || e.metaKey || /^(INPUT|TEXTAREA|SELECT)$/.test((e.target || {}).tagName || "")) return;
+      const ov = document.getElementById("op-overlay"); if (ov && ov.classList.contains("op-open")) return;
+      show(i + (e.key === "ArrowRight" ? 1 : -1));
+    });
+    let x0 = null;
+    g.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; }, { passive: true });
+    g.addEventListener("touchend", e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1)); }, { passive: true });
+  })();
+  </script>
+
+  <script>
+  /* Book a table mockup — no backend; NZ hours from CT_HOURS */
+  (function () {
+    const overlay = document.getElementById("bk-overlay");
+    if (!overlay) return;
+    const content = document.getElementById("bk-content");
+    const pageParts = [document.querySelector("body > header"), document.querySelector("body > main"), document.querySelector("body > footer")].filter(Boolean);
+    const HOURS = window.CT_HOURS || {};
+    const TZ = "Pacific/Auckland";
+    const SLOT = 30;
+    const LAST_PAD = 30; // last booking ends SLOT min before close
+    let opener = null;
+    let party = 2;
+    let confirmed = null;
+    const form = { date: "", time: "", name: "", phone: "", notes: "" };
+
+    const money = n => "$" + n.toFixed(2); // unused, keep quiet
+    const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+    const isOpen = () => overlay.classList.contains("bk-open");
+
+    function nzParts(d) {
+      const parts = new Intl.DateTimeFormat("en-NZ", { timeZone: TZ, weekday: "short", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(d);
+      const get = t => (parts.find(p => p.type === t) || {}).value;
+      return { wd: get("weekday").slice(0, 3), y: get("year"), mo: get("month"), da: get("day"), h: Number(get("hour")), m: Number(get("minute")) };
+    }
+    function todayISO() {
+      const p = nzParts(new Date());
+      return p.y + "-" + p.mo + "-" + p.da;
+    }
+    function minsNow() {
+      const p = nzParts(new Date());
+      return p.h * 60 + p.m;
+    }
+    function wdForISO(iso) {
+      // noon UTC on that calendar day is wrong for NZ; use midday NZ via a fixed offset parse
+      const [y, mo, da] = iso.split("-").map(Number);
+      // construct a Date that formatToParts in NZ reports as that Y-M-D at noon
+      // Probe from UTC noon and adjust
+      let t = Date.UTC(y, mo - 1, da, 12, 0, 0);
+      for (let i = 0; i < 3; i++) {
+        const p = nzParts(new Date(t));
+        const want = y * 10000 + mo * 100 + da;
+        const got = Number(p.y) * 10000 + Number(p.mo) * 100 + Number(p.da);
+        if (got === want) return p.wd;
+        t += (want - got) * 24 * 60 * 60 * 1000;
+      }
+      return nzParts(new Date(t)).wd;
+    }
+    function fmtTime(mins) {
+      const h = Math.floor(mins / 60), m = mins % 60;
+      const ap = h >= 12 ? "pm" : "am";
+      const h12 = ((h + 11) % 12) + 1;
+      return h12 + ":" + String(m).padStart(2, "0") + " " + ap;
+    }
+    function slotsFor(iso) {
+      const wd = wdForISO(iso);
+      const windows = HOURS[wd] || [];
+      const out = [];
+      windows.forEach(([open, close]) => {
+        const last = close - LAST_PAD;
+        for (let t = open; t <= last; t += SLOT) out.push(t);
+      });
+      if (iso === todayISO()) {
+        const now = minsNow();
+        return out.filter(t => t > now);
+      }
+      return out;
+    }
+    function fmtDateLong(iso) {
+      const [y, mo, da] = iso.split("-").map(Number);
+      // Use midday NZ for that date
+      let t = Date.UTC(y, mo - 1, da, 12, 0, 0);
+      for (let i = 0; i < 3; i++) {
+        const p = nzParts(new Date(t));
+        const want = y * 10000 + mo * 100 + da;
+        const got = Number(p.y) * 10000 + Number(p.mo) * 100 + Number(p.da);
+        if (got === want) break;
+        t += (want - got) * 24 * 60 * 60 * 1000;
+      }
+      return new Intl.DateTimeFormat("en-NZ", { timeZone: TZ, weekday: "long", day: "numeric", month: "long", year: "numeric" }).format(new Date(t));
+    }
+
+    function render() {
+      if (confirmed) {
+        content.innerHTML = `
+          <div class="bk-confirm">
+            <h2>Table requested</h2>
+            <p>Thanks, ${esc(confirmed.name)}. We&rsquo;ve received your request and will confirm by phone.</p>
+            <div class="bk-sum">
+              <div><span>Date</span><span>${esc(confirmed.dateLabel)}</span></div>
+              <div><span>Time</span><span>${esc(confirmed.timeLabel)}</span></div>
+              <div><span>Party</span><span>${confirmed.party} ${confirmed.party === 1 ? "guest" : "guests"}</span></div>
+              <div><span>Phone</span><span>${esc(confirmed.phone)}</span></div>
+              ${confirmed.notes ? `<div><span>Notes</span><span>${esc(confirmed.notes)}</span></div>` : ""}
+            </div>
+            <p>This is a mockup — nothing was sent.</p>
+            <button type="button" class="bk-home-btn" id="bk-done">Back to homepage</button>
+          </div>`;
+        document.getElementById("bk-done").addEventListener("click", () => { closeBook(true); });
+        return;
+      }
+
+      const min = todayISO();
+      if (!form.date || form.date < min) form.date = min;
+      const slots = slotsFor(form.date);
+      if (!slots.includes(Number(form.time))) form.time = slots.length ? String(slots[0]) : "";
+      const timeOpts = slots.length
+        ? slots.map(t => `<option value="${t}"${String(t) === String(form.time) ? " selected" : ""}>${fmtTime(t)}</option>`).join("")
+        : `<option value="" disabled selected>No times left today</option>`;
+
+      content.innerHTML = `
+        <form id="bk-form" novalidate>
+          <div class="bk-field">
+            <label for="bk-date">Date</label>
+            <input type="date" id="bk-date" min="${min}" value="${esc(form.date)}" required />
+            <div class="bk-msg" id="bk-err-date"></div>
+          </div>
+          <div class="bk-field">
+            <label for="bk-time">Time</label>
+            <select id="bk-time" ${slots.length ? "" : "disabled"} required>${timeOpts}</select>
+            <div class="bk-msg" id="bk-err-time"></div>
+          </div>
+          <div class="bk-field">
+            <label id="bk-party-label">Party size</label>
+            <div class="bk-party">
+              <div class="bk-stepper" role="group" aria-labelledby="bk-party-label">
+                <button type="button" id="bk-party-minus" aria-label="Fewer guests">−</button>
+                <span id="bk-party-n" aria-live="polite">${party}</span>
+                <button type="button" id="bk-party-plus" aria-label="More guests">+</button>
+              </div>
+            </div>
+            <p class="bk-hint">For groups larger than 12, please call <a href="tel:+6467578921">06 757 8921</a>.</p>
+          </div>
+          <div class="bk-field">
+            <label for="bk-name">Name</label>
+            <input id="bk-name" autocomplete="name" value="${esc(form.name)}" required />
+            <div class="bk-msg" id="bk-err-name"></div>
+          </div>
+          <div class="bk-field">
+            <label for="bk-phone">Phone</label>
+            <input id="bk-phone" type="tel" autocomplete="tel" value="${esc(form.phone)}" required />
+            <div class="bk-msg" id="bk-err-phone"></div>
+          </div>
+          <div class="bk-field">
+            <label for="bk-notes">Notes <span style="font-weight:400;color:#5c6466">(optional)</span></label>
+            <textarea id="bk-notes" maxlength="240" placeholder="High chair, allergies, occasion…">${esc(form.notes)}</textarea>
+          </div>
+          <div class="bk-msg" id="bk-form-msg"></div>
+          <button type="submit" class="bk-submit" id="bk-submit"${slots.length ? "" : " disabled"}>Request table</button>
+        </form>`;
+
+      const dateEl = document.getElementById("bk-date");
+      const timeEl = document.getElementById("bk-time");
+      const minus = document.getElementById("bk-party-minus");
+      const plus = document.getElementById("bk-party-plus");
+      const nEl = document.getElementById("bk-party-n");
+      const syncParty = () => {
+        nEl.textContent = String(party);
+        minus.disabled = party <= 1;
+        plus.disabled = party >= 12;
+      };
+      syncParty();
+      minus.addEventListener("click", () => { if (party > 1) { party--; syncParty(); } });
+      plus.addEventListener("click", () => { if (party < 12) { party++; syncParty(); } });
+      dateEl.addEventListener("change", () => {
+        form.date = dateEl.value || min;
+        form.time = "";
+        render();
+      });
+      timeEl.addEventListener("change", () => { form.time = timeEl.value; });
+      document.getElementById("bk-name").addEventListener("input", e => { form.name = e.target.value; });
+      document.getElementById("bk-phone").addEventListener("input", e => { form.phone = e.target.value; });
+      document.getElementById("bk-notes").addEventListener("input", e => { form.notes = e.target.value; });
+      document.getElementById("bk-form").addEventListener("submit", e => { e.preventDefault(); submit(); });
+    }
+
+    function submit() {
+      const min = todayISO();
+      const errs = {};
+      if (!form.date || form.date < min) errs.date = "Please choose a date from today onwards.";
+      const slots = form.date ? slotsFor(form.date) : [];
+      if (!form.time || !slots.includes(Number(form.time))) errs.time = slots.length ? "Please choose a time." : "No times left on this date.";
+      if (!form.name.trim()) errs.name = "Please enter your name.";
+      const digits = form.phone.replace(/\D/g, "");
+      if (!form.phone.trim()) errs.phone = "Please enter a phone number.";
+      else if (digits.length < 7 || digits.length > 15 || /[^\d\s()+-]/.test(form.phone)) errs.phone = "Please enter a valid phone number.";
+
+      ["date", "time", "name", "phone"].forEach(k => {
+        const el = document.getElementById("bk-" + k);
+        const msg = document.getElementById("bk-err-" + k);
+        if (el) el.classList.toggle("bk-invalid", !!errs[k]);
+        if (msg) msg.textContent = errs[k] || "";
+      });
+      const formMsg = document.getElementById("bk-form-msg");
+      if (Object.keys(errs).length) {
+        if (formMsg) formMsg.textContent = "Please check the details above.";
+        return;
+      }
+      if (formMsg) formMsg.textContent = "";
+      confirmed = {
+        name: form.name.trim(),
+        phone: form.phone.trim(),
+        notes: (form.notes || "").trim(),
+        party,
+        dateLabel: fmtDateLong(form.date),
+        timeLabel: fmtTime(Number(form.time))
+      };
+      render();
+      document.getElementById("bk-scroll").scrollTo({ top: 0 });
+    }
+
+    function openBook() {
+      if (isOpen()) return;
+      // close order if somehow open
+      if (location.hash === "#order") history.replaceState(null, "", location.pathname + location.search + "#book");
+      opener = document.activeElement;
+      const sbw = window.innerWidth - document.documentElement.clientWidth;
+      if (sbw > 0) document.body.style.paddingRight = sbw + "px";
+      document.body.classList.add("bk-lock");
+      pageParts.forEach(el => { el.inert = true; el.setAttribute("aria-hidden", "true"); });
+      overlay.classList.add("bk-open");
+      overlay.setAttribute("aria-hidden", "false");
+      confirmed = null;
+      form.date = todayISO();
+      form.time = "";
+      render();
+      document.getElementById("bk-x").focus({ preventScroll: true });
+    }
+    function closeBook(toTop) {
+      if (!isOpen()) return;
+      overlay.classList.remove("bk-open");
+      overlay.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("bk-lock");
+      document.body.style.paddingRight = "";
+      pageParts.forEach(el => { el.inert = false; el.removeAttribute("aria-hidden"); });
+      if (location.hash === "#book") history.replaceState(null, "", location.pathname + location.search);
+      if (opener && opener.focus) opener.focus({ preventScroll: true });
+      if (toTop) {
+        const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.scrollTo({ top: 0, behavior: smooth ? "smooth" : "auto" });
+      }
+    }
+
+    document.querySelectorAll('a[href="#book"]').forEach(a => a.addEventListener("click", e => {
+      e.preventDefault();
+      if (location.hash !== "#book") history.pushState(null, "", "#book");
+      openBook();
+    }));
+    document.getElementById("bk-x").addEventListener("click", () => closeBook(false));
+    document.getElementById("bk-home").addEventListener("click", () => closeBook(true));
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && isOpen()) closeBook(false);
+    });
+    const sync = () => { if (location.hash === "#book") openBook(); else closeBook(false); };
+    window.addEventListener("hashchange", sync);
+    window.addEventListener("popstate", sync);
+    if (location.hash === "#book") openBook();
+  })();
+  </script>
+
+
+  <script>
+  /* Back-to-top: page + ordering overlay */
+  (function () {
+    const threshold = () => Math.max(320, Math.round(window.innerHeight * 0.85));
+    const smooth = () => !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function wire(btn, getScrollEl, doScroll) {
+      if (!btn) return;
+      const sync = () => {
+        const el = getScrollEl();
+        const y = el === window ? (window.scrollY || document.documentElement.scrollTop || 0)
+          : (el ? el.scrollTop : 0);
+        btn.classList.toggle("is-on", y > threshold());
+      };
+      btn.addEventListener("click", () => doScroll(smooth()));
+      if (getScrollEl() === window) {
+        window.addEventListener("scroll", sync, { passive: true });
+        window.addEventListener("resize", sync);
+      } else {
+        const el = getScrollEl();
+        if (el) el.addEventListener("scroll", sync, { passive: true });
+        window.addEventListener("resize", sync);
+        // also when overlay opens
+        const ov = document.getElementById("op-overlay");
+        if (ov) new MutationObserver(sync).observe(ov, { attributes: true, attributeFilter: ["class"] });
+      }
+      sync();
+    }
+    wire(
+      document.getElementById("to-top"),
+      () => window,
+      (sm) => window.scrollTo({ top: 0, behavior: sm ? "smooth" : "auto" })
+    );
+    wire(
+      document.getElementById("op-to-top"),
+      () => document.getElementById("op-scroll"),
+      (sm) => {
+        const el = document.getElementById("op-scroll");
+        if (el) el.scrollTo({ top: 0, behavior: sm ? "smooth" : "auto" });
+      }
+    );
+  })();
+  </script>
+
+
+<script>
+(function(){var mq=window.matchMedia("(max-width: 960px)");function sw(){document.querySelectorAll("img.s-front").forEach(function(im){var w=mq.matches?im.dataset.mobile:im.dataset.desktop;if(im.getAttribute("src")!==w)im.setAttribute("src",w);});}sw();(mq.addEventListener?mq.addEventListener("change",sw):mq.addListener(sw));})();
+</script>
+</body>
+</html>
