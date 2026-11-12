@@ -1158,6 +1158,46 @@
       }
       .s-photo { position: relative; z-index: 1; }
     }
+    /* Phones: same stacked layout as the narrow desktop view — portrait photo, round arrows, info underneath; no glass, no swipe dots (2026-11-12) */
+    @media (max-width: 960px) and (hover: none) {
+      .s-top { padding-top: 32px !important; padding-bottom: 28px !important; max-width: 520px !important; overflow: visible !important; }
+      .s-media {
+        position: relative !important; top: auto !important; left: auto !important; right: auto !important;
+        height: auto !important; width: 472px !important; max-width: 100% !important;
+        margin: 16px auto 0 !important; padding: 0 56px !important; box-sizing: border-box !important;
+        overflow: visible !important; background: transparent !important;
+        display: flex !important; flex-direction: column !important; align-items: center !important;
+        justify-content: flex-start !important; z-index: auto !important;
+      }
+      .s-media::before { content: none !important; display: none !important; }
+      .s-photo {
+        width: 100% !important; max-width: 360px !important; height: auto !important;
+        aspect-ratio: 360 / 532 !important; flex: none !important; position: relative !important; z-index: auto !important;
+      }
+      .s-gal img { object-fit: contain !important; object-position: 50% 50% !important; }
+      .s-media .s-nav { display: flex !important; justify-content: space-between !important; align-items: center !important; top: 0 !important; height: 100% !important; left: 0 !important; right: 0 !important; }
+      .s-media .s-arrow { width: 40px !important; height: 40px !important; border-radius: 50% !important; border: 1px solid #ddd !important;
+        background: #fff !important; color: var(--teal-ink) !important; filter: none !important; box-shadow: none !important; }
+      .s-media .s-arrow:hover { background: #f3f5f5 !important; }
+      .s-media .s-arrow svg { width: 16px !important; height: 16px !important; stroke-width: 1.5 !important; color: inherit !important; }
+      .s-dots { display: none !important; }
+      .s-info {
+        display: flex !important; flex-direction: column !important; align-items: center !important;
+        width: calc(100% + 40px) !important;
+        margin: 16px -20px 0 !important;
+        padding: 22px 20px 28px !important;
+        background: #fff !important;
+        border-radius: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+        position: relative !important;
+        z-index: auto !important;
+      }
+      .s-info::before { content: none !important; display: none !important; }
+      .ct-menu, footer { position: relative !important; z-index: auto !important; background: #fff !important; }
+    }
 </style>
 </head>
 <body id="top">
