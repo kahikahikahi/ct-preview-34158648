@@ -19,3 +19,6 @@ html body .s-info>.s-link+.s-link{margin-top:16px!important}
 .s-info .s-btns .s-order-row{display:contents!important}
 .s-info .s-btns .btn{width:auto!important;flex:0 0 auto!important;justify-self:auto!important}
 .s-info .btn{font-weight:400!important}
+.s-info .status{display:none!important}
+.s-info .s-link,.s-info .btn,.s-info .s-link:hover,.s-info .btn:hover{text-decoration:none!important}
+*,*:hover,*:active{text-decoration:none!important}
