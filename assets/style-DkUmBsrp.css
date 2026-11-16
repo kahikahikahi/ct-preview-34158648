@@ -22,3 +22,6 @@ html body .s-info>.s-link+.s-link{margin-top:16px!important}
 .s-info .status{display:none!important}
 .s-info .s-link,.s-info .btn,.s-info .s-link:hover,.s-info .btn:hover{text-decoration:none!important}
 *,*:hover,*:active{text-decoration:none!important}
+.s-info .btn-menu{display:none!important}
+.s-info .btn,.s-info .btn:hover,.s-info .btn:active,.s-info .btn:visited{font-size:15px!important;letter-spacing:normal!important;color:var(--ink)!important;line-height:1.5!important}
+@media (min-width:961px),(hover:hover){.s-info .btn,.s-info .btn:hover{font-size:17px!important}}
