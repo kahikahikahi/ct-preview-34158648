@@ -8,3 +8,9 @@
 .btn,.btn:hover,.btn:active,.btn:visited{text-decoration:underline!important;text-underline-offset:4px}
 .btn-menu,.btn-menu:hover,.btn-menu:active,.btn-menu:visited{color:#0a7fc2!important}
 .btn-order,.btn-order:hover,.btn-order:active,.btn-order:visited{color:#f2b705!important}
+.s-info .status{margin-bottom:16px!important}
+.s-info>.s-hours,.s-info>.s-link,.s-info>.s-btns,.s-info>.s-apps{margin-top:16px!important}
+.s-info>.s-hours:first-child{margin-top:0!important}
+.s-info .s-btns{row-gap:16px!important}
+.s-info .btn{min-height:0!important;height:auto!important;padding:0!important;line-height:1.3!important}
+html body .s-info>.s-link+.s-link{margin-top:16px!important}
