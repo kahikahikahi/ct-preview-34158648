@@ -75,3 +75,4 @@ html body .s-info .s-btns .btn-menu{order:1!important}
 html body .s-info .s-btns .btn-order{order:2!important}
 html body .s-info .s-btns a.btn{position:relative!important;padding-right:1.25em!important}
 html body .s-info .s-btns a.btn::after{content:"\2192";position:absolute;right:0;top:50%;transform:translateY(-52%);display:inline-block;text-decoration:none!important}
+html body .s-info>.s-btns,html body .s-info>.s-apps{display:none!important}
