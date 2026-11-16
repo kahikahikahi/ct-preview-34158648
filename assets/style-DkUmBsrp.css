@@ -73,3 +73,5 @@ html body .ct-menu a.m-pdf{color:var(--ink)!important;text-decoration:underline!
 html body .s-info .s-btns{flex-direction:row!important;column-gap:28px!important;row-gap:0!important;justify-content:center!important}
 html body .s-info .s-btns .btn-menu{order:1!important}
 html body .s-info .s-btns .btn-order{order:2!important}
+html body .s-info .s-btns a.btn{position:relative!important;padding-right:1.25em!important}
+html body .s-info .s-btns a.btn::after{content:"\2192";position:absolute;right:0;top:50%;transform:translateY(-52%);display:inline-block;text-decoration:none!important}
