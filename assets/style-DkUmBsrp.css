@@ -69,3 +69,4 @@ html body .ct-menu .lead{border-bottom-color:#cfcfcf!important}
 html body .ct-menu a.m-pdf{color:var(--ink)!important;text-decoration:underline!important;text-decoration-thickness:1px!important;text-decoration-color:currentColor!important;text-underline-offset:4px!important}
 @media (hover:hover){html body .ct-menu a.m-pdf:hover{color:#555!important}}
 @media (max-width:960px) and (hover:none){html body .s-info .s-btns{flex-direction:row!important;column-gap:28px!important;row-gap:0!important;justify-content:center!important}html body .s-info .s-btns .btn-menu{order:1!important}html body .s-info .s-btns .btn-order{order:2!important}}
+@media (max-width:960px) and (hover:none){html body .s-photo{height:clamp(140px,calc(100vh - 400px),460px)!important;height:clamp(140px,calc(100svh - 400px),460px)!important;width:calc(clamp(140px,calc(100vh - 400px),460px) * 360 / 532)!important;width:calc(clamp(140px,calc(100svh - 400px),460px) * 360 / 532)!important}}
