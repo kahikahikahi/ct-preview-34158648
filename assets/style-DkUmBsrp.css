@@ -18,3 +18,4 @@ html body .s-info>.s-link+.s-link{margin-top:16px!important}
 .s-info .s-btns{display:flex!important;flex-direction:row!important;justify-content:center!important;align-items:center!important;column-gap:32px!important;flex-wrap:nowrap!important}
 .s-info .s-btns .s-order-row{display:contents!important}
 .s-info .s-btns .btn{width:auto!important;flex:0 0 auto!important;justify-self:auto!important}
+.s-info .btn{font-weight:400!important}
