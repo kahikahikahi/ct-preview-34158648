@@ -33,3 +33,4 @@ html body .s-info>.s-link+.s-link{margin-top:6px!important}
 .s-info>.s-btns{margin-top:24px!important}
 .s-info>.s-apps{margin-top:28px!important}
 .s-info a.btn-order,.s-info a.btn-order:hover,.s-info a.btn-order:active{text-decoration:underline!important;text-decoration-color:currentColor!important;text-decoration-thickness:1px!important;text-underline-offset:4px!important}
+@media (min-width:961px),(hover:hover){.s-top{align-items:center!important}.s-info{align-self:center!important}}
