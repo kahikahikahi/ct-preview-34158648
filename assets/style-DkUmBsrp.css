@@ -78,6 +78,4 @@ html body .s-info .s-btns a.btn::after{content:"\2192";position:absolute;right:0
 html body .s-info>.s-btns,html body .s-info>.s-apps{display:none!important}
 html body .s-info>.s-apps{display:flex!important;margin-top:20px!important}
 html body .s-info>.s-apps>span{display:none!important}
-html body .s-apps-row a.s-pickup{position:relative}
-html body .s-apps-row a.s-pickup::after{content:"Pickup";position:absolute;left:50%;top:100%;transform:translateX(-50%);margin-top:6px;font-size:13px;line-height:16px;color:#888;white-space:nowrap;pointer-events:none}
-html body .s-info>.s-apps{padding-bottom:22px}
+@media (max-width:960px) and (hover:none){html body .s-photo{height:clamp(130px,calc(100vh - 430px),420px)!important;height:clamp(130px,calc(100svh - 430px),420px)!important;width:calc(clamp(130px,calc(100vh - 430px),420px) * 360 / 532)!important;width:calc(clamp(130px,calc(100svh - 430px),420px) * 360 / 532)!important}}
