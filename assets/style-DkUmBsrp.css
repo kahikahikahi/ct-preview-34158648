@@ -39,3 +39,6 @@ html body .s-info>.s-hours:first-child{margin-top:0!important}
 @media (hover:hover){html body .s-info .s-link:hover,html body .s-info a.btn-order:hover{color:#555!important}}
 .s-info .s-link,.s-info .btn{transition:color .15s ease!important}
 @media (hover:hover) and (pointer:fine){html body .s-info .s-link{pointer-events:none!important;cursor:text!important;color:var(--ink)!important}}
+.s-info .s-hours::before{content:"Hours:";display:block}
+.s-info .s-link[href^="https://www.google.com/maps"]::before{content:"Address: "}
+.s-info .s-link[href^="tel:"]::before{content:"Phone: "}
