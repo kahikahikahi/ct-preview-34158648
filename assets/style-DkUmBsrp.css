@@ -2,5 +2,5 @@
 .s-nav,.s-dots,.s-arrow{display:none!important}
 .btn.btn-book{display:none!important}
 .btn,.btn:hover,.btn:active,.btn:visited{color:#000!important;border:2px solid #000!important;box-sizing:border-box}
-.btn-menu,.btn-menu:hover,.btn-menu:active,.btn-light,.btn-light:hover,.btn-light:active{background:#8fd3d3!important}
-.btn-order,.btn-order:hover,.btn-order:active{background:#f0d77c!important}
+.btn-menu,.btn-menu:hover,.btn-menu:active,.btn-light,.btn-light:hover,.btn-light:active{background:transparent!important}
+.btn-order,.btn-order:hover,.btn-order:active{background:transparent!important}
