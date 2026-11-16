@@ -49,3 +49,11 @@ html body .s-info .s-btns{flex-direction:column!important;row-gap:20px!important
 html body .s-info .s-btns::after{content:none!important;display:none!important}
 html body .s-info .s-btns .btn-menu{order:1!important}
 html body .s-info .s-btns .btn-order{order:2!important}
+html body .s-info{display:flex!important;flex-direction:column!important}
+html body .s-info>.s-logo{order:0!important}
+html body .s-info>.s-btns{order:1!important}
+html body .s-info>.s-hours{order:2!important}
+html body .s-info>.s-link{order:3!important}
+html body .s-info>.s-apps{order:4!important}
+html body .s-info .s-btns .btn-order{order:1!important}
+html body .s-info .s-btns .btn-menu{order:2!important}
