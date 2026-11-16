@@ -12,5 +12,5 @@
 </head>
 <body id="top">
   <div id="root"></div>
-</body>
+<script>document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest('a[href="#menu"]');if(!a)return;var m=document.getElementById("menu");if(!m)return;e.preventDefault();var h=document.querySelector(".ph-head"),o=0;if(h){var cs=getComputedStyle(h);if(cs.display!=="none"&&cs.position==="fixed")o=h.offsetHeight}window.scrollTo({top:m.getBoundingClientRect().top+window.pageYOffset-o,behavior:"smooth"})});</script></body>
 </html>

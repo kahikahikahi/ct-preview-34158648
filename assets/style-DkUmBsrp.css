@@ -39,3 +39,9 @@ html body .s-info>.s-hours:first-child{margin-top:0!important}
 @media (hover:hover){html body .s-info .s-link:hover,html body .s-info a.btn-order:hover{color:#555!important}}
 .s-info .s-link,.s-info .btn{transition:color .15s ease!important}
 @media (hover:hover) and (pointer:fine){html body .s-info .s-link{pointer-events:none!important;cursor:text!important;color:var(--ink)!important}}
+.s-info .btn-menu{display:flex!important;order:3!important}
+.s-info .btn-order{order:1!important}
+.s-info .s-btns{column-gap:12px!important}
+.s-info .s-btns::after{content:"\00B7";order:2;color:var(--ink);font-size:20px;line-height:1}
+.s-info a.btn-menu,.s-info a.btn-menu:hover,.s-info a.btn-menu:active{text-decoration:underline!important;text-decoration-color:currentColor!important;text-decoration-thickness:1px!important;text-underline-offset:4px!important}
+@media (hover:hover){html body .s-info a.btn-menu:hover{color:#555!important}}
