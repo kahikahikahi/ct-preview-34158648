@@ -36,5 +36,5 @@ html body .s-info>.s-link+.s-link{margin-top:6px!important}
 @media (min-width:961px),(hover:hover){.s-top{align-items:center!important}.s-info{align-self:center!important}}
 html body .s-info>.s-hours,html body .s-info>.s-link,html body .s-info>.s-link+.s-link,html body .s-info>.s-hours+.s-link,html body .s-info>.s-btns,html body .s-info>.s-apps,html body .s-info .s-logo+.s-hours{margin-top:20px!important}
 html body .s-info>.s-hours:first-child{margin-top:0!important}
-html body .s-info .s-link:hover,html body .s-info a.btn-order:hover,html body .s-info .s-link:active,html body .s-info a.btn-order:active{color:var(--ink)!important}
+@media (hover:hover){html body .s-info .s-link:hover,html body .s-info a.btn-order:hover{color:#555!important}}
 .s-info .s-link,.s-info .btn{transition:color .15s ease!important}
