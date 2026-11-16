@@ -61,3 +61,10 @@ html body .s-info>.s-logo{display:none!important}
 @media (min-width:961px){html body .s-info>.s-btns{margin-top:0!important}}
 html body .ph-head{display:none!important}
 @media (max-width:960px) and (hover:none){html body main{padding-top:8px!important}}
+html body .ct-menu h2,html body .ct-menu h3{color:var(--ink)!important;font-weight:400!important;letter-spacing:normal!important}
+html body .ct-menu .name,html body .ct-menu .price{color:var(--ink)!important;font-weight:400!important}
+html body .ct-menu .cols2 span{color:#5a6b6b!important;font-weight:400!important;letter-spacing:normal!important}
+html body .ct-menu .m-head{border-bottom:none!important}
+html body .ct-menu .lead{border-bottom-color:#cfcfcf!important}
+html body .ct-menu a.m-pdf{color:var(--ink)!important;text-decoration:underline!important;text-decoration-thickness:1px!important;text-decoration-color:currentColor!important;text-underline-offset:4px!important}
+@media (hover:hover){html body .ct-menu a.m-pdf:hover{color:#555!important}}
