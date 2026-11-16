@@ -47,3 +47,5 @@ html body .s-info>.s-hours:first-child{margin-top:0!important}
 @media (hover:hover){html body .s-info a.btn-menu:hover{color:#555!important}}
 html body .s-info .s-btns{flex-direction:column!important;row-gap:20px!important;column-gap:0!important}
 html body .s-info .s-btns::after{content:none!important;display:none!important}
+html body .s-info .s-btns .btn-menu{order:1!important}
+html body .s-info .s-btns .btn-order{order:2!important}
