@@ -45,9 +45,3 @@ html body .s-info>.s-hours:first-child{margin-top:0!important}
 .s-info .s-btns::after{content:"\00B7";order:2;color:var(--ink);font-size:20px;line-height:1}
 .s-info a.btn-menu,.s-info a.btn-menu:hover,.s-info a.btn-menu:active{text-decoration:underline!important;text-decoration-color:currentColor!important;text-decoration-thickness:1px!important;text-underline-offset:4px!important}
 @media (hover:hover){html body .s-info a.btn-menu:hover{color:#555!important}}
-html body .s-info .s-btns{display:grid!important;grid-template-columns:1fr auto 1fr!important;align-items:center!important;column-gap:12px!important;width:100%!important;align-self:stretch!important}
-html body .s-info .btn-order{justify-self:end!important}
-html body .s-info .btn-menu{justify-self:start!important}
-html body .s-info .s-btns{max-width:none!important}
-html body .s-info .s-btns a.btn.btn-order{justify-self:end!important}
-html body .s-info .s-btns a.btn.btn-menu{justify-self:start!important}
