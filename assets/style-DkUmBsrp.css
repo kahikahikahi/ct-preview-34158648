@@ -57,3 +57,7 @@ html body .s-info>.s-link{order:3!important}
 html body .s-info>.s-apps{order:4!important}
 html body .s-info .s-btns .btn-order{order:1!important}
 html body .s-info .s-btns .btn-menu{order:2!important}
+html body .s-info>.s-logo{display:none!important}
+@media (min-width:961px){html body .s-info>.s-btns{margin-top:0!important}}
+html body .ph-head{display:none!important}
+@media (max-width:960px) and (hover:none){html body main{padding-top:8px!important}}
