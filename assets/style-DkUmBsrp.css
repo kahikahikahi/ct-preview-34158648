@@ -25,3 +25,11 @@ html body .s-info>.s-link+.s-link{margin-top:16px!important}
 .s-info .btn-menu{display:none!important}
 .s-info .btn,.s-info .btn:hover,.s-info .btn:active,.s-info .btn:visited{font-size:15px!important;letter-spacing:normal!important;color:var(--ink)!important;line-height:1.5!important}
 @media (min-width:961px),(hover:hover){.s-info .btn,.s-info .btn:hover{font-size:17px!important}}
+.s-info>.s-hours{margin-top:24px!important}
+.s-info>.s-hours:first-child{margin-top:0!important}
+.s-info .s-logo+.s-hours{margin-top:24px!important}
+.s-info>.s-hours+.s-link{margin-top:20px!important}
+html body .s-info>.s-link+.s-link{margin-top:6px!important}
+.s-info>.s-btns{margin-top:24px!important}
+.s-info>.s-apps{margin-top:28px!important}
+.s-info a.btn-order,.s-info a.btn-order:hover,.s-info a.btn-order:active{text-decoration:underline!important;text-decoration-color:currentColor!important;text-decoration-thickness:1px!important;text-underline-offset:4px!important}
