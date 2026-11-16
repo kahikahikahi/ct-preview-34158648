@@ -82,3 +82,4 @@ html body .s-info>.s-apps>span{display:none!important}
 @media (max-width:960px) and (hover:none){html body .s-photo{height:clamp(120px,calc(100vh - 480px),380px)!important;height:clamp(120px,calc(100svh - 480px),380px)!important;width:calc(clamp(120px,calc(100vh - 480px),380px) * 360 / 532)!important;width:calc(clamp(120px,calc(100svh - 480px),380px) * 360 / 532)!important}}
 @media (max-width:960px) and (hover:none){html body .s-photo{height:clamp(120px,calc(100vh - 270px),420px)!important;height:clamp(120px,calc(100svh - 270px),420px)!important;width:calc(clamp(120px,calc(100vh - 270px),420px) * 360 / 532)!important;width:calc(clamp(120px,calc(100svh - 270px),420px) * 360 / 532)!important}}
 @media (max-width:960px) and (hover:none){html body .s-top{max-height:none!important;height:auto!important;min-height:calc(100vh - 64px)!important;min-height:calc(100svh - 64px)!important}}
+html body .s-info>.s-apps .s-apps-row img{width:56px!important;height:56px!important}
