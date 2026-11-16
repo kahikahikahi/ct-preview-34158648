@@ -76,3 +76,5 @@ html body .s-info .s-btns .btn-order{order:2!important}
 html body .s-info .s-btns a.btn{position:relative!important;padding-right:1.25em!important}
 html body .s-info .s-btns a.btn::after{content:"\2192";position:absolute;right:0;top:50%;transform:translateY(-52%);display:inline-block;text-decoration:none!important}
 html body .s-info>.s-btns,html body .s-info>.s-apps{display:none!important}
+html body .s-info>.s-apps{display:flex!important;margin-top:20px!important}
+html body .s-info>.s-apps>span{display:none!important}
