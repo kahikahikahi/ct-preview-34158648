@@ -4,7 +4,7 @@
 .btn,.btn:hover,.btn:active,.btn:visited{color:#000!important;border:none!important;box-sizing:border-box}
 .btn-menu,.btn-menu:hover,.btn-menu:active,.btn-light,.btn-light:hover,.btn-light:active{background:transparent!important}
 .btn-order,.btn-order:hover,.btn-order:active{background:transparent!important}
-.s-pdf,.m-pdf,.m-pdf-again{display:none!important}
+.s-pdf{display:none!important}
 .btn,.btn:hover,.btn:active,.btn:visited{text-decoration:underline!important;text-underline-offset:4px}
 .btn-menu,.btn-menu:hover,.btn-menu:active,.btn-menu:visited{color:#0a7fc2!important}
 .btn-order,.btn-order:hover,.btn-order:active,.btn-order:visited{color:#f2b705!important}
