@@ -147,3 +147,4 @@ html body .s-info .s-btns a.btn:hover{color:#555!important}
 html body .s-info>.s-btns,html body .s-info>.s-btns .s-order-row{font-size:inherit!important;line-height:inherit!important}
 html body .s-info .s-btns a.btn{font-size:17px!important;line-height:1.5!important}
 @media (max-width:960px) and (hover:none){html body .s-info .s-btns a.btn{font-size:15px!important;line-height:22px!important}}
+@media (max-width:960px) and (hover:none){html body .s-top{min-height:100vh!important;min-height:100svh!important}}
