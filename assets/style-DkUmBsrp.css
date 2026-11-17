@@ -135,3 +135,5 @@ html body .op .op-x:focus-visible,html body .op-mback .op-close:focus-visible{co
 html body .op .op-field input,html body .op .op-field select,html body .op .op-field textarea,html body .op-mback .op-field textarea{padding-left:0!important;padding-right:0!important}
 html body .op .op-item,html body .op .op-category .op-item{padding-left:0!important}
 html body .op .op-item:after{right:0!important}
+html body .s-info>.s-apps{order:-1!important;margin-top:0!important;margin-bottom:0!important}
+html body .s-info>.s-apps+*,html body .s-info>.s-hours{margin-top:20px!important}
