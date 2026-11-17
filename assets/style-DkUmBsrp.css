@@ -137,3 +137,13 @@ html body .op .op-item,html body .op .op-category .op-item{padding-left:0!import
 html body .op .op-item:after{right:0!important}
 html body .s-info>.s-apps{order:-1!important;margin-top:0!important;margin-bottom:0!important}
 html body .s-info>.s-apps+*,html body .s-info>.s-hours{margin-top:20px!important}
+html body .s-info>.s-apps{display:none!important}
+html body .s-info>.s-btns{display:flex!important;order:-1!important;margin-top:0!important;flex-direction:row!important;column-gap:28px!important;row-gap:0!important;justify-content:center!important;align-items:baseline!important}
+html body .s-info>.s-btns+*,html body .s-info>.s-hours{margin-top:20px!important}
+html body .s-info .s-btns .s-apps-inline{display:none!important}
+html body .s-info .s-btns a.btn{font:inherit!important;font-size:inherit!important;font-weight:400!important;letter-spacing:normal!important;text-transform:none!important;color:var(--ink)!important;background:none!important;border:0!important;box-shadow:none!important;padding:0!important;min-height:0!important;height:auto!important;text-decoration:underline!important;text-underline-offset:3px}
+html body .s-info .s-btns a.btn::after{content:none!important;display:none!important}
+html body .s-info .s-btns a.btn:hover{color:#555!important}
+html body .s-info>.s-btns,html body .s-info>.s-btns .s-order-row{font-size:inherit!important;line-height:inherit!important}
+html body .s-info .s-btns a.btn{font-size:17px!important;line-height:1.5!important}
+@media (max-width:960px) and (hover:none){html body .s-info .s-btns a.btn{font-size:15px!important;line-height:22px!important}}
