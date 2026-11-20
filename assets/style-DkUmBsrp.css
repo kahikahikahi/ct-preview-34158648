@@ -213,3 +213,7 @@ html body .bk-panel .bk-x:focus,html body .op .op-x:focus{outline:none!important
 @media (max-width:960px) and (hover:none){
   html body .bk-panel .bk-x,html body .op .op-x{right:auto!important}
 }
+/* Homepage link order: Order for pickup, Book a table, Menu */
+html body .s-info .s-btns .btn-order{order:1!important}
+html body .s-info .s-btns .btn-book,html body .s-info .s-btns a.btn.btn-book{order:2!important}
+html body .s-info .s-btns .btn-menu{order:3!important}
