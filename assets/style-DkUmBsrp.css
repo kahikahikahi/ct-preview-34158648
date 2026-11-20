@@ -314,3 +314,75 @@ html body .s-info .s-hours,html body .s-info .s-hours p,html body .s-info .s-hou
 @media (max-width:960px) and (hover:none){
   html body .s-info .s-hours,html body .s-info .s-hours p,html body .s-info .s-hours span,html body .s-info>.s-link,html body .s-info .s-btns a.btn{font-size:15px!important;font-weight:400!important}
 }
+
+/* Address and phone: look like plain hours text, no highlight */
+html body .s-info>.s-link,
+html body .s-info>.s-link:link,
+html body .s-info>.s-link:visited,
+html body .s-info>.s-link:hover,
+html body .s-info>.s-link:active,
+html body .s-info>.s-link:focus,
+html body .s-info>.s-link:focus-visible,
+html body .s-info a[href^="tel"],
+html body .s-info a[href^="tel"]:link,
+html body .s-info a[href^="tel"]:visited,
+html body .s-info a[href^="tel"]:hover,
+html body .s-info a[href^="tel"]:active,
+html body .s-info a[href^="tel"]:focus,
+html body .s-info a[href^="tel"]:focus-visible,
+html body a[x-apple-data-detectors],
+html body a[x-apple-data-detectors]:link,
+html body a[x-apple-data-detectors]:visited,
+html body a[x-apple-data-detectors]:hover,
+html body a[x-apple-data-detectors]:active,
+html body a[x-apple-data-detectors]:focus{
+  color:var(--ink)!important;
+  -webkit-text-fill-color:var(--ink)!important;
+  text-decoration:none!important;
+  text-decoration-color:transparent!important;
+  background:none!important;
+  background-color:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  outline:none!important;
+  -webkit-tap-highlight-color:transparent;
+}
+html body .s-info>.s-link,
+html body .s-info a[href^="tel"],
+html body a[x-apple-data-detectors]{
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* Landscape menu: desktop two-column layout, scaled for short height */
+@media (max-width:960px) and (hover:none) and (orientation:landscape){
+  html body #menu,html body .ct-menu{
+    padding:28px 20px 36px!important;
+    scroll-margin-top:0!important;
+  }
+  html body #menu .m-head{padding-bottom:12px!important;margin-bottom:20px!important}
+  html body #menu .m-head h2{font-size:28px!important}
+  html body #menu h3{font-size:22px!important}
+  html body #menu .m-cols{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    column-gap:clamp(24px,5vw,64px)!important;
+    align-items:start!important;
+  }
+  html body #menu .m-col{display:block!important}
+  html body #menu .sec{order:0!important;margin-bottom:28px!important}
+  html body #menu .m-wigrid{
+    column-count:2!important;
+    column-gap:clamp(24px,5vw,64px)!important;
+  }
+  html body #menu .m-bottom{
+    flex-direction:row!important;
+    justify-content:space-between!important;
+    gap:24px!important;
+  }
+  html body #menu .m-legend{text-align:right!important;max-width:360px!important}
+  html body #menu .line.k .price,html body #menu .cols2 span{width:88px!important}
+  html body #menu .cols2{font-size:13px!important;letter-spacing:.03em!important}
+  html body .op .op-items,html body .op .op-category .op-items,html body .op-items{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
