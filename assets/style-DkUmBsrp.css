@@ -419,3 +419,42 @@ html body .s-info .s-btns .btn-order{order:3!important}
 html body .s-info .s-btns .btn-menu{order:1!important}
 html body .s-info .s-btns .btn-book,html body .s-info .s-btns a.btn.btn-book{order:2!important}
 html body .s-info .s-btns .btn-order{order:3!important}
+
+/* Address and phone: plain-text links, clickable, no hover */
+html body .s-info>.s-link,
+html body .s-info>.s-link:link,
+html body .s-info>.s-link:visited,
+html body .s-info>.s-link:hover,
+html body .s-info>.s-link:active,
+html body .s-info>.s-link:focus,
+html body .s-info>.s-link:focus-visible,
+html body .s-info a[href^="tel"],
+html body .s-info a[href^="tel"]:link,
+html body .s-info a[href^="tel"]:visited,
+html body .s-info a[href^="tel"]:hover,
+html body .s-info a[href^="tel"]:active,
+html body .s-info a[href^="tel"]:focus,
+html body .s-info a[href^="tel"]:focus-visible{
+  color:var(--ink)!important;
+  -webkit-text-fill-color:var(--ink)!important;
+  text-decoration:none!important;
+  text-decoration-color:transparent!important;
+  background:none!important;
+  background-color:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  outline:none!important;
+  transition:none!important;
+  pointer-events:auto!important;
+  cursor:text!important;
+  -webkit-tap-highlight-color:transparent;
+}
+@media (hover:hover){
+  html body .s-info>.s-link:hover,
+  html body .s-info a[href^="tel"]:hover{
+    color:var(--ink)!important;
+    -webkit-text-fill-color:var(--ink)!important;
+    text-decoration:none!important;
+    background:none!important;
+  }
+}
