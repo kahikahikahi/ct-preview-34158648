@@ -158,3 +158,4 @@ html body .s-info .s-btns a.btn-order:hover{background:#333!important;color:#fff
 html body .s-info .s-btns a.btn-menu:hover{color:#555!important;border-color:#555!important}
 html body .s-info .s-btns a.btn{width:164px!important;flex:0 0 164px!important}
 html body .s-info .s-btns a.btn.btn-book{display:none!important}
+html body .s-info .s-btns a.btn{border-radius:999px!important}
