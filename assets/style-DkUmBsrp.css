@@ -309,3 +309,8 @@ html body .s-info .s-btns .btn-book,html body .s-info .s-btns a.btn.btn-book{ord
   html body .s-hours .s-htimes{display:inline!important}
   html body .ct-menu,html body footer{position:relative!important;z-index:2!important;background:#fff!important}
 }
+/* Equalise homepage info card text sizes */
+html body .s-info .s-hours,html body .s-info .s-hours p,html body .s-info .s-hours span,html body .s-info>.s-link,html body .s-info .s-btns a.btn{font-size:17px!important;font-weight:400!important}
+@media (max-width:960px) and (hover:none){
+  html body .s-info .s-hours,html body .s-info .s-hours p,html body .s-info .s-hours span,html body .s-info>.s-link,html body .s-info .s-btns a.btn{font-size:15px!important;font-weight:400!important}
+}
