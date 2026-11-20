@@ -419,8 +419,3 @@ html body .s-info .s-btns .btn-order{order:3!important}
 html body .s-info .s-btns .btn-menu{order:1!important}
 html body .s-info .s-btns .btn-book,html body .s-info .s-btns a.btn.btn-book{order:2!important}
 html body .s-info .s-btns .btn-order{order:3!important}
-
-/* Hide back-to-top on landscape phones so it does not cover menu prices */
-@media (max-width:960px) and (hover:none) and (orientation:landscape){
-  html body #to-top,html body .to-top{display:none!important}
-}
