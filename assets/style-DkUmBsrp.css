@@ -150,3 +150,50 @@ html body .s-info .s-btns a.btn{font-size:17px!important;line-height:1.5!importa
 @media (max-width:960px) and (hover:none){html body .s-top{min-height:100vh!important;min-height:100svh!important}}
 @media (max-width:960px) and (hover:none){html body .s-info .s-btns a.btn,html body .s-info>.s-link{position:relative!important;-webkit-tap-highlight-color:transparent}html body .s-info>.s-link::before,html body .s-info .s-btns a.btn::before{content:""!important;display:block!important;position:absolute!important;top:-11px!important;bottom:-11px!important;left:-12px!important;right:-12px!important;background:none!important}}
 html body .s-info .s-btns a.btn.btn-book{display:inline-block!important;order:3!important;background:none!important;border:0!important;color:var(--ink)!important;font-weight:400!important;box-shadow:none!important;height:auto!important;min-height:0!important;width:auto!important}
+/* Booking form — match restyled order screen (Kayi) */
+html body .bk,html body .bk-panel{background:#fff!important;color:var(--ink)!important;font-family:var(--body)!important;-webkit-tap-highlight-color:transparent}
+html body .bk-panel,html body .bk-panel *{box-shadow:none!important;text-shadow:none!important;filter:none!important;text-transform:none!important;letter-spacing:0!important;transition:none!important;animation:none!important;-webkit-tap-highlight-color:transparent}
+html body .bk-panel .bk-top{border-bottom:0!important;background:#fff!important}
+html body .bk-panel .bk-home,html body .bk-panel .bk-logo{display:none!important}
+html body .bk-panel .bk-top-in{position:relative!important;justify-content:center!important;gap:0!important;max-width:none!important;width:100%!important}
+html body .bk-panel .bk-pick{border:0!important;border-left:0!important;padding-left:0!important;margin:0 auto!important;flex-direction:row!important;align-items:center!important;gap:0!important;font-size:18px!important;line-height:40px!important;color:var(--ink)!important}
+html body .bk-panel .bk-k,html body .bk-panel .bk-title{color:var(--ink)!important;font-weight:400!important;font-size:18px!important;font-family:var(--display)!important;letter-spacing:0!important}
+html body .bk-panel .bk-x{position:absolute!important;right:8px!important;left:auto!important;top:50%!important;transform:translateY(-50%)!important;margin:0!important;border:0!important;background:none!important;color:var(--ink)!important;border-radius:0!important;box-shadow:none!important;outline:none!important}
+html body .bk-panel .bk-x:hover,html body .bk-panel .bk-x:focus-visible{background:none!important;color:#555!important;outline:none!important}
+html body .bk-panel .bk-x:focus{outline:none!important;background:none!important}
+html body .bk-panel .bk-home:focus,html body .bk-panel .bk-home:focus-visible{outline:none!important}
+html body .bk-panel .bk-sub,html body .bk-panel .bk-hint,html body .bk-panel .bk-field label{color:#5a6b6b!important;font-weight:400!important}
+html body .bk-panel .bk-field input,html body .bk-panel .bk-field select,html body .bk-panel .bk-field textarea{border:0!important;border-bottom:1px solid #c8c8c8!important;border-radius:0!important;background:#fff!important;color:var(--ink)!important;outline:none!important;box-shadow:none!important;padding-left:0!important;padding-right:0!important;height:44px!important;font:inherit!important;font-size:16px!important;font-weight:400!important}
+html body .bk-panel .bk-field textarea{height:auto!important;min-height:96px!important;padding-top:8px!important;padding-bottom:8px!important}
+html body .bk-panel .bk-field input:focus,html body .bk-panel .bk-field select:focus,html body .bk-panel .bk-field textarea:focus{border-bottom-color:var(--ink)!important;outline:none!important;box-shadow:none!important}
+html body .bk-panel .bk-field input.bk-invalid,html body .bk-panel .bk-field select.bk-invalid{border-bottom-color:#9b2c2c!important;outline:none!important;box-shadow:none!important}
+html body .bk-panel .bk-field input[type=date],html body .bk-panel .bk-field select{-webkit-appearance:none!important;-moz-appearance:none!important;appearance:none!important;background-color:#fff!important}
+html body .bk-panel .bk-field input[type=date]::-webkit-calendar-picker-indicator{opacity:.55;cursor:pointer;margin:0}
+html body .bk-panel .bk-field select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='none' stroke='%231b2b2b' stroke-width='1.2' d='M1 1.5 L6 6.5 L11 1.5'/></svg>")!important;background-repeat:no-repeat!important;background-position:right 0 center!important;background-size:12px 8px!important;padding-right:20px!important}
+html body .bk-panel .bk-field textarea::placeholder,html body .bk-panel .bk-field input::placeholder{color:#5a6b6b!important;opacity:1!important;font-weight:400!important}
+html body .bk-panel .bk-field textarea::-webkit-input-placeholder,html body .bk-panel .bk-field input::-webkit-input-placeholder{color:#5a6b6b!important;opacity:1!important;font-weight:400!important}
+html body .bk-panel .bk-party,html body .bk-panel .bk-stepper{border:0!important;background:none!important;border-radius:0!important;box-shadow:none!important;padding:0!important}
+html body .bk-panel .bk-stepper button{background:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:var(--ink)!important;font-weight:400!important;width:44px!important;height:44px!important}
+html body .bk-panel .bk-stepper button:not(:disabled):hover{color:#555!important;background:none!important}
+html body .bk-panel .bk-stepper button:disabled{color:#c8c8c8!important;background:none!important}
+html body .bk-panel .bk-stepper span{color:var(--ink)!important;font-weight:400!important}
+html body .bk-panel a{color:var(--ink)!important;text-decoration:underline!important;text-underline-offset:3px!important;text-decoration-thickness:1px!important;font-weight:400!important}
+html body .bk-panel a:hover,html body .bk-panel .bk-addr:hover{color:#555!important}
+html body .bk-panel .bk-msg{color:#9b2c2c!important;font-weight:400!important}
+html body .bk-panel .bk-submit,html body .bk-panel .bk-home-btn{display:inline-flex!important;align-items:center!important;justify-content:center!important;background:var(--ink)!important;color:#fff!important;border:0!important;border-radius:0!important;font-family:var(--display)!important;font-weight:700!important;font-size:15px!important;letter-spacing:0!important;text-transform:none!important;height:44px!important;width:100%!important;max-width:none!important;box-shadow:none!important;padding:0 1.25rem!important;margin-top:8px!important}
+html body .bk-panel .bk-submit:not(:disabled):hover,html body .bk-panel .bk-home-btn:hover{background:#555!important;color:#fff!important}
+html body .bk-panel .bk-submit:disabled{background:#c8c8c8!important;color:#fff!important;cursor:not-allowed!important}
+html body .bk-panel h1,html body .bk-panel h2,html body .bk-panel h3,html body .bk-panel h4,html body .bk-panel .bk-confirm h2{font-weight:400!important;color:var(--ink)!important;letter-spacing:0!important;text-transform:none!important}
+html body .bk-panel .bk-confirm{text-align:center!important;background:#fff!important}
+html body .bk-panel .bk-confirm p{color:var(--ink)!important;font-weight:400!important}
+html body .bk-panel .bk-confirm p:last-of-type{color:#5a6b6b!important}
+html body .bk-panel .bk-sum{border-top:1px solid #e6e6e6!important;border-bottom:1px solid #e6e6e6!important;border-left:0!important;border-right:0!important;border-radius:0!important;background:none!important}
+html body .bk-panel .bk-sum span:first-child{color:#5a6b6b!important;font-weight:400!important}
+html body .bk-panel .bk-sum span:last-child{color:var(--ink)!important;font-weight:400!important}
+html body .bk-panel .bk-home-btn{margin-top:24px!important}
+@media (max-width:960px) and (hover:none){
+  html body .bk-panel .bk-pick,html body .bk-panel .bk-k{font-size:18px!important;line-height:40px!important}
+  html body .bk-panel .bk-scroll{padding-bottom:calc(32px + env(safe-area-inset-bottom,0px))!important}
+  html body .bk-panel .bk-field input[type=date]{min-height:44px!important;line-height:44px!important}
+  html body .bk-panel .bk-x{right:4px!important}
+}
