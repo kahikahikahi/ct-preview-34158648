@@ -461,3 +461,4 @@ html body .s-info a[href^="tel"]:focus-visible{
 
 :root,html,html body{--ink:#000!important;--m-ink:#000!important;--op-ink:#000!important}
 html body .bk-panel .bk-field textarea::placeholder,html body .bk-panel .bk-field input::placeholder,html body .op input::placeholder,html body .op textarea::placeholder{color:#8a9494!important;-webkit-text-fill-color:#8a9494!important}
+html body main .s-info>div.s-hours.s-hours,html body .s-info>div.s-hours.s-hours{margin-top:40px!important}
