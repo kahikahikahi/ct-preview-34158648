@@ -409,3 +409,8 @@ html body .op-mback .op-close,
 html body .bk-panel .bk-x{
   color:#000!important;
 }
+
+/* Homepage link order: Book a table, Menu, Order for pickup */
+html body .s-info .s-btns .btn-book,html body .s-info .s-btns a.btn.btn-book{order:1!important}
+html body .s-info .s-btns .btn-menu{order:2!important}
+html body .s-info .s-btns .btn-order{order:3!important}
