@@ -386,3 +386,26 @@ html body a[x-apple-data-detectors]{
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
   }
 }
+
+/* Order and booking solid buttons: pure black */
+html body .op .op-btn,
+html body .op .op-btn-primary,
+html body .op .op-btn-secondary,
+html body .op-mback .op-btn,
+html body .op-mback .op-btn-primary,
+html body .op-mback .op-btn-secondary,
+html body .bk-panel .bk-submit,
+html body .bk-panel .bk-home-btn{
+  background:#000!important;
+  color:#fff!important;
+}
+html body .op .op-stepper button,
+html body .op-mback .op-stepper button,
+html body .bk-panel .bk-stepper button,
+html body .op .op-item:after,
+html body .op .op-item:hover:after,
+html body .op .op-x,
+html body .op-mback .op-close,
+html body .bk-panel .bk-x{
+  color:#000!important;
+}
