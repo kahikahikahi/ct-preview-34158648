@@ -414,3 +414,8 @@ html body .bk-panel .bk-x{
 html body .s-info .s-btns .btn-book,html body .s-info .s-btns a.btn.btn-book{order:1!important}
 html body .s-info .s-btns .btn-menu{order:2!important}
 html body .s-info .s-btns .btn-order{order:3!important}
+
+/* Homepage link order: Menu, Book a table, Order for pickup */
+html body .s-info .s-btns .btn-menu{order:1!important}
+html body .s-info .s-btns .btn-book,html body .s-info .s-btns a.btn.btn-book{order:2!important}
+html body .s-info .s-btns .btn-order{order:3!important}
