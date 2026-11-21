@@ -461,4 +461,4 @@ html body .s-info a[href^="tel"]:focus-visible{
 
 :root,html,html body{--ink:#000!important;--m-ink:#000!important;--op-ink:#000!important}
 html body .bk-panel .bk-field textarea::placeholder,html body .bk-panel .bk-field input::placeholder,html body .op input::placeholder,html body .op textarea::placeholder{color:#8a9494!important;-webkit-text-fill-color:#8a9494!important}
-@media (max-width:960px) and (hover:none){html.ios-safari body .s-top{justify-content:flex-start!important}html.ios-safari body .s-top::before{content:"";order:-99;flex:1 1 0;max-height:120px}html.ios-safari body .s-top::after{content:"";order:99;flex:2 1 0}}
+@media (max-width:960px) and (hover:none){html body .s-top{min-height:var(--avail,100svh)!important;justify-content:center!important}}
