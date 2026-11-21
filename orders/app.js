@@ -282,7 +282,7 @@
     return o.payment_status === "paid" ? '<span class="pay-paid">Paid at counter</span>' : "Pay at counter";
   }
 
-  var CHEVRON = '<svg class="chev" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var CHEVRON = '<span class="chev-hit"><svg class="chev" viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
   function summary(id, isNew, ref, name, when, right, open) {
     return '<button type="button" class="sum" data-act="expand" data-id="' + id + '" aria-expanded="' + (open ? "true" : "false") + '">' +
       (isNew ? '<span class="badge-new">New</span>' : "") +
@@ -352,9 +352,12 @@
       var fresh = nw.map(function (o) { return { t: o.created_at, h: orderCard(o) }; })
         .concat(pb.map(function (b) { return { t: b.created_at, h: bookingCard(b) }; }))
         .sort(function (a, b) { return new Date(a.t) - new Date(b.t); });
-      fill("list-new", fresh.map(function (x) { return x.h; }).join(""), "Nothing new.");
-      fill("list-progress", progressOrders().map(orderCard).join(""), "Nothing cooking.");
-      fill("list-booked", upcomingBookings().map(bookingCard).join(""), "No bookings coming up.");
+      fill("list-new", fresh.map(function (x) { return x.h; }).join(""), "No new orders.");
+      var prog = progressOrders(), booked = upcomingBookings();
+      fill("list-progress", prog.map(orderCard).join(""), "");
+      fill("list-booked", booked.map(bookingCard).join(""), "");
+      $("list-progress").parentNode.hidden = !prog.length;
+      $("list-booked").parentNode.hidden = !booked.length;
     }
     var n = nw.length + pb.length, co = $("count-orders");
     co.hidden = !n; co.textContent = n;

@@ -51,7 +51,7 @@ h1, h2, h3 { margin: 0; font-weight: 600; }
 
 /* App layout */
 .app { display: flex; flex-direction: column; height: 100vh; }
-.topbar { display: flex; align-items: center; gap: 14px; padding: 10px 18px; border-bottom: 1px solid #ddd; flex: none; }
+.topbar { display: flex; align-items: center; gap: 14px; padding: 10px 18px; border-bottom: 1px solid #ececec; flex: none; }
 .top-logo { width: 44px; height: 44px; display: block; }
 .tabs { display: flex; gap: 4px; flex: 1; }
 .tab {
@@ -69,41 +69,44 @@ h1, h2, h3 { margin: 0; font-weight: 600; }
 .panes { flex: 1; min-height: 0; }
 .pane { height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 8px 18px 48px; }
 .wrap { max-width: 760px; margin: 0 auto; }
-.group { margin-top: 14px; }
+.group { margin-top: 18px; }
 .group h2 { font-size: 18px; font-weight: 500; color: #555; margin: 8px 0 2px; }
-.list { border-top: 1px solid #ddd; }
-.empty { color: #666; padding: 16px 0; border-bottom: 1px solid #ddd; }
+.list { }
+.empty { color: #666; padding: 16px 0; }
 
 /* Collapsed rows; tap to open */
-.card { border-bottom: 1px solid #ddd; }
+.card { padding: 12px 0; }
+.card + .card { border-top: 1px solid #ececec; }
 .sum {
-  display: flex; align-items: center; gap: 12px; width: 100%; min-height: 72px; padding: 10px 2px;
+  display: flex; align-items: stretch; gap: 12px; width: 100%; min-height: 84px; padding: 0 0 0 2px;
   background: #fff; border: 0; text-align: left; font-size: 20px;
 }
+.sum > span { align-self: center; }
+.sum > .chev-hit { align-self: stretch; flex: none; width: 80px; margin-left: -4px; display: flex; align-items: center; justify-content: center; }
 .badge-new { flex: none; background: #b91c1c; color: #fff; font-size: 15px; font-weight: 500; padding: 2px 8px; border-radius: 6px; }
 .s-ref { flex: none; font-weight: 600; }
 .s-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .s-when { flex: none; }
 .s-right { flex: none; min-width: 88px; text-align: right; }
-.chev { flex: none; width: 24px; height: 24px; color: #000; }
+.chev { width: 34px; height: 34px; color: #000; }
 .card.open .chev { transform: rotate(180deg); }
-.actions.under { margin-top: 0; padding: 0 2px 14px; }
+.actions.under { margin-top: 0; padding: 2px 2px 18px; }
 .card.open .actions.under + .detail { padding-top: 6px; }
 .detail { padding: 0 2px 18px; }
 .line { margin-top: 4px; }
 .line a { text-decoration: none; font-weight: 600; }
 .items { list-style: none; margin: 12px 0 0; padding: 0; }
-.items li { padding: 8px 0; border-top: 1px solid #eee; }
+.items li { padding: 8px 0; }
 .it-name { font-weight: 600; }
 .it-price { float: right; font-weight: 400; }
 .it-opt { margin-left: 28px; font-size: 17px; color: #222; }
 .it-note, .order-note { margin: 4px 0 0 28px; font-size: 17px; color: #9a3412; }
 .order-note { margin: 10px 0 0; }
-.totals { display: flex; justify-content: space-between; margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee; }
+.totals { display: flex; justify-content: space-between; margin-top: 10px; }
 .pay-paid { color: #15803d; }
-.actions { display: flex; gap: 12px; margin-top: 16px; }
-.actions .btn { flex: 1; min-height: 66px; font-size: 21px; }
-.actions .btn-go, .actions .btn-dark { flex: 2; }
+.actions { display: flex; gap: 40px; margin-top: 16px; }
+.actions .btn { flex: 1; min-height: 72px; font-size: 21px; }
+.actions .btn-go, .actions .btn-dark { flex: 1.6; }
 
 /* Settings + menu */
 .settings { display: flex; flex-direction: column; gap: 16px; margin-top: 18px; }
@@ -112,7 +115,7 @@ h1, h2, h3 { margin: 0; font-weight: 600; }
 .menu-cat h2 { font-size: 18px; font-weight: 500; color: #555; margin: 10px 0 2px; }
 .menu-row {
   display: flex; align-items: center; gap: 12px; width: 100%;
-  min-height: 66px; padding: 6px 2px; border: 0; border-bottom: 1px solid #ddd; background: #fff; text-align: left;
+  min-height: 66px; padding: 6px 2px; border: 0; border-bottom: 1px solid #ececec; background: #fff; text-align: left;
 }
 .menu-row .m-name { flex: 1; font-size: 20px; }
 .menu-row .m-state { font-size: 16px; color: #b91c1c; }
