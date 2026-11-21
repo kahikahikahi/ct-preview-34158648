@@ -282,12 +282,14 @@
     return o.payment_status === "paid" ? '<span class="pay-paid">Paid at counter</span>' : "Pay at counter";
   }
 
-  var CHEVRON = '<span class="chev-hit"><svg class="chev" viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+  var CHEVRON = '<svg class="chev" viewBox="0 0 24 24" width="52" height="52" aria-hidden="true"><path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   function summary(id, isNew, ref, name, when, right, open) {
-    return '<button type="button" class="sum" data-act="expand" data-id="' + id + '" aria-expanded="' + (open ? "true" : "false") + '">' +
+    return '<div class="top"><button type="button" class="sum" data-act="expand" data-id="' + id + '">' +
       (isNew ? '<span class="badge-new">New</span>' : "") +
       '<span class="s-ref">' + esc(ref) + '</span><span class="s-name">' + esc(name) + "</span>" +
-      '<span class="s-when">' + esc(when) + "</span>" + '<span class="s-right">' + esc(right) + "</span>" + CHEVRON + "</button>";
+      '<span class="s-when">' + esc(when) + "</span>" + '<span class="s-right">' + esc(right) + "</span></button>" +
+      '<button type="button" class="chev-btn" data-act="expand" data-id="' + id + '" aria-expanded="' + (open ? "true" : "false") +
+      '" aria-label="' + (open ? "Hide details" : "Show details") + '">' + CHEVRON + "</button></div>";
   }
 
   function orderCard(o) {
@@ -325,7 +327,7 @@
     var open = !!state.expanded[b.id];
     var ppl = b.party_size + (b.party_size === 1 ? " person" : " people");
     var html = '<article class="card' + (open ? " open" : "") + '">' +
-      summary(b.id, b.status === "pending", b.ref, b.name, "Booking " + bookingDate(b.booking_date) + ", " + bookingTime(b.booking_time), ppl, open);
+      summary(b.id, b.status === "pending", b.ref, b.name, bookingDate(b.booking_date) + ", " + bookingTime(b.booking_time), "Table for " + b.party_size, open);
     if (b.status === "pending") {
       html += '<div class="actions under"><button type="button" class="btn" data-act="bk-decline" data-id="' + b.id + '">Decline</button>' +
         '<button type="button" class="btn btn-go" data-act="bk-accept" data-id="' + b.id + '">Accept</button></div>';

@@ -77,20 +77,20 @@ h1, h2, h3 { margin: 0; font-weight: 600; }
 /* Collapsed rows; tap to open */
 .card { padding: 12px 0; }
 .card + .card { border-top: 1px solid #ececec; }
+.top { display: flex; align-items: stretch; }
 .sum {
-  display: flex; align-items: stretch; gap: 12px; width: 100%; min-height: 84px; padding: 0 0 0 2px;
+  flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; min-height: 84px; padding: 0 0 0 2px;
   background: #fff; border: 0; text-align: left; font-size: 20px;
 }
-.sum > span { align-self: center; }
-.sum > .chev-hit { align-self: stretch; flex: none; width: 80px; margin-left: -4px; display: flex; align-items: center; justify-content: center; }
 .badge-new { flex: none; background: #b91c1c; color: #fff; font-size: 15px; font-weight: 500; padding: 2px 8px; border-radius: 6px; }
 .s-ref { flex: none; font-weight: 600; }
 .s-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .s-when { flex: none; }
-.s-right { flex: none; min-width: 88px; text-align: right; }
-.chev { width: 34px; height: 34px; color: #000; }
+.s-right { flex: none; min-width: 80px; text-align: right; }
+.chev-btn { flex: none; width: 104px; min-height: 84px; margin-left: 8px; background: #fff; border: 0; padding: 0; display: flex; align-items: center; justify-content: center; color: #000; }
+.chev { width: 52px; height: 52px; display: block; }
 .card.open .chev { transform: rotate(180deg); }
-.actions.under { margin-top: 0; padding: 2px 2px 18px; }
+.actions.under { margin: 32px 112px 0 0; padding: 0 2px 14px; }
 .card.open .actions.under + .detail { padding-top: 6px; }
 .detail { padding: 0 2px 18px; }
 .line { margin-top: 4px; }
