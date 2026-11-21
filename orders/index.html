@@ -13,15 +13,15 @@
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-180.png" />
-  <link rel="stylesheet" href="./app.css?v=1" />
+  <link rel="stylesheet" href="./app.css?v=2" />
   <script defer src="./supabase-js-2.119.2.min.js"></script>
-  <script defer src="./app.js?v=1"></script>
+  <script defer src="./app.js?v=2"></script>
 </head>
 <body>
   <!-- Login -->
   <section id="screen-login" class="screen center" hidden>
     <form id="login-form" class="login" autocomplete="on">
-      <img src="./logo.png" alt="Cafe Turquoise" class="login-logo" width="240" />
+      <img src="./eye.png" alt="Cafe Turquoise" class="login-logo" width="120" height="120" />
       <h1>Shop orders</h1>
       <label>Email<input id="login-email" type="email" autocomplete="username" required /></label>
       <label>Password<input id="login-password" type="password" autocomplete="current-password" required /></label>
@@ -33,7 +33,7 @@
   <!-- Not staff -->
   <section id="screen-denied" class="screen center" hidden>
     <div class="login">
-      <img src="./logo.png" alt="Cafe Turquoise" class="login-logo" width="240" />
+      <img src="./eye.png" alt="Cafe Turquoise" class="login-logo" width="120" height="120" />
       <p class="denied">This login doesn't have shop access.</p>
       <button type="button" class="btn btn-big" data-action="signout">Log out</button>
     </div>
@@ -42,7 +42,7 @@
   <!-- Tap to start (unlocks sound, keeps the screen awake) -->
   <section id="screen-start" class="screen center" hidden>
     <button type="button" id="start-btn" class="start-btn">
-      <img src="./icon-192.png" alt="" width="120" height="120" />
+      <img src="./eye.png" alt="" width="120" height="120" />
       <span class="start-title">Tap to start</span>
       <span class="start-sub">Turns on the order sound and keeps the screen awake</span>
     </button>
@@ -51,12 +51,10 @@
   <!-- Main app -->
   <section id="screen-app" class="screen app" hidden>
     <header class="topbar">
-      <img src="./logo.png" alt="Cafe Turquoise" class="top-logo" />
+      <img src="./eye.png" alt="Cafe Turquoise" class="top-logo" width="44" height="44" />
       <nav class="tabs" role="tablist">
-        <button type="button" class="tab" data-tab="orders" role="tab">Orders <span class="count" id="count-orders" hidden></span></button>
-        <button type="button" class="tab" data-tab="bookings" role="tab">Bookings <span class="count" id="count-bookings" hidden></span></button>
-        <button type="button" class="tab" data-tab="done" role="tab">Done today</button>
-        <button type="button" class="tab" data-tab="menu" role="tab">Menu</button>
+        <button type="button" class="tab" data-tab="current" role="tab">Current <span class="count" id="count-orders" hidden></span></button>
+        <button type="button" class="tab" data-tab="settings" role="tab">Settings</button>
       </nav>
       <div class="top-right">
         <span id="conn" class="conn">Connecting…</span>
@@ -65,39 +63,36 @@
       </div>
     </header>
 
-    <button type="button" id="alert-bar" class="alert-bar" hidden></button>
-
     <main class="panes">
-      <div class="pane" id="pane-orders">
-        <div class="cols">
-          <section class="col">
+      <div class="pane" id="pane-current">
+        <div class="wrap">
+          <section class="group">
             <h2>New</h2>
             <div id="list-new" class="list"></div>
           </section>
-          <section class="col">
+          <section class="group">
             <h2>In progress</h2>
             <div id="list-progress" class="list"></div>
           </section>
-        </div>
-      </div>
-      <div class="pane" id="pane-bookings" hidden>
-        <div class="cols">
-          <section class="col">
-            <h2>Booking requests</h2>
-            <div id="list-bk-pending" class="list"></div>
-          </section>
-          <section class="col">
-            <h2>Coming up</h2>
-            <div id="list-bk-upcoming" class="list"></div>
+          <section class="group">
+            <h2>Bookings coming up</h2>
+            <div id="list-booked" class="list"></div>
           </section>
         </div>
       </div>
-      <div class="pane" id="pane-done" hidden>
-        <div id="list-done" class="list list-wide"></div>
-      </div>
-      <div class="pane" id="pane-menu" hidden>
-        <p class="hint">Switch an item off when it runs out. Customers can't order it until you switch it back on.</p>
-        <div id="menu-list" class="menu-list"></div>
+      <div class="pane" id="pane-settings" hidden>
+        <div class="wrap">
+          <div id="settings-main" class="settings">
+            <button type="button" class="btn btn-big" id="edit-menu-btn">Edit menu</button>
+            <button type="button" class="btn btn-big btn-stop-line" id="stop-btn">Stop receiving orders</button>
+            <p id="stop-note" class="hint"></p>
+          </div>
+          <div id="settings-menu" hidden>
+            <button type="button" class="link-btn" id="menu-back-btn">Back</button>
+            <p class="hint">Switch an item off when it runs out. Customers can't order it until you switch it back on.</p>
+            <div id="menu-list" class="menu-list"></div>
+          </div>
+        </div>
       </div>
     </main>
   </section>
