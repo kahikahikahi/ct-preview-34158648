@@ -85,6 +85,10 @@ h1, h2, h3 { margin: 0; font-weight: 600; }
 .s-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .s-when { flex: none; }
 .s-right { flex: none; min-width: 88px; text-align: right; }
+.chev { flex: none; width: 24px; height: 24px; color: #000; }
+.card.open .chev { transform: rotate(180deg); }
+.actions.under { margin-top: 0; padding: 0 2px 14px; }
+.card.open .actions.under + .detail { padding-top: 6px; }
 .detail { padding: 0 2px 18px; }
 .line { margin-top: 4px; }
 .line a { text-decoration: none; font-weight: 600; }

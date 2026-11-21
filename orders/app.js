@@ -282,17 +282,22 @@
     return o.payment_status === "paid" ? '<span class="pay-paid">Paid at counter</span>' : "Pay at counter";
   }
 
-  function summary(id, isNew, ref, name, when, right) {
-    return '<button type="button" class="sum" data-act="expand" data-id="' + id + '">' +
+  var CHEVRON = '<svg class="chev" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function summary(id, isNew, ref, name, when, right, open) {
+    return '<button type="button" class="sum" data-act="expand" data-id="' + id + '" aria-expanded="' + (open ? "true" : "false") + '">' +
       (isNew ? '<span class="badge-new">New</span>' : "") +
       '<span class="s-ref">' + esc(ref) + '</span><span class="s-name">' + esc(name) + "</span>" +
-      '<span class="s-when">' + esc(when) + "</span>" + '<span class="s-right">' + esc(right) + "</span></button>";
+      '<span class="s-when">' + esc(when) + "</span>" + '<span class="s-right">' + esc(right) + "</span>" + CHEVRON + "</button>";
   }
 
   function orderCard(o) {
     var open = !!state.expanded[o.id];
     var html = '<article class="card' + (open ? " open" : "") + '">' +
-      summary(o.id, o.status === "new", o.ref, o.customer_name, whenShort(o) + (o.status === "ready" ? ", ready" : ""), money(o.total_cents));
+      summary(o.id, o.status === "new", o.ref, o.customer_name, whenShort(o) + (o.status === "ready" ? ", ready" : ""), money(o.total_cents), open);
+    if (o.status === "new") {
+      html += '<div class="actions under"><button type="button" class="btn" data-act="decline" data-id="' + o.id + '">Decline</button>' +
+        '<button type="button" class="btn btn-go" data-act="accept" data-id="' + o.id + '">Accept</button></div>';
+    }
     if (open) {
       var items = (o.order_items || []).slice().sort(function (a, b) { return a.id - b.id; });
       html += '<div class="detail">' + pickupHtml(o) +
@@ -306,10 +311,7 @@
         (o.notes ? '<div class="order-note">Order note: ' + esc(o.notes) + "</div>" : "") +
         '<div class="totals"><span>Total ' + money(o.total_cents) + "</span><span>" + payText(o) + "</span></div>";
       var actions = "";
-      if (o.status === "new") {
-        actions = '<button type="button" class="btn" data-act="decline" data-id="' + o.id + '">Decline</button>' +
-          '<button type="button" class="btn btn-go" data-act="accept" data-id="' + o.id + '">Accept</button>';
-      } else if (o.status === "accepted" || o.status === "preparing") {
+      if (o.status === "accepted" || o.status === "preparing") {
         actions = '<button type="button" class="btn btn-dark" data-act="ready" data-id="' + o.id + '">Ready</button>';
       } else if (o.status === "ready") {
         actions = '<button type="button" class="btn btn-dark" data-act="collected" data-id="' + o.id + '">Picked up</button>';
@@ -323,7 +325,11 @@
     var open = !!state.expanded[b.id];
     var ppl = b.party_size + (b.party_size === 1 ? " person" : " people");
     var html = '<article class="card' + (open ? " open" : "") + '">' +
-      summary(b.id, b.status === "pending", b.ref, b.name, "Booking " + bookingDate(b.booking_date) + ", " + bookingTime(b.booking_time), ppl);
+      summary(b.id, b.status === "pending", b.ref, b.name, "Booking " + bookingDate(b.booking_date) + ", " + bookingTime(b.booking_time), ppl, open);
+    if (b.status === "pending") {
+      html += '<div class="actions under"><button type="button" class="btn" data-act="bk-decline" data-id="' + b.id + '">Decline</button>' +
+        '<button type="button" class="btn btn-go" data-act="bk-accept" data-id="' + b.id + '">Accept</button></div>';
+    }
     if (open) {
       html += '<div class="detail">' +
         '<div class="line">Table for ' + ppl + ", " + esc(bookingDate(b.booking_date)) + " at " + bookingTime(b.booking_time) + "</div>" +
@@ -331,9 +337,6 @@
         (b.email ? '<div class="line">Email: ' + esc(b.email) + "</div>" : "") +
         '<div class="line">Sent ' + ago(b.created_at) + "</div>" +
         (b.notes ? '<div class="order-note">Note: ' + esc(b.notes) + "</div>" : "") +
-        (b.status === "pending"
-          ? '<div class="actions"><button type="button" class="btn" data-act="bk-decline" data-id="' + b.id + '">Decline</button>' +
-            '<button type="button" class="btn btn-go" data-act="bk-accept" data-id="' + b.id + '">Accept</button></div>' : "") +
         "</div>";
     }
     return html + "</article>";
