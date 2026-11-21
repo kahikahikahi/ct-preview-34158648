@@ -286,7 +286,7 @@
   function summary(id, isNew, ref, name, when, right, open) {
     return '<div class="top"><button type="button" class="sum" data-act="expand" data-id="' + id + '">' +
       (isNew ? '<span class="badge-new">New</span>' : "") +
-      '<span class="s-ref">' + esc(ref) + '</span><span class="s-name">' + esc(name) + "</span>" +
+      '<span class="s-name">' + esc(name) + "</span>" +
       '<span class="s-when">' + esc(when) + "</span>" + '<span class="s-right">' + esc(right) + "</span></button>" +
       '<button type="button" class="chev-btn" data-act="expand" data-id="' + id + '" aria-expanded="' + (open ? "true" : "false") +
       '" aria-label="' + (open ? "Hide details" : "Show details") + '">' + CHEVRON + "</button></div>";
@@ -416,7 +416,7 @@
   }
   function renderNumpad() {
     var o = numpad.order, n = parseInt(numpad.mins, 10), ok = n >= 1 && n <= 300;
-    var html = "<h3>Accept " + esc(o.ref) + "</h3>";
+    var html = "<h3>Accept " + esc(o.customer_name) + "'s order</h3>";
     if (o.pickup_type === "later" && !numpad.showKeys) {
       html += '<p class="sub">' + esc(o.customer_name) + " chose pickup at " + fmtTime(o.pickup_at) + ".</p>" +
         '<div class="modal-actions"><button type="button" class="btn" data-np="cancel">Cancel</button>' +
@@ -450,7 +450,7 @@
         if (r.error) throw r.error;
         var row = r.data && r.data[0];
         closeModal();
-        toast(o.ref + " accepted" + (row && row.ready_at ? ", ready at " + fmtTime(row.ready_at) : ""));
+        toast(o.customer_name + "'s order accepted" + (row && row.ready_at ? ", ready at " + fmtTime(row.ready_at) : ""));
         refresh();
       }).catch(function (e) { btn.disabled = false; toast(errMsg(e), true); refresh(); });
     }
@@ -534,15 +534,15 @@
     }
     if (act === "accept" && (o = findOrder(id))) return openAccept(o);
     if (act === "decline" && (o = findOrder(id))) {
-      return confirmBox("Decline " + o.ref + "?", "Please phone " + o.customer_name + (o.phone ? " on " + o.phone : "") + " to let them know.",
-        "Yes, decline", function () { setOrderStatus(o, "new", "cancelled", o.ref + " declined"); });
+      return confirmBox("Decline " + o.customer_name + "'s order?", "Please phone them" + (o.phone ? " on " + o.phone : "") + " to let them know.",
+        "Yes, decline", function () { setOrderStatus(o, "new", "cancelled", "Order declined"); });
     }
-    if (act === "ready" && (o = findOrder(id))) { t.disabled = true; return setOrderStatus(o, o.status, "ready", o.ref + " is ready"); }
-    if (act === "collected" && (o = findOrder(id))) { t.disabled = true; return setOrderStatus(o, "ready", "collected", o.ref + " picked up"); }
-    if (act === "bk-accept" && (b = findBooking(id))) { markSeen(b.id); t.disabled = true; return setBookingStatus(b, "accepted", b.ref + " accepted"); }
+    if (act === "ready" && (o = findOrder(id))) { t.disabled = true; return setOrderStatus(o, o.status, "ready", o.customer_name + "'s order is ready"); }
+    if (act === "collected" && (o = findOrder(id))) { t.disabled = true; return setOrderStatus(o, "ready", "collected", o.customer_name + "'s order picked up"); }
+    if (act === "bk-accept" && (b = findBooking(id))) { markSeen(b.id); t.disabled = true; return setBookingStatus(b, "accepted", "Booking for " + b.name + " accepted"); }
     if (act === "bk-decline" && (b = findBooking(id))) {
-      return confirmBox("Decline " + b.ref + "?", "Please phone " + b.name + " on " + b.phone + " to let them know.",
-        "Yes, decline", function () { markSeen(b.id); setBookingStatus(b, "declined", b.ref + " declined"); });
+      return confirmBox("Decline " + b.name + "'s booking?", "Please phone them on " + b.phone + " to let them know.",
+        "Yes, decline", function () { markSeen(b.id); setBookingStatus(b, "declined", "Booking declined"); });
     }
     if (act === "toggle") return toggleItem(t);
   });
@@ -607,7 +607,7 @@
     refresh();
     pollTimer = setInterval(function () { refresh(); }, POLL_MS);
   });
-  function tick() { $("clock").textContent = fmtTime(new Date()); setConn(); }
+  function tick() { setConn(); }
 
   window.addEventListener("online", function () { if (state.started) { subscribe(); refresh(); } });
 

@@ -64,7 +64,6 @@ h1, h2, h3 { margin: 0; font-weight: 600; }
 .conn { font-size: 16px; color: #333; }
 .conn.ok::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #15803d; margin-right: 6px; }
 .conn.bad { color: #b91c1c; }
-.clock { font-size: 20px; }
 
 .panes { flex: 1; min-height: 0; }
 .pane { height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 8px 18px 48px; }
@@ -83,7 +82,6 @@ h1, h2, h3 { margin: 0; font-weight: 600; }
   background: #fff; border: 0; text-align: left; font-size: 20px;
 }
 .badge-new { flex: none; background: #b91c1c; color: #fff; font-size: 15px; font-weight: 500; padding: 2px 8px; border-radius: 6px; }
-.s-ref { flex: none; font-weight: 600; }
 .s-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .s-when { flex: none; }
 .s-right { flex: none; min-width: 80px; text-align: right; }
@@ -144,6 +142,5 @@ h1, h2, h3 { margin: 0; font-weight: 600; }
 .toast.bad { background: #b91c1c; }
 
 @media (max-width: 700px) {
-  .clock { display: none; }
   .s-when { display: none; }
 }
