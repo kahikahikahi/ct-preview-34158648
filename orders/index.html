@@ -13,9 +13,9 @@
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-180.png" />
-  <link rel="stylesheet" href="./app.css?v=7" />
+  <link rel="stylesheet" href="./app.css?v=8" />
   <script defer src="./supabase-js-2.119.2.min.js"></script>
-  <script defer src="./app.js?v=7"></script>
+  <script defer src="./app.js?v=8"></script>
 </head>
 <body>
   <!-- Login -->
@@ -62,7 +62,7 @@
 
     <main class="panes">
       <div class="pane" id="pane-current">
-        <div class="wrap">
+        <div class="wrap" id="orders-list">
           <section class="group">
             <h2>New</h2>
             <div id="list-new" class="list"></div>
@@ -76,6 +76,7 @@
             <div id="list-booked" class="list"></div>
           </section>
         </div>
+        <div class="wrap" id="order-detail" hidden></div>
       </div>
       <div class="pane" id="pane-settings" hidden>
         <div class="wrap">

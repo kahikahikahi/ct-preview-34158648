@@ -19,6 +19,7 @@
     started: false,
     tab: "current",
     expanded: {},
+    detail: null,
     settingsView: "main",
     accepting: true,
     orders: [],
@@ -77,6 +78,39 @@
     var t = new Date(todayNZ() + "T00:00:00Z"); t.setUTCDate(t.getUTCDate() + 1);
     if (s === t.toISOString().slice(0, 10)) return "Tomorrow";
     return new Date(s + "T00:00:00Z").toLocaleDateString("en-NZ", { timeZone: "UTC", weekday: "short", day: "numeric", month: "short" });
+  }
+  function nzOffsetFor(dateStr) {
+    var probe = new Date((dateStr || todayNZ()) + "T12:00:00Z"), p = {};
+    new Intl.DateTimeFormat("en-NZ", { timeZone: TZ, timeZoneName: "longOffset" })
+      .formatToParts(probe).forEach(function (x) { p[x.type] = x.value; });
+    var off = (p.timeZoneName || "GMT+13:00").replace("GMT", "") || "+13:00";
+    if (!/^[+-]\d{2}:\d{2}$/.test(off)) off = "+13:00";
+    return off;
+  }
+  function bookingDateTime(b) {
+    var tm = String(b.booking_time || "00:00").slice(0, 8);
+    if (tm.length === 5) tm += ":00";
+    return new Date(b.booking_date + "T" + tm + nzOffsetFor(b.booking_date));
+  }
+  function dayShort(d) {
+    if (!d) return "";
+    var dt = d instanceof Date ? d : new Date(d);
+    return new Intl.DateTimeFormat("en-NZ", { timeZone: TZ, weekday: "short" }).format(dt).replace(/\./g, "").toUpperCase();
+  }
+  function bookingDayShort(b) {
+    return new Date(b.booking_date + "T12:00:00Z").toLocaleDateString("en-NZ", { timeZone: "UTC", weekday: "short" }).replace(/\./g, "").toUpperCase();
+  }
+  function fmtStamp(d) {
+    if (!d) return "";
+    var dt = d instanceof Date ? d : new Date(d), p = {};
+    new Intl.DateTimeFormat("en-NZ", {
+      timeZone: TZ, weekday: "short", day: "numeric", month: "short",
+      hour: "2-digit", minute: "2-digit", hour12: true
+    }).formatToParts(dt).forEach(function (x) { p[x.type] = x.value; });
+    var hour = p.hour || "";
+    if (hour.length === 1) hour = "0" + hour;
+    var ap = String(p.dayPeriod || "pm").replace(/[\s.]/g, "").toUpperCase();
+    return p.weekday + " " + p.day + " " + p.month + " - " + hour + ":" + p.minute + ap;
   }
   function telHref(p) { return "tel:" + String(p || "").replace(/[^\d+]/g, ""); }
   function loadSeen() { try { return JSON.parse(localStorage.getItem("ct-seen-bookings") || "[]"); } catch (e) { return []; } }
@@ -258,94 +292,151 @@
     }).join("");
   }
 
-  function whenShort(o) {
-    if (o.status !== "new" && o.ready_at) return "Ready " + fmtTime(o.ready_at);
-    return o.pickup_type === "later" ? fmtTime(o.pickup_at) : "ASAP";
-  }
-
-  function pickupHtml(o) {
-    if (o.status !== "new" && o.ready_at) {
-      var m = minsFromNow(o.ready_at), rel = "";
-      if (o.status !== "ready") rel = m > 0 ? " (in " + m + " min)" : m === 0 ? " (now)" : " (" + (-m) + " min late)";
-      return '<div class="line">Ready at ' + fmtTime(o.ready_at) + rel +
-        (o.pickup_type === "later" && fmtTime(o.pickup_at) !== fmtTime(o.ready_at) ? ", customer chose " + fmtTime(o.pickup_at) : "") + "</div>";
-    }
-    if (o.pickup_type === "later") return '<div class="line">Pickup later: ' + fmtTime(o.pickup_at) + "</div>";
-    return '<div class="line">Pickup as soon as possible</div>';
-  }
-
   function payText(o) {
     if (o.payment_method === "online") {
       return o.payment_status === "paid" ? '<span class="pay-paid">Paid online</span>'
-        : "Online, not paid" + (o.payment_status === "failed" ? " (payment failed)" : "");
+        : "Pay online" + (o.payment_status === "failed" ? " (payment failed)" : o.payment_status === "unpaid" ? "" : ", not paid");
     }
     return o.payment_status === "paid" ? '<span class="pay-paid">Paid at counter</span>' : "Pay at counter";
   }
 
   var CHEVRON = '<svg class="chev" viewBox="0 0 24 24" width="52" height="52" aria-hidden="true"><path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  function summary(id, isNew, ref, name, when, right, open) {
+  var TABLE_ICON = '<svg class="type-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 6h18v2.4H3V6zm2.4 3.6h2.2V20H5.4V9.6zm13 0h2.2V20h-2.2V9.6zM9.2 9.6h5.6v2H9.2v-2z"/></svg>';
+  var BAG_ICON = '<svg class="type-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M8 7V6a4 4 0 0 1 8 0v1h3v14H5V7h3zm2-1a2 2 0 0 1 4 0v1h-4V6z"/></svg>';
+  var PEOPLE_ICON = '<svg class="people-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>';
+  var PHONE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.8 3.5h3.1l.8 3.4-1.8 1.5a12.4 12.4 0 0 0 6.7 6.7l1.5-1.8 3.4.8v3.1c0 .8-.3 1.5-1.1 1.8A16.2 16.2 0 0 1 3.5 6.6c.3-.8 1-1.1 1.8-1.1z"/></svg>';
+  var MAIL_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M3.5 6h17v12h-17V6z"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M3.8 6.6L12 13.2 20.2 6.6"/></svg>';
+  var BACK_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M15 5l-8 7 8 7"/></svg>';
+  var TICKS = '<svg class="ticks" viewBox="0 0 28 14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M1.6 7.4l3.8 3.8L13.2 2.4"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M11.6 7.4l3.8 3.8L23.2 2.4"/></svg>';
+
+  function orderStatus(o) {
+    if (o.status === "new") return { text: "New", kind: "new" };
+    if (o.status === "ready") return { text: "Ready", kind: "ok" };
+    if (o.status === "accepted" || o.status === "preparing") return { text: "Accepted", kind: "ok" };
+    return { text: o.status, kind: "" };
+  }
+  function bookingStatus(b) {
+    if (b.status === "pending") return { text: "New", kind: "new" };
+    if (b.status === "accepted") return { text: "Accepted", kind: "ok" };
+    return { text: b.status, kind: "" };
+  }
+  function statusHtml(st, cls) {
+    if (!st) return "";
+    var ticks = st.kind === "ok" ? TICKS : "";
+    return '<span class="' + cls + (st.kind ? " " + st.kind : "") + '">' + ticks + esc(st.text) + "</span>";
+  }
+  function orderDay(o) {
+    if (o.pickup_type === "later" && o.pickup_at) return dayShort(o.pickup_at);
+    return "ASAP";
+  }
+
+  function summary(id, icon, day, name, st, rightHtml) {
     return '<div class="top"><button type="button" class="sum" data-act="expand" data-id="' + id + '">' +
-      (isNew ? '<span class="badge-new">New</span>' : "") +
-      '<span class="s-name">' + esc(name) + "</span>" +
-      '<span class="s-when">' + esc(when) + "</span>" + '<span class="s-right">' + esc(right) + "</span></button>" +
-      '<button type="button" class="chev-btn" data-act="expand" data-id="' + id + '" aria-expanded="' + (open ? "true" : "false") +
-      '" aria-label="' + (open ? "Hide details" : "Show details") + '">' + CHEVRON + "</button></div>";
+      '<span class="s-icon">' + icon + '<span class="s-day">' + esc(day) + "</span></span>" +
+      '<span class="s-mid"><span class="s-name">' + esc(name) + "</span>" + statusHtml(st, "s-status") + "</span>" +
+      '<span class="s-right">' + rightHtml + "</span></button>" +
+      '<button type="button" class="chev-btn" data-act="expand" data-id="' + id + '" aria-label="Show details">' + CHEVRON + "</button></div>";
+  }
+
+  function kv(label, valueHtml, extra) {
+    return '<div class="kv' + (extra ? " " + extra : "") + '"><span class="kv-l">' + esc(label) + '</span><span class="kv-v">' + valueHtml + "</span></div>";
+  }
+  function customerBlock(name, phone, email) {
+    return '<div class="cust"><div class="cust-name">' + esc(name) + "</div>" +
+      (phone ? '<a class="cust-line" href="' + esc(telHref(phone)) + '">' + PHONE_ICON + "<span>" + esc(phone) + "</span></a>" : "") +
+      (email ? '<div class="cust-line">' + MAIL_ICON + "<span>" + esc(email) + "</span></div>" : "") +
+      "</div>";
+  }
+  function statusBand(st) {
+    if (!st) return "";
+    var ticks = st.kind === "ok" ? TICKS : "";
+    return '<div class="status-band ' + (st.kind || "") + '">' + ticks + esc(st.text) + "</div>";
+  }
+  function detailShell(title, pill, st, body, actions) {
+    return '<div class="detail-screen"><div class="detail-head">' +
+      '<button type="button" class="back-btn" data-act="back" aria-label="Back">' + BACK_ICON + "</button>" +
+      '<div class="detail-titles"><h2>' + esc(title) + "</h2>" +
+      '<span class="pill">' + esc(pill) + "</span></div></div>" +
+      statusBand(st) +
+      '<div class="detail-body">' + body + "</div>" +
+      (actions ? '<div class="actions detail-actions">' + actions + "</div>" : "") +
+      "</div>";
+  }
+  function noteHtml(label, text) {
+    if (!text) return "";
+    return '<div class="order-note">' + esc(label) + ": " + esc(text) + "</div>";
+  }
+  function itemList(o) {
+    var items = (o.order_items || []).slice().sort(function (a, b) { return a.id - b.id; });
+    return '<ul class="items">' + items.map(function (it) {
+      return "<li><div class=\"it-top\"><span class=\"it-name\">" + it.qty + " × " + esc(it.name) +
+        "</span><span class=\"it-price\">" + money(it.line_cents) + "</span></div>" + optionLines(it) +
+        (it.note ? '<div class="it-note">Note: ' + esc(it.note) + "</div>" : "") + "</li>";
+    }).join("") + "</ul>";
+  }
+  function acceptDecline(kind, id) {
+    var d = kind === "booking" ? "bk-decline" : "decline";
+    var a = kind === "booking" ? "bk-accept" : "accept";
+    return '<div class="actions under"><button type="button" class="btn" data-act="' + d + '" data-id="' + id + '">Decline</button>' +
+      '<button type="button" class="btn btn-go" data-act="' + a + '" data-id="' + id + '">Accept</button></div>';
   }
 
   function orderCard(o) {
-    var open = !!state.expanded[o.id];
-    var html = '<article class="card' + (open ? " open" : "") + '">' +
-      summary(o.id, o.status === "new", o.ref, o.customer_name, whenShort(o) + (o.status === "ready" ? ", ready" : ""), money(o.total_cents), open);
-    if (o.status === "new") {
-      html += '<div class="actions under"><button type="button" class="btn" data-act="decline" data-id="' + o.id + '">Decline</button>' +
-        '<button type="button" class="btn btn-go" data-act="accept" data-id="' + o.id + '">Accept</button></div>';
-    }
-    if (open) {
-      var items = (o.order_items || []).slice().sort(function (a, b) { return a.id - b.id; });
-      html += '<div class="detail">' + pickupHtml(o) +
-        '<div class="line">Placed ' + fmtTime(o.created_at) + ", " + ago(o.created_at) + "</div>" +
-        (o.phone ? '<div class="line">Phone: <a href="' + esc(telHref(o.phone)) + '">' + esc(o.phone) + "</a></div>" : "") +
-        '<ul class="items">' + items.map(function (it) {
-          return '<li><div class="it-name">' + it.qty + "× " + esc(it.name) +
-            '<span class="it-price">' + money(it.line_cents) + "</span></div>" + optionLines(it) +
-            (it.note ? '<div class="it-note">Note: ' + esc(it.note) + "</div>" : "") + "</li>";
-        }).join("") + "</ul>" +
-        (o.notes ? '<div class="order-note">Order note: ' + esc(o.notes) + "</div>" : "") +
-        '<div class="totals"><span>Total ' + money(o.total_cents) + "</span><span>" + payText(o) + "</span></div>";
-      var actions = "";
-      if (o.status === "accepted" || o.status === "preparing") {
-        actions = '<button type="button" class="btn btn-dark" data-act="ready" data-id="' + o.id + '">Ready</button>';
-      } else if (o.status === "ready") {
-        actions = '<button type="button" class="btn btn-dark" data-act="collected" data-id="' + o.id + '">Picked up</button>';
-      }
-      html += (actions ? '<div class="actions">' + actions + "</div>" : "") + "</div>";
-    }
+    var html = '<article class="card">' +
+      summary(o.id, BAG_ICON, orderDay(o), o.customer_name, orderStatus(o), esc(money(o.total_cents)));
+    if (o.status === "new") html += acceptDecline("order", o.id);
     return html + "</article>";
   }
 
   function bookingCard(b) {
-    var open = !!state.expanded[b.id];
-    var ppl = b.party_size + (b.party_size === 1 ? " person" : " people");
-    var html = '<article class="card' + (open ? " open" : "") + '">' +
-      summary(b.id, b.status === "pending", b.ref, b.name, bookingDate(b.booking_date) + ", " + bookingTime(b.booking_time), "Table for " + b.party_size, open);
-    if (b.status === "pending") {
-      html += '<div class="actions under"><button type="button" class="btn" data-act="bk-decline" data-id="' + b.id + '">Decline</button>' +
-        '<button type="button" class="btn btn-go" data-act="bk-accept" data-id="' + b.id + '">Accept</button></div>';
-    }
-    if (open) {
-      html += '<div class="detail">' +
-        '<div class="line">Table for ' + ppl + ", " + esc(bookingDate(b.booking_date)) + " at " + bookingTime(b.booking_time) + "</div>" +
-        '<div class="line">Phone: ' + (b.phone ? '<a href="' + esc(telHref(b.phone)) + '">' + esc(b.phone) + "</a>" : "not given") + "</div>" +
-        (b.email ? '<div class="line">Email: ' + esc(b.email) + "</div>" : "") +
-        '<div class="line">Sent ' + ago(b.created_at) + "</div>" +
-        (b.notes ? '<div class="order-note">Note: ' + esc(b.notes) + "</div>" : "") +
-        "</div>";
-    }
+    var html = '<article class="card">' +
+      summary(b.id, TABLE_ICON, bookingDayShort(b), b.name, bookingStatus(b), esc(String(b.party_size)) + PEOPLE_ICON);
+    if (b.status === "pending") html += acceptDecline("booking", b.id);
     return html + "</article>";
   }
 
+  function orderDetail(o) {
+    var st = orderStatus(o);
+    var body = kv("Placed on", esc(fmtStamp(o.created_at)));
+    if (o.accepted_at) body += kv("Accepted on", esc(fmtStamp(o.accepted_at)));
+    if (o.ready_at) body += kv("Ready at", esc(fmtStamp(o.ready_at)), "fulfill");
+    else if (o.pickup_type === "later" && o.pickup_at) body += kv("Fulfillment", esc(fmtStamp(o.pickup_at)), "fulfill");
+    else body += kv("Fulfillment", "ASAP", "fulfill");
+    body += '<div class="rule"></div>' + customerBlock(o.customer_name, o.phone, o.email) +
+      '<div class="rule"></div>' + itemList(o) + noteHtml("Order note", o.notes) +
+      '<div class="totals"><span>Total</span><span>' + money(o.total_cents) + "</span></div>" +
+      '<div class="pay-line"><span>Payment</span><span>' + payText(o) + "</span></div>";
+    var actions = "";
+    if (o.status === "new") {
+      actions = '<button type="button" class="btn" data-act="decline" data-id="' + o.id + '">Decline</button>' +
+        '<button type="button" class="btn btn-go" data-act="accept" data-id="' + o.id + '">Accept</button>';
+    } else if (o.status === "accepted" || o.status === "preparing") {
+      actions = '<button type="button" class="btn btn-dark" data-act="ready" data-id="' + o.id + '">Ready</button>';
+    } else if (o.status === "ready") {
+      actions = '<button type="button" class="btn btn-dark" data-act="collected" data-id="' + o.id + '">Picked up</button>';
+    }
+    return detailShell("Pickup", "Pickup", st, body, actions);
+  }
+
+  function bookingDetail(b) {
+    var st = bookingStatus(b);
+    var ppl = b.party_size + (b.party_size === 1 ? " person" : " persons");
+    var body = kv("Placed on", esc(fmtStamp(b.created_at)));
+    if (b.status === "accepted" && b.decided_at) body += kv("Accepted on", esc(fmtStamp(b.decided_at)));
+    body += kv("Fulfillment", esc(fmtStamp(bookingDateTime(b))), "fulfill") +
+      '<div class="rule"></div>' + customerBlock(b.name, b.phone, b.email) +
+      '<div class="rule"></div>' + kv("Guests", esc(String(b.party_size))) +
+      noteHtml("Note", b.notes);
+    var actions = "";
+    if (b.status === "pending") {
+      actions = '<button type="button" class="btn" data-act="bk-decline" data-id="' + b.id + '">Decline</button>' +
+        '<button type="button" class="btn btn-go" data-act="bk-accept" data-id="' + b.id + '">Accept</button>';
+    }
+    return detailShell(ppl, "Reservation", st, body, actions);
+  }
+
   function fill(id, html, emptyText) {
-    $(id).innerHTML = html || '<div class="empty">' + emptyText + "</div>";
+    $(id).innerHTML = html || (emptyText ? '<div class="empty">' + emptyText + "</div>" : "");
   }
 
   function render() {
@@ -364,6 +455,20 @@
     var n = nw.length + pb.length, co = $("count-orders");
     co.hidden = !n; co.textContent = n;
     document.title = (n ? "(" + n + ") " : "") + "Cafe Turquoise Orders";
+
+    var detailEl = $("order-detail"), listEl = $("orders-list");
+    var d = state.detail ? (findOrder(state.detail) || findBooking(state.detail)) : null;
+    if (state.detail && !d) state.detail = null;
+    if (state.tab === "current" && state.detail && d) {
+      listEl.hidden = true;
+      detailEl.hidden = false;
+      detailEl.innerHTML = findOrder(state.detail) ? orderDetail(d) : bookingDetail(d);
+      if (detailEl.parentNode) detailEl.parentNode.scrollTop = 0;
+    } else if (listEl && detailEl) {
+      listEl.hidden = false;
+      detailEl.hidden = true;
+      detailEl.innerHTML = "";
+    }
     renderSettings();
     setConn();
     updateRinging();
@@ -399,6 +504,7 @@
 
   function setTab(tab) {
     state.tab = tab;
+    if (tab !== "current") state.detail = null;
     document.querySelectorAll(".tab").forEach(function (t) { t.classList.toggle("active", t.dataset.tab === tab); });
     ["current", "settings"].forEach(function (p) { $("pane-" + p).hidden = p !== tab; });
     if (tab === "settings") { state.settingsView = "main"; refresh(); }
@@ -527,8 +633,9 @@
     }
     if (t.dataset.action === "signout") return signOut();
     var act = t.dataset.act, id = t.dataset.id, o, b;
+    if (act === "back") { state.detail = null; return render(); }
     if (act === "expand") {
-      state.expanded[id] = !state.expanded[id];
+      state.detail = id;
       if (findBooking(id)) markSeen(id);
       return render();
     }
