@@ -373,6 +373,8 @@
   var PHONE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.8 3.5h3.1l.8 3.4-1.8 1.5a12.4 12.4 0 0 0 6.7 6.7l1.5-1.8 3.4.8v3.1c0 .8-.3 1.5-1.1 1.8A16.2 16.2 0 0 1 3.5 6.6c.3-.8 1-1.1 1.8-1.1z"/></svg>';
   var MAIL_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M3.5 6h17v12h-17V6z"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M3.8 6.6L12 13.2 20.2 6.6"/></svg>';
   var BACK_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M15 5l-8 7 8 7"/></svg>';
+  var CROSS_ICON = '<svg class="decide-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 8.5l-7 7M8.5 8.5l7 7" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>';
+  var TICK_ICON = '<svg class="decide-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 12.5l3.5 3.5 7.5-7.5" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var TICKS = '<svg class="ticks" viewBox="0 0 28 14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M1.6 7.4l3.8 3.8L13.2 2.4"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M11.6 7.4l3.8 3.8L23.2 2.4"/></svg>';
 
   function orderStatus(o) {
@@ -422,13 +424,14 @@
     return dueLabel(bookingDateTime(b));
   }
 
-  function summary(id, icon, day, name, st, rightHtml, due) {
+  function summary(id, icon, day, name, st, rightHtml, due, acts) {
     return '<div class="top"><button type="button" class="sum" data-act="expand" data-id="' + id + '">' +
       '<span class="s-icon">' + icon + '<span class="s-day">' + esc(day) + "</span></span>" +
       '<span class="s-mid"><span class="s-name">' + esc(name) + "</span>" +
       (due ? '<span class="s-due">' + esc(due) + "</span>" : "") +
       statusHtml(st, "s-status") + "</span>" +
       '<span class="s-right">' + rightHtml + "</span></button>" +
+      (acts || "") +
       '<button type="button" class="chev-btn" data-act="expand" data-id="' + id + '" aria-label="Show details">' + CHEVRON + "</button></div>";
   }
 
@@ -471,22 +474,24 @@
   function acceptDecline(kind, id) {
     var d = kind === "booking" ? "bk-decline" : "decline";
     var a = kind === "booking" ? "bk-accept" : "accept";
-    return '<div class="actions under"><button type="button" class="btn" data-act="' + d + '" data-id="' + id + '">Decline</button>' +
-      '<button type="button" class="btn btn-go" data-act="' + a + '" data-id="' + id + '">Accept</button></div>';
+    return '<div class="row-acts">' +
+      '<button type="button" class="decide-btn decide-no" data-act="' + d + '" data-id="' + id + '" aria-label="Decline">' + CROSS_ICON + "</button>" +
+      '<button type="button" class="decide-btn decide-yes" data-act="' + a + '" data-id="' + id + '" aria-label="Accept">' + TICK_ICON + "</button>" +
+      "</div>";
   }
 
   function orderCard(o) {
-    var html = '<article class="card">' +
-      summary(o.id, BAG_ICON, orderDay(o), o.customer_name, orderStatus(o), esc(money(o.total_cents)), orderDue(o));
-    if (o.status === "new") html += acceptDecline("order", o.id);
-    return html + "</article>";
+    var acts = o.status === "new" ? acceptDecline("order", o.id) : "";
+    return '<article class="card">' +
+      summary(o.id, BAG_ICON, orderDay(o), o.customer_name, orderStatus(o), esc(money(o.total_cents)), orderDue(o), acts) +
+      "</article>";
   }
 
   function bookingCard(b) {
-    var html = '<article class="card">' +
-      summary(b.id, TABLE_ICON, bookingDayShort(b), b.name, bookingStatus(b), esc(String(b.party_size)) + PEOPLE_ICON, bookingDue(b));
-    if (b.status === "pending") html += acceptDecline("booking", b.id);
-    return html + "</article>";
+    var acts = b.status === "pending" ? acceptDecline("booking", b.id) : "";
+    return '<article class="card">' +
+      summary(b.id, TABLE_ICON, bookingDayShort(b), b.name, bookingStatus(b), esc(String(b.party_size)) + PEOPLE_ICON, bookingDue(b), acts) +
+      "</article>";
   }
 
   function orderDetail(o) {
@@ -502,8 +507,7 @@
       '<div class="pay-line"><span>Payment</span><span>' + payText(o) + "</span></div>";
     var actions = "";
     if (o.status === "new") {
-      actions = '<button type="button" class="btn" data-act="decline" data-id="' + o.id + '">Decline</button>' +
-        '<button type="button" class="btn btn-go" data-act="accept" data-id="' + o.id + '">Accept</button>';
+      actions = acceptDecline("order", o.id);
     } else if (o.status === "accepted" || o.status === "preparing") {
       actions = '<button type="button" class="btn btn-go" data-act="ready" data-id="' + o.id + '">Ready</button>';
     } else if (o.status === "ready") {
@@ -523,8 +527,7 @@
       noteHtml("Note", b.notes);
     var actions = "";
     if (b.status === "pending") {
-      actions = '<button type="button" class="btn" data-act="bk-decline" data-id="' + b.id + '">Decline</button>' +
-        '<button type="button" class="btn btn-go" data-act="bk-accept" data-id="' + b.id + '">Accept</button>';
+      actions = acceptDecline("booking", b.id);
     }
     return detailShell(ppl, "Reservation", st, body, actions);
   }
@@ -747,8 +750,13 @@
   }
 
   document.addEventListener("click", function (e) {
+    if (e.target.closest && e.target.closest(".row-acts") && !e.target.closest("button")) {
+      e.stopPropagation();
+      return;
+    }
     var t = e.target.closest ? e.target.closest("button, [data-act]") : null;
     if (!t) return;
+    if (t.closest && t.closest(".row-acts")) e.stopPropagation();
     if (t.dataset.np && numpad) return numpadClick(t);
     if (t.dataset.dc) return sendDecline(t);
     if (t.dataset.cf) {

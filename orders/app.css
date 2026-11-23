@@ -1,14 +1,10 @@
-/* Café Turquoise staff app. White, dark text, turquoise where it means something. Flat. */
+/* Café Turquoise staff app. White, black text, flat. Status colours stay symbolic. */
 :root {
-  --ink: #152325;
-  --mute: #5c6e70;
-  --line: #d7e4e5;
-  --page: #f3f7f7;
+  --ink: #111111;
+  --mute: #5c5c5c;
+  --line: #e0e0e0;
+  --page: #f3f3f3;
   --bg: #ffffff;
-  --tq: #14a3ad;
-  --tq-bright: #1fb5c1;
-  --tq-deep: #0e7a82;
-  --tq-soft: #e8f6f7;
   --new: #c05621;
   --new-soft: #f6efe6;
   --go: #1a8f3c;
@@ -16,7 +12,7 @@
   --go-soft: #e8f5e9;
   --danger: #b91c1c;
   --danger-soft: #fdecec;
-  --quiet: #7a8a8c;
+  --quiet: #7a7a7a;
   --radius: 10px;
 }
 *, *::before, *::after { box-sizing: border-box; }
@@ -45,7 +41,7 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .center, #screen-login, #screen-denied { background: var(--bg); }
 .center { display: flex; align-items: center; justify-content: center; padding: 24px; min-height: 100vh; text-align: center; }
 
-/* Buttons: Accept / Ready / Picked up = solid turquoise; Decline / Cancel = quiet outline. */
+/* Buttons: Ready / Picked up / Send / Log in = solid black; Cancel = quiet outline. */
 .btn {
   border: 1.5px solid var(--quiet); background: var(--bg); color: var(--ink);
   border-radius: 999px; min-height: 60px; padding: 0 22px; font-size: 20px; font-weight: 500;
@@ -53,10 +49,10 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .btn:hover, .btn:active { background: var(--bg); color: var(--ink); border-color: var(--quiet); }
 .btn:disabled { opacity: .45; cursor: default; }
 .btn-dark, .btn-go {
-  background: var(--tq-deep); border-color: var(--tq-deep); color: #fff;
+  background: #111; border-color: #111; color: #fff;
 }
 .btn-dark:hover, .btn-dark:active, .btn-go:hover, .btn-go:active {
-  background: var(--tq-deep); border-color: var(--tq-deep); color: #fff;
+  background: #111; border-color: #111; color: #fff;
 }
 .btn-stop, .btn-stop-line {
   background: var(--bg); border-color: var(--quiet); color: var(--ink);
@@ -128,16 +124,16 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .sum:hover, .sum:active { background: transparent; }
 .s-icon { flex: none; width: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--ink); }
 .type-icon { width: 28px; height: 28px; display: block; }
-.s-day { font-size: 12px; font-weight: 500; color: var(--tq-deep); letter-spacing: .02em; line-height: 1; }
+.s-day { font-size: 12px; font-weight: 500; color: #333; letter-spacing: .02em; line-height: 1; }
 .s-mid { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
 .s-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 400; color: var(--ink); }
-.s-due { font-size: 15px; font-weight: 400; color: var(--ink); }
-.s-status { font-size: 15px; font-weight: 400; color: var(--mute); }
+.s-due { font-size: 15px; font-weight: 400; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.s-status { font-size: 15px; font-weight: 400; color: var(--mute); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .s-status.ok { color: var(--go-text); }
 .s-status.new { color: var(--new); }
 .s-status.bad { color: var(--danger); }
 .ticks { width: 26px; height: 14px; display: inline-block; vertical-align: -2px; margin-right: 6px; }
-.s-right { flex: none; min-width: 72px; text-align: right; display: flex; align-items: center; justify-content: flex-end; gap: 6px; color: var(--ink); font-weight: 400; padding-right: 2px; }
+.s-right { flex: none; min-width: 0; text-align: right; display: flex; align-items: center; justify-content: flex-end; gap: 6px; color: var(--ink); font-weight: 400; padding-right: 0; }
 .people-icon { width: 26px; height: 26px; display: block; color: var(--ink); }
 .chev-btn {
   flex: none; width: 104px; min-height: 88px; margin-left: 8px; background: transparent; border: 0;
@@ -145,6 +141,26 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 }
 .chev-btn:hover, .chev-btn:active { background: transparent; color: var(--ink); }
 .chev { width: 52px; height: 52px; display: block; }
+.row-acts {
+  display: flex; align-items: center; flex: none;
+  gap: 24px; padding: 0 0 0 24px;
+}
+.decide-btn {
+  box-sizing: border-box;
+  flex: none; width: 52px; height: 52px; padding: 0; margin: 0;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  -webkit-tap-highlight-color: transparent; transition: none;
+}
+.decide-icon { width: 22px; height: 22px; display: block; }
+.decide-no {
+  background: transparent; border: 1.5px solid #555; color: #333;
+}
+.decide-no:hover, .decide-no:active { background: transparent; border-color: #555; color: #333; }
+.decide-yes {
+  background: #111; border: 1.5px solid #111; color: #fff;
+}
+.decide-yes:hover, .decide-yes:active { background: #111; border-color: #111; color: #fff; }
+.top:has(.row-acts) .chev-btn { width: 64px; min-width: 64px; margin-left: 24px; }
 .actions.under { margin: 12px 112px 0 16px; padding: 0 0 18px; justify-content: flex-end; }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 16px; }
 .actions .btn {
@@ -177,7 +193,7 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .kv { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 10px 0; font-size: 16px; }
 .kv-l { color: var(--mute); font-weight: 400; }
 .kv-v { color: var(--ink); text-align: right; }
-.kv.fulfill .kv-v { color: var(--tq-deep); }
+.kv.fulfill .kv-v { color: var(--ink); }
 .rule { height: 1px; background: var(--line); margin: 6px 0; border: 0; }
 .cust { padding: 12px 0 8px; }
 .cust-name { font-size: 18px; font-weight: 400; color: var(--ink); margin-bottom: 4px; }
@@ -199,6 +215,7 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .pay-paid { color: var(--go-text); }
 .detail-actions { padding: 8px 18px calc(32px + env(safe-area-inset-bottom, 0px)); margin-top: 8px; justify-content: flex-start; }
 .detail-actions .btn { min-height: 44px; }
+.detail-actions .row-acts { padding: 0; }
 
 /* Settings + menu. Settings home is an iOS-style list, not pill buttons. */
 .settings { display: flex; flex-direction: column; gap: 0; margin-top: 0; padding: 0; }
@@ -228,14 +245,14 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .menu-row .m-name { flex: 1; font-size: 20px; }
 .menu-row .m-state { font-size: 16px; color: var(--danger); }
 .menu-row.off .m-name { color: var(--mute); text-decoration: line-through; }
-.switch { flex: none; position: relative; width: 84px; height: 44px; border-radius: 22px; background: var(--go); transition: none; }
+.switch { flex: none; position: relative; width: 84px; height: 44px; border-radius: 22px; background: #111; transition: none; }
 .switch::after { content: ""; position: absolute; top: 4px; left: 44px; width: 36px; height: 36px; border-radius: 50%; background: #fff; transition: none; }
 .menu-row.off .switch { background: #c4c4c4; }
 .menu-row.off .switch::after { left: 4px; }
 .menu-row.busy { opacity: .5; }
 
 /* Modal + numpad */
-.modal { position: fixed; inset: 0; background: rgba(21,35,37,.4); display: flex; align-items: center; justify-content: center; z-index: 10; }
+.modal { position: fixed; inset: 0; background: rgba(17,17,17,.4); display: flex; align-items: center; justify-content: center; z-index: 10; }
 .modal-box { background: var(--bg); border-radius: 16px; padding: 24px; width: min(520px, 94vw); max-height: 96vh; overflow-y: auto; text-align: center; }
 .modal-box.is-form { text-align: left; }
 .modal-box h3 { font-size: 22px; font-weight: 500; margin-bottom: 12px; }
@@ -274,6 +291,20 @@ button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
   .modal-box:has(.np-keys) { width: min(520px, 94vw); }
 }
 
+@media (max-width: 400px) {
+  .sum { gap: 6px; padding-left: 8px; font-size: 16px; }
+  .s-icon { width: 36px; }
+  .type-icon { width: 24px; height: 24px; }
+  .s-name { font-size: 16px; }
+  .s-due, .s-status { font-size: 13px; }
+  .chev-btn { width: 56px; min-width: 56px; margin-left: 4px; }
+  .chev { width: 40px; height: 40px; }
+  .row-acts { gap: 16px; padding-left: 16px; }
+  .decide-btn { width: 48px; height: 48px; }
+  .decide-icon { width: 20px; height: 20px; }
+  .top:has(.row-acts) .chev-btn { width: 48px; min-width: 48px; margin-left: 16px; }
+  .top:has(.row-acts) .chev { width: 36px; height: 36px; }
+}
 @media (max-width: 960px) {
   .actions.under { margin: 12px 112px 0 16px; }
   .detail-head { padding: 4px 10px 8px 4px; }
