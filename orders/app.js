@@ -373,8 +373,6 @@
   var PHONE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.8 3.5h3.1l.8 3.4-1.8 1.5a12.4 12.4 0 0 0 6.7 6.7l1.5-1.8 3.4.8v3.1c0 .8-.3 1.5-1.1 1.8A16.2 16.2 0 0 1 3.5 6.6c.3-.8 1-1.1 1.8-1.1z"/></svg>';
   var MAIL_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M3.5 6h17v12h-17V6z"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M3.8 6.6L12 13.2 20.2 6.6"/></svg>';
   var BACK_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M15 5l-8 7 8 7"/></svg>';
-  var CROSS_ICON = '<svg class="decide-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 6.5L6.5 17.5M6.5 6.5l11 11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>';
-  var TICK_ICON = '<svg class="decide-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l5 5L19.5 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var TICKS = '<svg class="ticks" viewBox="0 0 28 14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M1.6 7.4l3.8 3.8L13.2 2.4"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M11.6 7.4l3.8 3.8L23.2 2.4"/></svg>';
 
   function orderStatus(o) {
@@ -430,9 +428,9 @@
       '<span class="s-mid"><span class="s-name">' + esc(name) + "</span>" +
       (due ? '<span class="s-due">' + esc(due) + "</span>" : "") +
       statusHtml(st, "s-status") + "</span></button>" +
-      (acts || "") +
       '<button type="button" class="s-right" data-act="expand" data-id="' + id + '">' + rightHtml + "</button>" +
-      '<button type="button" class="chev-btn" data-act="expand" data-id="' + id + '" aria-label="Show details">' + CHEVRON + "</button></div>";
+      (acts || '<button type="button" class="chev-btn" data-act="expand" data-id="' + id + '" aria-label="Show details">' + CHEVRON + "</button>") +
+      "</div>";
   }
 
   function kv(label, valueHtml, extra) {
@@ -475,8 +473,8 @@
     var d = kind === "booking" ? "bk-decline" : "decline";
     var a = kind === "booking" ? "bk-accept" : "accept";
     return '<div class="row-acts">' +
-      '<button type="button" class="decide-btn decide-no" data-act="' + d + '" data-id="' + id + '" aria-label="Decline">' + CROSS_ICON + "</button>" +
-      '<button type="button" class="decide-btn decide-yes" data-act="' + a + '" data-id="' + id + '" aria-label="Accept">' + TICK_ICON + "</button>" +
+      '<button type="button" class="decide-btn decide-no" data-act="' + d + '" data-id="' + id + '" aria-label="Decline">Decline</button>' +
+      '<button type="button" class="decide-btn decide-yes" data-act="' + a + '" data-id="' + id + '" aria-label="Accept">Accept</button>' +
       "</div>";
   }
 
