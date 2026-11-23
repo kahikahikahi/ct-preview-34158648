@@ -375,7 +375,7 @@
     // "No internet" only after a real offline event or 20s of failed requests. No other status text.
     if (isUnreachable()) { c.className = "conn bad"; c.textContent = "No internet"; return; }
     if (!state.accepting) { c.className = "conn bad"; c.textContent = "Not receiving orders"; return; }
-    c.className = "conn ok"; c.textContent = "Live";
+    c.className = "conn ok"; c.textContent = "LIVE";
   }
 
   // ---------- rendering ----------
