@@ -133,12 +133,27 @@
   function errMsg(e) { return (e && e.message) ? e.message : "Something went wrong. Please try again."; }
 
   function show(screen) {
-    ["login", "denied", "start", "app"].forEach(function (s) { $("screen-" + s).hidden = s !== screen; });
+    ["login", "denied", "app"].forEach(function (s) { $("screen-" + s).hidden = s !== screen; });
   }
 
   // ---------- sound (Web Audio, no files) ----------
-  var audio = null, master = null;
-  function unlockAudio() {
+  var audio = null, master = null, audioUnlockBound = false;
+  function onAudioGesture() { unlockAudio(true); }
+  function armSilentAudioUnlock() {
+    if (audioUnlockBound) return;
+    audioUnlockBound = true;
+    document.addEventListener("pointerdown", onAudioGesture, true);
+    document.addEventListener("keydown", onAudioGesture, true);
+    document.addEventListener("touchstart", onAudioGesture, true);
+  }
+  function disarmSilentAudioUnlock() {
+    if (!audioUnlockBound) return;
+    audioUnlockBound = false;
+    document.removeEventListener("pointerdown", onAudioGesture, true);
+    document.removeEventListener("keydown", onAudioGesture, true);
+    document.removeEventListener("touchstart", onAudioGesture, true);
+  }
+  function unlockAudio(fromGesture) {
     var AC = window.AudioContext || window.webkitAudioContext;
     if (!AC) return;
     if (!audio) {
@@ -147,7 +162,21 @@
       master = audio.createGain(); master.gain.value = 1;
       master.connect(comp); comp.connect(audio.destination);
     }
-    if (audio.state === "suspended") audio.resume();
+    function after(ok) {
+      if (ok && audio.state === "running") {
+        disarmSilentAudioUnlock();
+        if (fromGesture || ringKind) { ringKind = ""; updateRinging(); }
+      } else {
+        armSilentAudioUnlock();
+      }
+    }
+    if (audio.state === "suspended") {
+      var p = audio.resume();
+      if (p && p.then) p.then(function () { after(true); }).catch(function () { after(false); });
+      else after(audio.state === "running");
+    } else {
+      after(audio.state === "running");
+    }
     tone(0, 440, 0.05, 0.001, "sine"); // silent blip to fully unlock on iOS/Android
   }
   function tone(at, freq, dur, vol, type) {
@@ -768,25 +797,25 @@
         // role may have just been added: refresh the token once before saying no
         return sb.auth.refreshSession().then(function (r) {
           var s = r.data && r.data.session;
-          if (isStaff(s)) { state.session = s; show(state.started ? "app" : "start"); }
+          if (isStaff(s)) { state.session = s; startApp(); }
           else if (r.error && isTransientAuthError(r.error)) {
-            show(state.started ? "app" : "start");
+            startApp();
             scheduleAuthRetry();
           }
           else show("denied");
         }).catch(function (e) {
           if (isTransientAuthError(e) || hasStoredSession()) {
-            show(state.started ? "app" : "start");
+            startApp();
             scheduleAuthRetry();
           } else show("denied");
         });
       }
-      show(state.started ? "app" : "start");
+      startApp();
       return;
     }
     if (hasStoredSession()) {
       if (!state.session) state.session = readStoredAuth();
-      show(state.started ? "app" : "start");
+      startApp();
       scheduleAuthRetry();
       return;
     }
@@ -794,11 +823,12 @@
     show("login");
   }
 
-  $("start-btn").addEventListener("click", function () {
-    unlockAudio();
-    requestWakeLock();
-    state.started = true;
+  function startApp() {
     show("app");
+    if (state.started) return;
+    state.started = true;
+    requestWakeLock();
+    unlockAudio();
     setTab(state.tab);
     tick(); clockTimer = setInterval(tick, 15000);
     loadMenu();
@@ -806,7 +836,7 @@
     refreshAuth(false);
     refresh();
     pollTimer = setInterval(function () { refresh(); }, POLL_MS);
-  });
+  }
   function tick() { setConn(); }
 
   function onAppVisible() { refreshAuth(false); }

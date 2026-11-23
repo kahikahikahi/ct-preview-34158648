@@ -16,7 +16,7 @@ a { color: inherit; }
 h1, h2, h3 { margin: 0; font-weight: 500; }
 
 .screen { min-height: 100%; }
-.center, #screen-login, #screen-denied, #screen-start { background: #fff; }
+.center, #screen-login, #screen-denied { background: #fff; }
 .center { display: flex; align-items: center; justify-content: center; padding: 24px; min-height: 100vh; text-align: center; }
 
 /* Buttons */
@@ -43,12 +43,6 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .login input:focus { border-width: 2px; padding: 0 13px; }
 .error { color: #b91c1c; margin: 0; }
 .denied { font-size: 22px; text-align: center; margin: 8px 0; }
-
-/* Tap to start */
-.start-btn { display: flex; flex-direction: column; align-items: center; gap: 16px; background: #fff; border: 0; padding: 40px; }
-.start-btn img { width: 120px; height: 120px; }
-.start-title { font-size: 40px; font-weight: 600; }
-.start-sub { font-size: 18px; color: #333; }
 
 /* App layout */
 .app { display: flex; flex-direction: column; height: 100vh; }
