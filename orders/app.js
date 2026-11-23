@@ -366,7 +366,7 @@
     return o.payment_status === "paid" ? '<span class="pay-paid">Paid at counter</span>' : "Pay at counter";
   }
 
-  var CHEVRON = '<svg class="chev" viewBox="0 0 24 24" width="52" height="52" aria-hidden="true"><path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var CHEVRON = '<svg class="chev" viewBox="0 0 24 24" width="52" height="52" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var TABLE_ICON = '<svg class="type-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 6h18v2.4H3V6zm2.4 3.6h2.2V20H5.4V9.6zm13 0h2.2V20h-2.2V9.6zM9.2 9.6h5.6v2H9.2v-2z"/></svg>';
   var BAG_ICON = '<svg class="type-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M8 7V6a4 4 0 0 1 8 0v1h3v14H5V7h3zm2-1a2 2 0 0 1 4 0v1h-4V6z"/></svg>';
   var PEOPLE_ICON = '<svg class="people-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>';
@@ -476,14 +476,14 @@
   }
 
   function orderCard(o) {
-    var html = '<article class="card' + (state.detail === o.id ? ' is-open' : '') + '">' +
+    var html = '<article class="card">' +
       summary(o.id, BAG_ICON, orderDay(o), o.customer_name, orderStatus(o), esc(money(o.total_cents)), orderDue(o));
     if (o.status === "new") html += acceptDecline("order", o.id);
     return html + "</article>";
   }
 
   function bookingCard(b) {
-    var html = '<article class="card' + (state.detail === b.id ? ' is-open' : '') + '">' +
+    var html = '<article class="card">' +
       summary(b.id, TABLE_ICON, bookingDayShort(b), b.name, bookingStatus(b), esc(String(b.party_size)) + PEOPLE_ICON, bookingDue(b));
     if (b.status === "pending") html += acceptDecline("booking", b.id);
     return html + "</article>";
@@ -552,13 +552,12 @@
     var detailEl = $("order-detail"), listEl = $("orders-list");
     var d = state.detail ? (findOrder(state.detail) || findBooking(state.detail)) : null;
     if (state.detail && !d) state.detail = null;
-    var split = !!(state.tab === "current" && state.detail && d && window.matchMedia("(min-width: 1180px)").matches);
-    document.body.classList.toggle("split", split);
+    document.body.classList.remove("split");
     if (state.tab === "current" && state.detail && d) {
-      listEl.hidden = split ? false : true;
+      listEl.hidden = true;
       detailEl.hidden = false;
       detailEl.innerHTML = findOrder(state.detail) ? orderDetail(d) : bookingDetail(d);
-      if (!split && detailEl.parentNode) detailEl.parentNode.scrollTop = 0;
+      if (detailEl.parentNode) detailEl.parentNode.scrollTop = 0;
     } else if (listEl && detailEl) {
       listEl.hidden = false;
       detailEl.hidden = true;
