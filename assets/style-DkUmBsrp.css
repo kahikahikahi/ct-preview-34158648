@@ -471,3 +471,6 @@ html body .op .op-soldout,html body .op-mback .op-soldout{color:#767676!importan
 html body .s-info .s-btns .btn-menu{order:1!important}
 html body .s-info .s-btns .btn-order{order:2!important}
 html body .s-info .s-btns .btn-book,html body .s-info .s-btns a.btn.btn-book{order:3!important}
+
+/* Info lines: drag selects text instead of dragging the link */
+html body .s-info a.s-link{-webkit-user-drag:none!important;user-select:text!important;-webkit-user-select:text!important}
