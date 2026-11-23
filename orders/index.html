@@ -13,9 +13,9 @@
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-180.png" />
-  <link rel="stylesheet" href="./app.css?v=8" />
+  <link rel="stylesheet" href="./app.css?v=9" />
   <script defer src="./supabase-js-2.119.2.min.js"></script>
-  <script defer src="./app.js?v=8"></script>
+  <script defer src="./app.js?v=9"></script>
 </head>
 <body>
   <!-- Login -->
@@ -50,12 +50,11 @@
   <section id="screen-app" class="screen app" hidden>
     <header class="topbar">
       <img src="./eye.png" alt="Cafe Turquoise" class="top-logo" width="44" height="44" />
-      <nav class="tabs" role="tablist">
-        <button type="button" class="tab" data-tab="current" role="tab">Orders <span class="count" id="count-orders" hidden></span></button>
-        <button type="button" class="tab" data-tab="settings" role="tab">Settings</button>
-      </nav>
+      <span id="conn" class="conn">Connecting…</span>
       <div class="top-right">
-        <span id="conn" class="conn">Connecting…</span>
+        <button type="button" class="cog-btn" id="settings-btn" aria-label="Settings">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11.1 2.5h1.8l.35 2.4c.5.14 1 .36 1.44.64l2.2-1.05 1.27 1.27-1.05 2.2c.28.45.5.94.64 1.44l2.4.35v1.8l-2.4.35c-.14.5-.36 1-.64 1.44l1.05 2.2-1.27 1.27-2.2-1.05c-.45.28-.94.5-1.44.64l-.35 2.4h-1.8l-.35-2.4c-.5-.14-1-.36-1.44-.64l-2.2 1.05-1.27-1.27 1.05-2.2A6.7 6.7 0 0 1 5.6 13.3L3.2 12.95v-1.8l2.4-.35c.14-.5.36-1 .64-1.44l-1.05-2.2 1.27-1.27 2.2 1.05c.45-.28.94-.5 1.44-.64L11.1 2.5zM12 9.2A2.8 2.8 0 1 0 14.8 12 2.8 2.8 0 0 0 12 9.2z"/></svg>
+        </button>
         <button type="button" class="btn btn-small" data-action="signout">Log out</button>
       </div>
     </header>
@@ -80,13 +79,17 @@
       </div>
       <div class="pane" id="pane-settings" hidden>
         <div class="wrap">
+          <div class="settings-head">
+          <button type="button" class="back-btn" id="settings-back-btn" aria-label="Back">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M15 5l-8 7 8 7"/></svg>
+          </button>
+          </div>
           <div id="settings-main" class="settings">
             <button type="button" class="btn btn-big" id="edit-menu-btn">Edit menu</button>
             <button type="button" class="btn btn-big btn-stop-line" id="stop-btn">Stop receiving orders</button>
             <p id="stop-note" class="hint"></p>
           </div>
           <div id="settings-menu" hidden>
-            <button type="button" class="link-btn" id="menu-back-btn">Back</button>
             <p class="hint">Switch an item off when it runs out. Customers can't order it until you switch it back on.</p>
             <div id="menu-list" class="menu-list"></div>
           </div>

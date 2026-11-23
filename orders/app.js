@@ -452,8 +452,7 @@
       $("list-progress").parentNode.hidden = !prog.length;
       $("list-booked").parentNode.hidden = !booked.length;
     }
-    var n = nw.length + pb.length, co = $("count-orders");
-    co.hidden = !n; co.textContent = n;
+    var n = nw.length + pb.length;
     document.title = (n ? "(" + n + ") " : "") + "Cafe Turquoise Orders";
 
     var detailEl = $("order-detail"), listEl = $("orders-list");
@@ -505,7 +504,6 @@
   function setTab(tab) {
     state.tab = tab;
     if (tab !== "current") state.detail = null;
-    document.querySelectorAll(".tab").forEach(function (t) { t.classList.toggle("active", t.dataset.tab === tab); });
     ["current", "settings"].forEach(function (p) { $("pane-" + p).hidden = p !== tab; });
     if (tab === "settings") { state.settingsView = "main"; refresh(); }
     render();
@@ -623,9 +621,12 @@
       if (t.dataset.cf === "yes" && fn) fn();
       return;
     }
-    if (t.dataset.tab) return setTab(t.dataset.tab);
+    if (t.id === "settings-btn") return setTab("settings");
+    if (t.id === "settings-back-btn") {
+      if (state.settingsView === "menu") { state.settingsView = "main"; return render(); }
+      return setTab("current");
+    }
     if (t.id === "edit-menu-btn") { state.settingsView = "menu"; loadMenu(); return render(); }
-    if (t.id === "menu-back-btn") { state.settingsView = "main"; return render(); }
     if (t.id === "stop-btn") {
       if (!state.accepting) return setAccepting(true);
       return confirmBox("Stop receiving orders?", "The website won't take new orders until you start again.",
