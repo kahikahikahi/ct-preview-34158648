@@ -8,6 +8,7 @@
   var SUPABASE_KEY = "sb_publishable_aXCPQakkbNccpChsgDGfWw_4XqKNZ2H";
   var TZ = "Pacific/Auckland";
   var POLL_MS = 30000;
+  var PREP_MINUTES = 20;
   var QUICK_MINUTES = [10, 15, 20, 30, 45];
 
   var AUTH_STORAGE_KEY = "ct-orders-auth";
@@ -31,9 +32,9 @@
     accepting: true,
     orders: [],
     bookings: [],
-    completed: [],
-    completedHasMore: false,
-    completedLoading: false,
+    dueCollected: [],
+    dueHasMore: false,
+    dueLoading: false,
     detailFrom: null,
     menu: [],
     groups: {},        // option group key -> name
@@ -239,9 +240,29 @@
 
   // ---------- data ----------
   function newOrders() { return state.orders.filter(function (o) { return o.status === "new"; }); }
+  function orderDueAt(o) {
+    if (o.ready_at) return new Date(o.ready_at);
+    if (o.pickup_type === "later" && o.pickup_at) return new Date(o.pickup_at);
+    if (o.created_at) return new Date(new Date(o.created_at).getTime() + PREP_MINUTES * 60000);
+    return null;
+  }
+  function isDueNow(o) {
+    if (o.status === "ready" || o.status === "collected") return true;
+    if (o.status === "accepted" || o.status === "preparing") {
+      var t = orderDueAt(o);
+      return !!(t && t.getTime() <= Date.now());
+    }
+    return false;
+  }
   function progressOrders() {
-    return state.orders.filter(function (o) { return o.status === "accepted" || o.status === "preparing" || o.status === "ready"; })
-      .sort(function (a, b) { return new Date(a.ready_at || a.pickup_at || a.created_at) - new Date(b.ready_at || b.pickup_at || b.created_at); });
+    return state.orders.filter(function (o) {
+      return (o.status === "accepted" || o.status === "preparing") && !isDueNow(o);
+    }).sort(function (a, b) {
+      return (orderDueAt(a) || 0) - (orderDueAt(b) || 0);
+    });
+  }
+  function liveDueOrders() {
+    return state.orders.filter(isDueNow);
   }
   function pendingBookings() { return state.bookings.filter(function (b) { return b.status === "pending"; }); }
   function upcomingBookings() {
@@ -426,13 +447,15 @@
     var dt = when instanceof Date ? when : new Date(when);
     var time = fmtTime(dt);
     if (!time) return "";
-    if (isTodayNZ(dt)) return "Due " + time;
-    return "Due " + weekdayShort(dt) + " " + time;
+    var p = {};
+    new Intl.DateTimeFormat("en-NZ", { timeZone: TZ, weekday: "short", day: "numeric", month: "short" })
+      .formatToParts(dt).forEach(function (x) { p[x.type] = x.value; });
+    var wk = weekdayShort(dt) || (p.weekday || "");
+    return "Due " + wk + " " + (p.day || "") + " " + (p.month || "") + ", " + time;
   }
   function orderDue(o) {
-    if (o.pickup_type === "later" && (o.ready_at || o.pickup_at)) return dueLabel(o.ready_at || o.pickup_at);
-    if (o.status !== "new" && o.ready_at) return dueLabel(o.ready_at);
-    return "ASAP";
+    var when = orderDueAt(o);
+    return when ? dueLabel(when) : "";
   }
   function bookingDue(b) {
     return dueLabel(bookingDateTime(b));
@@ -446,9 +469,14 @@
   function dueLine(due, pay) {
     if (!due && !pay) return "";
     var html = '<span class="s-due">';
-    if (due) html += '<span class="s-due-text">' + esc(due) + "</span>";
-    if (due && pay) html += '<span class="s-pay-sep"> · </span>';
-    if (pay) html += '<span class="s-pay' + (pay.paid ? " ok" : " bad") + '">' + esc(pay.text) + "</span>";
+    if (due) {
+      var cut = due.lastIndexOf(", ");
+      if (cut > 0) html += '<span class="s-due-date">' + esc(due.slice(0, cut + 1)) + "</span> " +
+        '<span class="s-due-time">' + esc(due.slice(cut + 2)) + "</span>";
+      else html += '<span class="s-due-text">' + esc(due) + "</span>";
+    }
+    if (pay) html += (due ? " " : "") + '<span class="s-pay-bit">' + (due ? '<span class="s-pay-sep">· </span>' : "") +
+      '<span class="s-pay' + (pay.paid ? " ok" : " bad") + '">' + esc(pay.text) + "</span></span>";
     return html + "</span>";
   }
   function summary(id, icon, day, name, st, rightHtml, due, acts, pay) {
@@ -521,21 +549,10 @@
       "</article>";
   }
 
-  function completedWhen(o) {
-    var dt = o.updated_at || o.accepted_at || o.created_at;
-    if (!dt) return "";
-    var d = dt instanceof Date ? dt : new Date(dt);
-    var time = fmtTime(d);
-    if (isTodayNZ(d)) return "Today " + time;
-    var p = {};
-    new Intl.DateTimeFormat("en-NZ", { timeZone: TZ, weekday: "short", day: "numeric", month: "short" })
-      .formatToParts(d).forEach(function (x) { p[x.type] = x.value; });
-    return (p.weekday || "") + " " + (p.day || "") + " " + (p.month || "") + ", " + time;
-  }
-  function completedCard(o) {
-    var when = o.updated_at || o.created_at;
+  function dueCard(o) {
+    var when = orderDueAt(o) || o.updated_at || o.created_at;
     return '<article class="card">' +
-      summary(o.id, BAG_ICON, dayShort(when) || orderDay(o), o.customer_name, orderStatus(o), esc(money(o.total_cents)), completedWhen(o), "", payShort(o)) +
+      summary(o.id, BAG_ICON, dayShort(when) || orderDay(o), o.customer_name, orderStatus(o), esc(money(o.total_cents)), orderDue(o), "", payShort(o)) +
       "</article>";
   }
 
@@ -553,8 +570,6 @@
     var actions = "";
     if (o.status === "new") {
       actions = acceptDecline("order", o.id);
-    } else if (o.status === "accepted" || o.status === "preparing" || o.status === "ready") {
-      actions = '<button type="button" class="btn btn-go btn-sq" data-act="collected" data-id="' + o.id + '">Picked up</button>';
     }
     return detailShell("Pickup", "Pickup", st, body, actions);
   }
@@ -620,13 +635,13 @@
   function renderSettings() {
     $("settings-main").hidden = state.settingsView !== "main";
     $("settings-menu").hidden = state.settingsView !== "menu";
-    $("settings-completed").hidden = state.settingsView !== "completed";
+    $("settings-due").hidden = state.settingsView !== "due";
     var title = $("settings-title");
-    if (title) title.hidden = state.settingsView !== "completed";
-    var more = $("completed-more");
-    if (more) more.hidden = !(state.settingsView === "completed" && state.completedHasMore);
-    if (state.settingsView === "completed") {
-      fill("list-completed", state.completed.map(completedCard).join(""), "No completed orders.");
+    if (title) title.hidden = state.settingsView !== "due";
+    var more = $("due-more");
+    if (more) more.hidden = !(state.settingsView === "due" && state.dueHasMore);
+    if (state.settingsView === "due") {
+      fill("list-due", dueList().map(dueCard).join(""), "No due orders.");
     }
     var b = $("stop-btn");
     b.className = "settings-row" + (state.accepting ? "" : " off");
@@ -660,33 +675,46 @@
     render();
   }
 
-  var COMPLETED_PAGE = 50;
-  function loadCompleted(append) {
-    if (state.completedLoading) return;
-    state.completedLoading = true;
-    var from = append ? state.completed.length : 0;
+  var DUE_PAGE = 50;
+  function dueList() {
+    var seen = {}, rows = [];
+    liveDueOrders().concat(state.dueCollected).forEach(function (o) {
+      if (seen[o.id]) return;
+      seen[o.id] = true;
+      rows.push(o);
+    });
+    rows.sort(function (a, b) {
+      var da = orderDueAt(a), db = orderDueAt(b);
+      return (db ? db.getTime() : 0) - (da ? da.getTime() : 0);
+    });
+    return rows;
+  }
+  function loadDue(append) {
+    if (state.dueLoading) return;
+    state.dueLoading = true;
+    var from = append ? state.dueCollected.length : 0;
     return sb.from("orders").select("*, order_items(*)")
       .eq("status", "collected")
       .order("updated_at", { ascending: false })
-      .range(from, from + COMPLETED_PAGE - 1)
+      .range(from, from + DUE_PAGE - 1)
       .then(function (r) {
-        state.completedLoading = false;
+        state.dueLoading = false;
         if (r.error) throw r.error;
         var rows = r.data || [];
-        state.completed = append ? state.completed.concat(rows) : rows;
-        state.completedHasMore = rows.length === COMPLETED_PAGE;
+        state.dueCollected = append ? state.dueCollected.concat(rows) : rows;
+        state.dueHasMore = rows.length === DUE_PAGE;
         render();
       }).catch(function (e) {
-        state.completedLoading = false;
+        state.dueLoading = false;
         toast(errMsg(e), true);
         render();
       });
   }
-  function openCompleted() {
-    state.settingsView = "completed";
+  function openDue() {
+    state.settingsView = "due";
     state.detail = null;
     state.detailFrom = null;
-    loadCompleted(false);
+    loadDue(false);
     render();
   }
 
@@ -699,25 +727,28 @@
     numpad = { order: o, mins: "", showKeys: o.pickup_type !== "later" };
     renderNumpad();
   }
+  var ROW_CHEV = '<svg class="settings-chev" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>';
   function renderNumpad() {
     var o = numpad.order, n = parseInt(numpad.mins, 10), ok = n >= 1 && n <= 300;
-    var html = "<h3>Accept " + esc(o.customer_name) + "'s order</h3>";
+    var pickupBit = o.pickup_type === "later" && o.pickup_at ? "Pickup " + fmtTime(o.pickup_at) : "ASAP";
+    var html = '<div class="modal-body"><h3>Accept order</h3>' +
+      '<p class="sub">' + esc(o.customer_name) + " · " + pickupBit + "</p>";
     if (o.pickup_type === "later" && !numpad.showKeys) {
-      html += '<p class="sub">' + esc(o.customer_name) + " chose pickup at " + fmtTime(o.pickup_at) + ".</p>" +
-        '<div class="modal-actions"><button type="button" class="btn" data-np="cancel">Cancel</button>' +
-        '<button type="button" class="btn btn-go" data-np="later">Accept for ' + fmtTime(o.pickup_at) + "</button></div>" +
-        '<button type="button" class="link-btn" data-np="keys">Change time</button>';
+      html += "</div>";
+      html += '<button type="button" class="modal-row" data-np="keys"><span>Change time</span>' + ROW_CHEV + "</button>";
+      html += '<div class="modal-actions"><button type="button" class="btn" data-np="cancel">Cancel</button>' +
+        '<button type="button" class="btn btn-go" data-np="later">Accept</button></div>';
       openModal(html); return;
     }
+    if (ok) html += '<p class="sub">Ready at ' + fmtTime(new Date(Date.now() + n * 60000)) + "</p>";
     html += '<div class="np-display"><span class="np-mins">' + (numpad.mins || "0") + "</span><span class=\"np-unit\">min</span></div>";
     html += '<div class="np-keys">' + [1, 2, 3, 4, 5, 6, 7, 8, 9].map(function (k) {
       return '<button type="button" class="btn" data-np="key" data-v="' + k + '">' + k + "</button>";
     }).join("") + '<button type="button" class="btn" data-np="clear">Clear</button>' +
       '<button type="button" class="btn" data-np="key" data-v="0">0</button>' +
-      '<button type="button" class="btn" data-np="back" aria-label="Delete">⌫</button></div>';
+      '<button type="button" class="btn" data-np="back" aria-label="Delete">⌫</button></div></div>';
     html += '<div class="modal-actions"><button type="button" class="btn" data-np="cancel">Cancel</button>' +
-      '<button type="button" class="btn btn-go" data-np="ok"' + (ok ? "" : " disabled") + ">" +
-      (ok ? "Accept, ready at " + fmtTime(new Date(Date.now() + n * 60000)) : "Accept") + "</button></div>";
+      '<button type="button" class="btn btn-go" data-np="ok"' + (ok ? "" : " disabled") + ">Accept</button></div>";
     openModal(html);
   }
 
@@ -742,9 +773,9 @@
   }
 
   function confirmBox(title, text, yes, onYes) {
-    openModal("<h3>" + esc(title) + '</h3><p class="sub">' + esc(text) + "</p>" +
+    openModal('<div class="modal-body"><h3>' + esc(title) + '</h3><p class="sub">' + esc(text) + "</p></div>" +
       '<div class="modal-actions"><button type="button" class="btn" data-cf="no">Cancel</button>' +
-      '<button type="button" class="btn btn-stop" data-cf="yes">' + esc(yes) + "</button></div>");
+      '<button type="button" class="btn btn-go" data-cf="yes">' + esc(yes) + "</button></div>");
     confirmYes = onYes;
   }
   var confirmYes = null;
@@ -759,10 +790,11 @@
     var note = hasCustomerEmail(row.email)
       ? "We'll email them to let them know."
       : "This " + noun + " has no email, so they won't be notified automatically.";
-    openModal("<h3>" + esc("Decline " + name + "'s " + noun + "?") + "</h3>" +
+    openModal('<div class="modal-body"><h3>Decline ' + noun + "</h3>" +
+      '<p class="sub">' + esc(name) + "</p>" +
       '<p class="sub">' + esc(note) + "</p>" +
       '<label class="msg-label" for="decline-msg">Message to customer (optional)</label>' +
-      '<textarea id="decline-msg" class="msg-box" maxlength="500" rows="4"></textarea>' +
+      '<textarea id="decline-msg" class="msg-box" maxlength="500" rows="4"></textarea></div>' +
       '<div class="modal-actions"><button type="button" class="btn" data-dc="no">Cancel</button>' +
       '<button type="button" class="btn btn-go" data-dc="yes" data-kind="' + kind + '" data-id="' + row.id + '">Send / Decline</button></div>');
     $("modal-box").classList.add("is-form");
@@ -811,7 +843,7 @@
   }
   function findOrder(id) {
     return state.orders.filter(function (o) { return o.id === id; })[0] ||
-      state.completed.filter(function (o) { return o.id === id; })[0];
+      state.dueCollected.filter(function (o) { return o.id === id; })[0];
   }
   function findBooking(id) { return state.bookings.filter(function (b) { return b.id === id; })[0]; }
 
@@ -846,14 +878,14 @@
     }
     if (t.id === "settings-btn") return setTab("settings");
     if (t.id === "settings-back-btn") {
-      if (state.settingsView === "menu" || state.settingsView === "completed") {
+      if (state.settingsView === "menu" || state.settingsView === "due") {
         state.settingsView = "main";
         return render();
       }
       return setTab("current");
     }
-    if (t.id === "completed-btn") return openCompleted();
-    if (t.id === "completed-more") return loadCompleted(true);
+    if (t.id === "due-btn") return openDue();
+    if (t.id === "due-more") return loadDue(true);
     if (t.id === "edit-menu-btn") { state.settingsView = "menu"; loadMenu(); return render(); }
     if (t.id === "stop-btn") {
       if (!state.accepting) return setAccepting(true);
@@ -863,32 +895,21 @@
     var act = t.dataset.act, id = t.dataset.id, o, b;
     if (act === "back") {
       state.detail = null;
-      if (state.detailFrom === "completed") {
+      if (state.detailFrom === "due") {
         state.detailFrom = null;
         state.tab = "settings";
-        state.settingsView = "completed";
+        state.settingsView = "due";
       }
       return render();
     }
     if (act === "expand") {
-      state.detailFrom = (state.tab === "settings" && state.settingsView === "completed") ? "completed" : null;
+      state.detailFrom = (state.tab === "settings" && state.settingsView === "due") ? "due" : null;
       state.detail = id;
       if (findBooking(id)) markSeen(id);
       return render();
     }
     if (act === "accept" && (o = findOrder(id))) return openAccept(o);
     if (act === "decline" && (o = findOrder(id))) return openDecline("order", o);
-    if (act === "collected" && (o = findOrder(id))) {
-      t.disabled = true;
-      return sb.from("orders").update({ status: "collected" }).eq("id", o.id)
-        .in("status", ["accepted", "preparing", "ready"]).select("id").then(function (r) {
-          if (r.error) throw r.error;
-          if (!r.data || !r.data.length) throw new Error("This order was changed on another screen.");
-          state.completed = [];
-          toast(o.customer_name + "'s order picked up");
-          refresh();
-        }).catch(function (e) { t.disabled = false; toast(errMsg(e), true); refresh(); });
-    }
     if (act === "bk-accept" && (b = findBooking(id))) {
       markSeen(b.id); t.disabled = true;
       return sb.rpc("accept_booking", { booking_id: b.id }).then(function (r) {
@@ -1051,7 +1072,7 @@
     refresh();
     pollTimer = setInterval(function () { refresh(); }, POLL_MS);
   }
-  function tick() { setConn(); }
+  function tick() { setConn(); if (state.started && state.loadedOnce) render(); }
 
   function onAppVisible() { refreshAuth(false); }
   document.addEventListener("visibilitychange", function () {

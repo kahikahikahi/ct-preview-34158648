@@ -130,6 +130,8 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .s-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 400; color: var(--ink); }
 .s-due { font-size: 15px; font-weight: 400; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .s-pay-sep { color: var(--mute); }
+.s-pay-bit { white-space: nowrap; }
+.s-due-date, .s-due-time, .s-pay-bit { white-space: nowrap; display: inline-block; }
 .s-pay.ok { color: var(--go-text); }
 .s-pay.bad { color: var(--danger); }
 .s-status { font-size: 15px; font-weight: 400; color: var(--mute); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -243,7 +245,7 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .settings-row.off .switch { background: #c4c4c4; }
 .settings-row.off .switch::after { left: 4px; }
 #settings-menu { padding: 8px 18px; }
-#settings-completed { padding: 0 0 24px; }
+#settings-due { padding: 0 0 24px; }
 .more-btn {
   display: block; width: 100%; border: 0; background: transparent;
   padding: 18px; font: inherit; font-size: 16px; font-weight: 400; color: var(--ink);
@@ -272,25 +274,49 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 
 /* Modal + numpad */
 .modal { position: fixed; inset: 0; background: rgba(17,17,17,.4); display: flex; align-items: center; justify-content: center; z-index: 10; }
-.modal-box { background: var(--bg); border-radius: 16px; padding: 24px; width: min(520px, 94vw); max-height: 96vh; overflow-y: auto; text-align: center; }
+.modal-box {
+  background: var(--bg); border-radius: 8px; padding: 0; width: min(400px, 94vw);
+  max-height: 96vh; overflow: hidden; overflow-y: auto; text-align: left;
+}
 .modal-box.is-form { text-align: left; }
-.modal-box h3 { font-size: 22px; font-weight: 500; margin-bottom: 12px; }
-.modal-box .sub { margin: 0 0 14px; font-size: 17px; color: var(--ink); font-weight: 400; }
-.msg-label { display: block; text-align: left; margin: 4px 0 8px; font-size: 16px; color: var(--ink); font-weight: 400; }
+.modal-body { padding: 24px 24px 16px; }
+.modal-box h3 { font-size: 22px; font-weight: 400; margin: 0 0 8px; text-align: left; }
+.modal-box .sub { margin: 0 0 8px; font-size: 17px; color: var(--ink); font-weight: 400; text-align: left; }
+.msg-label { display: block; text-align: left; margin: 12px 0 8px; font-size: 16px; color: var(--ink); font-weight: 400; }
 .msg-box {
-  display: block; width: 100%; min-height: 120px; border: 1.5px solid var(--line); border-radius: var(--radius);
+  display: block; width: 100%; min-height: 120px; border: 1.5px solid var(--line); border-radius: 0;
   padding: 12px; font: inherit; font-size: 18px; resize: vertical; outline: none; background: var(--bg); margin-bottom: 4px;
+  box-sizing: border-box;
 }
 .msg-box:focus { border-color: var(--ink); }
-.np-display { display: flex; align-items: baseline; justify-content: center; gap: 8px; border-bottom: 1px solid var(--ink); padding: 4px 0 10px; margin-bottom: 16px; }
+.np-display { display: flex; align-items: baseline; justify-content: center; gap: 8px; border-bottom: 1px solid var(--ink); padding: 4px 0 10px; margin: 12px 0 16px; }
 .np-mins { font-size: 52px; font-weight: 500; }
 .np-unit { font-size: 22px; }
-.np-keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.np-keys .btn { min-height: 76px; font-size: 30px; padding: 0; border-radius: var(--radius); }
-.modal-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px; margin-top: 16px; }
+.np-keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 0 16px; }
+.np-keys .btn { min-height: 76px; font-size: 30px; padding: 0; border-radius: 0; }
+.modal-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: 100%; min-height: 56px; padding: 0 24px; margin: 0;
+  border: 0; border-top: 1px solid var(--line); border-radius: 0;
+  background: var(--bg); font: inherit; font-size: 16px; font-weight: 400; color: var(--ink);
+  text-align: left;
+}
+.modal-row:hover, .modal-row:active { background: var(--bg); color: var(--ink); }
+.modal-actions { display: flex; flex-wrap: nowrap; align-items: stretch; gap: 0; margin: 0; padding: 0; }
 .modal-actions .btn {
-  flex: none; width: auto; min-height: 44px; height: 44px;
-  padding: 0 22px; font-size: 16px; font-weight: 400; white-space: nowrap;
+  flex: 1 1 50%; width: 50%; min-height: 56px; height: 56px;
+  padding: 0 12px; margin: 0; border: 0; border-radius: 0;
+  font-size: 16px; font-weight: 400; white-space: nowrap;
+  background: #f3f3f3; color: #111;
+}
+.modal-actions .btn:hover, .modal-actions .btn:active { background: #f3f3f3; color: #111; border: 0; }
+.modal-actions .btn-go, .modal-actions .btn-dark, .modal-actions .btn-stop {
+  background: #111; color: #fff;
+}
+.modal-actions .btn-go:hover, .modal-actions .btn-go:active,
+.modal-actions .btn-dark:hover, .modal-actions .btn-dark:active,
+.modal-actions .btn-stop:hover, .modal-actions .btn-stop:active {
+  background: #111; color: #fff; border: 0;
 }
 
 .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 20; background: var(--ink); color: #fff; padding: 14px 22px; border-radius: var(--radius); font-size: 18px; max-width: 90vw; }
@@ -316,11 +342,12 @@ button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
   .type-icon { width: 24px; height: 24px; }
   .s-name { font-size: 16px; }
   .s-due, .s-status { font-size: 13px; }
+  .s-due { white-space: normal; line-height: 1.3; }
   .s-right { font-size: 16px; }
   .chev-btn { width: 56px; min-width: 56px; margin-left: 4px; }
   .chev { width: 40px; height: 40px; }
-  .row-acts { gap: 0; padding: 0 0 0 8px; }
-  .decide-btn { width: 84px; }
+  .row-acts { gap: 0; padding: 0 0 0 4px; }
+  .decide-btn { width: 72px; font-size: 15px; }
   .detail-actions .decide-btn { width: 84px; }
 }
 @media (max-width: 960px) {
