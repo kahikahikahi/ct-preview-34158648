@@ -13,9 +13,9 @@
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-180.png" />
-  <link rel="stylesheet" href="./app.css?v=15" />
+  <link rel="stylesheet" href="./app.css?v=16" />
   <script defer src="./supabase-js-2.119.2.min.js"></script>
-  <script defer src="./app.js?v=15"></script>
+  <script defer src="./app.js?v=16"></script>
 </head>
 <body>
   <!-- Login -->
@@ -41,7 +41,7 @@
   <section id="screen-app" class="screen app" hidden>
     <header class="topbar">
       <img src="./eye.png" alt="Café Turquoise" class="top-logo" width="44" height="44" />
-      <span id="conn" class="conn">Connecting…</span>
+      <span id="conn" class="conn ok">Live</span>
       <div class="top-right">
         <button type="button" class="cog-btn" id="settings-btn" aria-label="Settings">
           <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -78,8 +78,13 @@
           </button>
           </div>
           <div id="settings-main" class="settings">
-            <button type="button" class="btn btn-big" id="edit-menu-btn">Edit menu</button>
-            <button type="button" class="btn btn-big btn-stop-line" id="stop-btn">Stop receiving orders</button>
+            <div class="settings-list">
+              <button type="button" class="settings-row" id="edit-menu-btn">
+                <span>Edit menu</span>
+                <svg class="settings-chev" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+              </button>
+              <button type="button" class="settings-row stop" id="stop-btn">Stop receiving orders</button>
+            </div>
             <p id="stop-note" class="hint"></p>
           </div>
           <div id="settings-menu" hidden>

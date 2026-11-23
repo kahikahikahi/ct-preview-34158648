@@ -228,6 +228,7 @@
     if (document.visibilityState === "visible" && state.started) {
       if (!wakeLock) requestWakeLock();
       if (audio && audio.state === "suspended") audio.resume();
+      if (!state.live) subscribe();
       refresh();
     }
   });
@@ -265,9 +266,10 @@
       if (!r[2].error && r[2].data) state.accepting = r[2].data.accepting_orders !== false;
       state.loadedOnce = true;
       state.lastOk = Date.now();
+      noteReachOk();
       render();
     }).catch(function (e) {
-      setConn();
+      noteReachFailed();
       if (e && /JWT|token/i.test(e.message || "")) sb.auth.refreshSession();
     }).then(function () {
       refreshing = null;
@@ -293,6 +295,7 @@
     }).catch(function (e) { toast("Couldn't load the menu: " + errMsg(e), true); });
   }
 
+  var subscribeRetry = null, reachFailedAt = 0, reachFailTimer = null;
   function subscribe() {
     if (state.channel) sb.removeChannel(state.channel);
     state.channel = sb.channel("shop-tablet")
@@ -301,15 +304,42 @@
       .subscribe(function (status) {
         state.live = status === "SUBSCRIBED";
         setConn();
-        if (state.live) refreshSoon();
+        if (state.live) {
+          if (subscribeRetry) { clearTimeout(subscribeRetry); subscribeRetry = null; }
+          refreshSoon();
+        } else if ((status === "CHANNEL_ERROR" || status === "TIMED_OUT" || status === "CLOSED") && state.started && !subscribeRetry) {
+          // Realtime dropped; polling keeps data fresh. Try the socket again shortly.
+          subscribeRetry = setTimeout(function () {
+            subscribeRetry = null;
+            if (state.started && !state.live) subscribe();
+          }, 2000);
+        }
       });
   }
+  function noteReachOk() {
+    reachFailedAt = 0;
+    if (reachFailTimer) { clearTimeout(reachFailTimer); reachFailTimer = null; }
+  }
+  function noteReachFailed() {
+    if (!reachFailedAt) {
+      reachFailedAt = Date.now();
+      if (reachFailTimer) clearTimeout(reachFailTimer);
+      reachFailTimer = setTimeout(function () { reachFailTimer = null; setConn(); }, 20000);
+    }
+    setConn();
+  }
+  function isUnreachable() {
+    if (typeof navigator !== "undefined" && navigator.onLine === false) return true;
+    return !!(reachFailedAt && Date.now() - reachFailedAt >= 20000);
+  }
   function setConn() {
-    var c = $("conn"), fresh = Date.now() - state.lastOk < POLL_MS * 2 + 5000;
-    if (state.live && fresh && !state.accepting) { c.className = "conn bad"; c.textContent = "Not receiving orders"; }
-    else if (state.live && fresh) { c.className = "conn ok"; c.textContent = "Live"; }
-    else if (fresh) { c.className = "conn"; c.textContent = "Checking every 30 s"; }
-    else { c.className = "conn bad"; c.textContent = "Offline, retrying"; }
+    var c = $("conn");
+    if (!c) return;
+    // Show Live (or Not receiving orders) straight away, including while realtime is connecting.
+    // "No internet" only after a real offline event or 20s of failed requests. No other status text.
+    if (isUnreachable()) { c.className = "conn bad"; c.textContent = "No internet"; return; }
+    if (!state.accepting) { c.className = "conn bad"; c.textContent = "Not receiving orders"; return; }
+    c.className = "conn ok"; c.textContent = "Live";
   }
 
   // ---------- rendering ----------
@@ -349,11 +379,13 @@
     if (o.status === "new") return { text: "New", kind: "new" };
     if (o.status === "ready") return { text: "Ready", kind: "ok" };
     if (o.status === "accepted" || o.status === "preparing") return { text: "Accepted", kind: "ok" };
+    if (o.status === "cancelled") return { text: "Cancelled", kind: "bad" };
     return { text: o.status, kind: "" };
   }
   function bookingStatus(b) {
     if (b.status === "pending") return { text: "New", kind: "new" };
     if (b.status === "accepted") return { text: "Accepted", kind: "ok" };
+    if (b.status === "declined") return { text: "Declined", kind: "bad" };
     return { text: b.status, kind: "" };
   }
   function statusHtml(st, cls) {
@@ -516,7 +548,7 @@
     $("settings-menu").hidden = state.settingsView !== "menu";
     var b = $("stop-btn");
     b.textContent = state.accepting ? "Stop receiving orders" : "Start receiving orders";
-    b.className = "btn btn-big " + (state.accepting ? "btn-stop-line" : "btn-go");
+    b.className = "settings-row " + (state.accepting ? "stop" : "start");
     $("stop-note").textContent = state.accepting ? "The website is taking orders." : "The website is not taking orders.";
   }
 
@@ -761,7 +793,8 @@
   function stopApp() {
     state.started = false;
     clearInterval(pollTimer); clearInterval(clockTimer); updateRinging();
-    if (state.channel) { sb.removeChannel(state.channel); state.channel = null; }
+    if (subscribeRetry) { clearTimeout(subscribeRetry); subscribeRetry = null; }
+    if (state.channel) { sb.removeChannel(state.channel); state.channel = null; state.live = false; }
     if (wakeLock) { wakeLock.release().catch(function () {}); wakeLock = null; }
   }
 
@@ -890,13 +923,20 @@
     if (document.visibilityState === "visible") onAppVisible();
   });
   window.addEventListener("focus", onAppVisible);
+  window.addEventListener("offline", function () { setConn(); });
   window.addEventListener("online", function () {
+    noteReachOk();
+    setConn();
     refreshAuth(true);
     if (state.started) { subscribe(); refresh(); }
   });
 
   sb.auth.onAuthStateChange(function (event, session) {
-    if (event === "TOKEN_REFRESHED" && session) { state.session = session; return; }
+    if (event === "TOKEN_REFRESHED" && session) {
+      state.session = session;
+      if (state.started && !state.live) subscribe();
+      return;
+    }
     if (event === "SIGNED_IN" && session) {
       if (!state.session) onSession(session);
       else state.session = session;
