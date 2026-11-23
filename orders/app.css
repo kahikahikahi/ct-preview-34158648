@@ -145,10 +145,12 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 }
 .chev-btn:hover, .chev-btn:active { background: transparent; color: var(--ink); }
 .chev { width: 52px; height: 52px; display: block; }
-.actions.under { margin: 32px 112px 0 16px; padding: 0 0 18px; }
-.actions { display: flex; gap: 16px; margin-top: 16px; }
-.actions .btn { flex: 1; min-height: 72px; font-size: 21px; }
-.actions .btn-go, .actions .btn-dark { flex: 1.6; }
+.actions.under { margin: 12px 112px 0 16px; padding: 0 0 18px; justify-content: flex-end; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 16px; }
+.actions .btn {
+  flex: none; width: auto; min-height: 44px; height: 44px;
+  padding: 0 22px; font-size: 16px; font-weight: 400; white-space: nowrap;
+}
 
 /* Detail screen */
 #order-detail { padding: 0; min-height: 100%; }
@@ -195,8 +197,8 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .totals { display: flex; justify-content: space-between; margin-top: 8px; padding: 12px 0 4px; font-size: 18px; }
 .pay-line { display: flex; justify-content: space-between; padding: 6px 0 10px; color: var(--ink); }
 .pay-paid { color: var(--go-text); }
-.detail-actions { padding: 8px 18px calc(32px + env(safe-area-inset-bottom, 0px)); margin-top: 8px; }
-.detail-actions .btn { min-height: 72px; }
+.detail-actions { padding: 8px 18px calc(32px + env(safe-area-inset-bottom, 0px)); margin-top: 8px; justify-content: flex-start; }
+.detail-actions .btn { min-height: 44px; }
 
 /* Settings + menu. Settings home is an iOS-style list, not pill buttons. */
 .settings { display: flex; flex-direction: column; gap: 0; margin-top: 0; padding: 0; }
@@ -249,9 +251,11 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .np-unit { font-size: 22px; }
 .np-keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .np-keys .btn { min-height: 76px; font-size: 30px; padding: 0; border-radius: var(--radius); }
-.modal-actions { display: flex; gap: 12px; margin-top: 16px; }
-.modal-actions .btn { flex: 1; min-height: 68px; font-size: 20px; padding: 0 12px; white-space: nowrap; }
-.modal-actions .btn-go, .modal-actions .btn-stop { flex: 2; }
+.modal-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px; margin-top: 16px; }
+.modal-actions .btn {
+  flex: none; width: auto; min-height: 44px; height: 44px;
+  padding: 0 22px; font-size: 16px; font-weight: 400; white-space: nowrap;
+}
 
 .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 20; background: var(--ink); color: #fff; padding: 14px 22px; border-radius: var(--radius); font-size: 18px; max-width: 90vw; }
 .toast.bad { background: var(--danger); }
@@ -266,14 +270,12 @@ button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 @media (min-width: 961px) {
   .app { max-width: 720px; margin: 0 auto; }
   .detail-actions { max-width: 520px; }
-  .actions { gap: 16px; }
   .modal-box { width: min(440px, 94vw); }
   .modal-box:has(.np-keys) { width: min(520px, 94vw); }
 }
 
 @media (max-width: 960px) {
-  .actions { gap: 12px; }
-  .actions.under { margin: 24px 104px 0 16px; }
+  .actions.under { margin: 12px 112px 0 16px; }
   .detail-head { padding: 4px 10px 8px 4px; }
   .detail-titles { padding-top: 8px; }
   .status-band { padding: 10px 18px; }
