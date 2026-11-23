@@ -438,11 +438,24 @@
     return dueLabel(bookingDateTime(b));
   }
 
-  function summary(id, icon, day, name, st, rightHtml, due, acts) {
+  function payShort(o) {
+    if (o.payment_status === "paid") return { text: "Paid", paid: true };
+    if (o.payment_method === "counter" && o.status === "collected") return { text: "Paid", paid: true };
+    return { text: "Not paid", paid: false };
+  }
+  function dueLine(due, pay) {
+    if (!due && !pay) return "";
+    var html = '<span class="s-due">';
+    if (due) html += '<span class="s-due-text">' + esc(due) + "</span>";
+    if (due && pay) html += '<span class="s-pay-sep"> · </span>';
+    if (pay) html += '<span class="s-pay' + (pay.paid ? " ok" : " bad") + '">' + esc(pay.text) + "</span>";
+    return html + "</span>";
+  }
+  function summary(id, icon, day, name, st, rightHtml, due, acts, pay) {
     return '<div class="top"><button type="button" class="sum" data-act="expand" data-id="' + id + '">' +
       '<span class="s-icon">' + icon + '<span class="s-day">' + esc(day) + "</span></span>" +
       '<span class="s-mid"><span class="s-name">' + esc(name) + "</span>" +
-      (due ? '<span class="s-due">' + esc(due) + "</span>" : "") +
+      dueLine(due, pay) +
       statusHtml(st, "s-status") + "</span></button>" +
       '<button type="button" class="s-right" data-act="expand" data-id="' + id + '">' + rightHtml + "</button>" +
       (acts || '<button type="button" class="chev-btn" data-act="expand" data-id="' + id + '" aria-label="Show details">' + CHEVRON + "</button>") +
@@ -497,7 +510,7 @@
   function orderCard(o) {
     var acts = o.status === "new" ? acceptDecline("order", o.id) : "";
     return '<article class="card">' +
-      summary(o.id, BAG_ICON, orderDay(o), o.customer_name, orderStatus(o), esc(money(o.total_cents)), orderDue(o), acts) +
+      summary(o.id, BAG_ICON, orderDay(o), o.customer_name, orderStatus(o), esc(money(o.total_cents)), orderDue(o), acts, payShort(o)) +
       "</article>";
   }
 
@@ -522,7 +535,7 @@
   function completedCard(o) {
     var when = o.updated_at || o.created_at;
     return '<article class="card">' +
-      summary(o.id, BAG_ICON, dayShort(when) || orderDay(o), o.customer_name, orderStatus(o), esc(money(o.total_cents)), completedWhen(o), "") +
+      summary(o.id, BAG_ICON, dayShort(when) || orderDay(o), o.customer_name, orderStatus(o), esc(money(o.total_cents)), completedWhen(o), "", payShort(o)) +
       "</article>";
   }
 
