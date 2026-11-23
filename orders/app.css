@@ -43,7 +43,7 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 /* Buttons: Accept / Ready / Picked up = solid turquoise; Decline / Cancel = quiet outline. */
 .btn {
   border: 1.5px solid var(--quiet); background: var(--bg); color: var(--ink);
-  border-radius: var(--radius); min-height: 60px; padding: 0 22px; font-size: 20px; font-weight: 500;
+  border-radius: 999px; min-height: 60px; padding: 0 22px; font-size: 20px; font-weight: 500;
 }
 .btn:hover, .btn:active { background: var(--bg); color: var(--ink); border-color: var(--quiet); }
 .btn:disabled { opacity: .45; cursor: default; }
@@ -228,7 +228,7 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .np-mins { font-size: 52px; font-weight: 500; }
 .np-unit { font-size: 22px; }
 .np-keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.np-keys .btn { min-height: 76px; font-size: 30px; padding: 0; }
+.np-keys .btn { min-height: 76px; font-size: 30px; padding: 0; border-radius: var(--radius); }
 .modal-actions { display: flex; gap: 12px; margin-top: 16px; }
 .modal-actions .btn { flex: 1; min-height: 68px; font-size: 20px; padding: 0 12px; white-space: nowrap; }
 .modal-actions .btn-go, .modal-actions .btn-stop { flex: 2; }
