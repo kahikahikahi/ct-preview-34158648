@@ -149,7 +149,7 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .chev { width: 52px; height: 52px; display: block; }
 .row-acts {
   display: flex; align-items: stretch; align-self: stretch; flex: none;
-  gap: 8px; padding: 0 0 0 8px;
+  gap: 0; padding: 0 0 0 8px;
 }
 .decide-btn {
   box-sizing: border-box;
@@ -220,7 +220,7 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .pay-paid { color: var(--go-text); }
 .detail-actions { padding: 8px 18px calc(32px + env(safe-area-inset-bottom, 0px)); margin-top: 8px; justify-content: flex-start; }
 .detail-actions .btn { min-height: 44px; }
-.detail-actions .row-acts { padding: 0; height: 48px; align-self: auto; }
+.detail-actions .row-acts { padding: 0; height: 48px; align-self: auto; gap: 0; }
 .detail-actions .decide-btn { height: 48px; width: 110px; align-self: auto; }
 
 /* Settings + menu. Settings home is an iOS-style list, not pill buttons. */
@@ -306,7 +306,7 @@ button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
   .s-right { font-size: 16px; }
   .chev-btn { width: 56px; min-width: 56px; margin-left: 4px; }
   .chev { width: 40px; height: 40px; }
-  .row-acts { gap: 8px; padding: 0 0 0 8px; }
+  .row-acts { gap: 0; padding: 0 0 0 8px; }
   .decide-btn { width: 84px; }
   .detail-actions .decide-btn { width: 84px; }
 }
