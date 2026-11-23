@@ -551,7 +551,7 @@ html body .op-meze-chevron {
 
 
 
-/* Homepage buttons: staircase at mid-width, Menu at the info left edge */
+/* Homepage buttons: mid-width staircase, centred in the info section */
 html body .s-info > .s-btns,
 html body .s-info .s-btns {
   display: block !important;
@@ -559,11 +559,11 @@ html body .s-info .s-btns {
   flex-wrap: nowrap !important;
   align-items: stretch !important;
   justify-content: flex-start !important;
-  align-self: start !important;
+  align-self: center !important;
   /* Midpoint of the old tight cluster (102px) and the full info width */
   width: calc((102px + 100%) / 2) !important;
   max-width: 100% !important;
-  margin-left: 0 !important;
+  margin-left: auto !important;
   margin-right: auto !important;
   column-gap: 0 !important;
   row-gap: 14px !important;
