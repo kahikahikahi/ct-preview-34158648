@@ -634,3 +634,34 @@ html body .s-info .s-btns a.btn {
   -webkit-user-select: text !important;
   user-select: text !important;
 }
+
+/* Desktop: info lines fill their row and the gaps between them, so a
+   rough drag still selects. Visual spacing is unchanged (padding, not margin). */
+@media (hover: hover) and (pointer: fine), (min-width: 961px) {
+  html body .s-info > .s-hours,
+  html body .s-info > .s-link,
+  html body .s-info > .s-hours + .s-link,
+  html body .s-info > .s-link + .s-link,
+  html body .s-info > .s-btns + *,
+  html body .s-info > .s-apps + *,
+  html body .s-info .s-logo + .s-hours {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin-top: 0 !important;
+    padding-top: 20px !important;
+  }
+}
+@media (min-width: 961px) {
+  html body .s-info > .s-hours,
+  html body .s-info > .s-link,
+  html body .s-info > .s-hours + .s-link,
+  html body .s-info > .s-link + .s-link,
+  html body .s-info > .s-btns + *,
+  html body .s-info > .s-apps + *,
+  html body .s-info .s-logo + .s-hours {
+    padding-top: 24px !important;
+    margin-top: 0 !important;
+  }
+}
