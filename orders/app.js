@@ -31,6 +31,10 @@
     accepting: true,
     orders: [],
     bookings: [],
+    completed: [],
+    completedHasMore: false,
+    completedLoading: false,
+    detailFrom: null,
     menu: [],
     groups: {},        // option group key -> name
     itemGroups: {},    // menu item id -> [group keys] (display order)
@@ -390,6 +394,7 @@
     if (o.status === "new") return { text: "New", kind: "new" };
     if (o.status === "ready") return { text: "Ready", kind: "ok" };
     if (o.status === "accepted" || o.status === "preparing") return { text: "Accepted", kind: "ok" };
+    if (o.status === "collected") return { text: "Picked up", kind: "ok" };
     if (o.status === "cancelled") return { text: "Cancelled", kind: "bad" };
     return { text: o.status, kind: "" };
   }
@@ -503,6 +508,24 @@
       "</article>";
   }
 
+  function completedWhen(o) {
+    var dt = o.updated_at || o.accepted_at || o.created_at;
+    if (!dt) return "";
+    var d = dt instanceof Date ? dt : new Date(dt);
+    var time = fmtTime(d);
+    if (isTodayNZ(d)) return "Today " + time;
+    var p = {};
+    new Intl.DateTimeFormat("en-NZ", { timeZone: TZ, weekday: "short", day: "numeric", month: "short" })
+      .formatToParts(d).forEach(function (x) { p[x.type] = x.value; });
+    return (p.weekday || "") + " " + (p.day || "") + " " + (p.month || "") + ", " + time;
+  }
+  function completedCard(o) {
+    var when = o.updated_at || o.created_at;
+    return '<article class="card">' +
+      summary(o.id, BAG_ICON, dayShort(when) || orderDay(o), o.customer_name, orderStatus(o), esc(money(o.total_cents)), completedWhen(o), "") +
+      "</article>";
+  }
+
   function orderDetail(o) {
     var st = orderStatus(o);
     var body = kv("Placed on", esc(fmtStamp(o.created_at)));
@@ -517,10 +540,8 @@
     var actions = "";
     if (o.status === "new") {
       actions = acceptDecline("order", o.id);
-    } else if (o.status === "accepted" || o.status === "preparing") {
-      actions = '<button type="button" class="btn btn-go" data-act="ready" data-id="' + o.id + '">Ready</button>';
-    } else if (o.status === "ready") {
-      actions = '<button type="button" class="btn btn-go" data-act="collected" data-id="' + o.id + '">Picked up</button>';
+    } else if (o.status === "accepted" || o.status === "preparing" || o.status === "ready") {
+      actions = '<button type="button" class="btn btn-go btn-sq" data-act="collected" data-id="' + o.id + '">Picked up</button>';
     }
     return detailShell("Pickup", "Pickup", st, body, actions);
   }
@@ -565,12 +586,15 @@
     var d = state.detail ? (findOrder(state.detail) || findBooking(state.detail)) : null;
     if (state.detail && !d) state.detail = null;
     document.body.classList.remove("split");
-    if (state.tab === "current" && state.detail && d) {
+    if (state.detail && d) {
+      $("pane-current").hidden = false;
+      $("pane-settings").hidden = true;
       listEl.hidden = true;
       detailEl.hidden = false;
       detailEl.innerHTML = findOrder(state.detail) ? orderDetail(d) : bookingDetail(d);
       if (detailEl.parentNode) detailEl.parentNode.scrollTop = 0;
     } else if (listEl && detailEl) {
+      ["current", "settings"].forEach(function (p) { $("pane-" + p).hidden = p !== state.tab; });
       listEl.hidden = false;
       detailEl.hidden = true;
       detailEl.innerHTML = "";
@@ -583,6 +607,14 @@
   function renderSettings() {
     $("settings-main").hidden = state.settingsView !== "main";
     $("settings-menu").hidden = state.settingsView !== "menu";
+    $("settings-completed").hidden = state.settingsView !== "completed";
+    var title = $("settings-title");
+    if (title) title.hidden = state.settingsView !== "completed";
+    var more = $("completed-more");
+    if (more) more.hidden = !(state.settingsView === "completed" && state.completedHasMore);
+    if (state.settingsView === "completed") {
+      fill("list-completed", state.completed.map(completedCard).join(""), "No completed orders.");
+    }
     var b = $("stop-btn");
     b.className = "settings-row" + (state.accepting ? "" : " off");
     b.setAttribute("aria-checked", state.accepting ? "true" : "false");
@@ -609,9 +641,39 @@
 
   function setTab(tab) {
     state.tab = tab;
-    if (tab !== "current") state.detail = null;
+    if (tab !== "current") { state.detail = null; state.detailFrom = null; }
     ["current", "settings"].forEach(function (p) { $("pane-" + p).hidden = p !== tab; });
     if (tab === "settings") { state.settingsView = "main"; refresh(); }
+    render();
+  }
+
+  var COMPLETED_PAGE = 50;
+  function loadCompleted(append) {
+    if (state.completedLoading) return;
+    state.completedLoading = true;
+    var from = append ? state.completed.length : 0;
+    return sb.from("orders").select("*, order_items(*)")
+      .eq("status", "collected")
+      .order("updated_at", { ascending: false })
+      .range(from, from + COMPLETED_PAGE - 1)
+      .then(function (r) {
+        state.completedLoading = false;
+        if (r.error) throw r.error;
+        var rows = r.data || [];
+        state.completed = append ? state.completed.concat(rows) : rows;
+        state.completedHasMore = rows.length === COMPLETED_PAGE;
+        render();
+      }).catch(function (e) {
+        state.completedLoading = false;
+        toast(errMsg(e), true);
+        render();
+      });
+  }
+  function openCompleted() {
+    state.settingsView = "completed";
+    state.detail = null;
+    state.detailFrom = null;
+    loadCompleted(false);
     render();
   }
 
@@ -727,13 +789,6 @@
   }
 
   // ---------- actions ----------
-  function setOrderStatus(o, from, to, okMsg) {
-    return sb.from("orders").update({ status: to }).eq("id", o.id).eq("status", from).select("id").then(function (r) {
-      if (r.error) throw r.error;
-      if (!r.data || !r.data.length) throw new Error("This order was changed on another screen.");
-      toast(okMsg); refresh();
-    }).catch(function (e) { toast(errMsg(e), true); refresh(); });
-  }
   function setBookingStatus(b, to, okMsg) {
     return sb.from("bookings").update({ status: to }).eq("id", b.id).eq("status", "pending").select("id").then(function (r) {
       if (r.error) throw r.error;
@@ -741,7 +796,10 @@
       toast(okMsg); refresh();
     }).catch(function (e) { toast(errMsg(e), true); refresh(); });
   }
-  function findOrder(id) { return state.orders.filter(function (o) { return o.id === id; })[0]; }
+  function findOrder(id) {
+    return state.orders.filter(function (o) { return o.id === id; })[0] ||
+      state.completed.filter(function (o) { return o.id === id; })[0];
+  }
   function findBooking(id) { return state.bookings.filter(function (b) { return b.id === id; })[0]; }
 
   function toggleItem(btn) {
@@ -775,9 +833,14 @@
     }
     if (t.id === "settings-btn") return setTab("settings");
     if (t.id === "settings-back-btn") {
-      if (state.settingsView === "menu") { state.settingsView = "main"; return render(); }
+      if (state.settingsView === "menu" || state.settingsView === "completed") {
+        state.settingsView = "main";
+        return render();
+      }
       return setTab("current");
     }
+    if (t.id === "completed-btn") return openCompleted();
+    if (t.id === "completed-more") return loadCompleted(true);
     if (t.id === "edit-menu-btn") { state.settingsView = "menu"; loadMenu(); return render(); }
     if (t.id === "stop-btn") {
       if (!state.accepting) return setAccepting(true);
@@ -785,16 +848,34 @@
         "Stop orders", function () { setAccepting(false); });
     }
     var act = t.dataset.act, id = t.dataset.id, o, b;
-    if (act === "back") { state.detail = null; return render(); }
+    if (act === "back") {
+      state.detail = null;
+      if (state.detailFrom === "completed") {
+        state.detailFrom = null;
+        state.tab = "settings";
+        state.settingsView = "completed";
+      }
+      return render();
+    }
     if (act === "expand") {
+      state.detailFrom = (state.tab === "settings" && state.settingsView === "completed") ? "completed" : null;
       state.detail = id;
       if (findBooking(id)) markSeen(id);
       return render();
     }
     if (act === "accept" && (o = findOrder(id))) return openAccept(o);
     if (act === "decline" && (o = findOrder(id))) return openDecline("order", o);
-    if (act === "ready" && (o = findOrder(id))) { t.disabled = true; return setOrderStatus(o, o.status, "ready", o.customer_name + "'s order is ready"); }
-    if (act === "collected" && (o = findOrder(id))) { t.disabled = true; return setOrderStatus(o, "ready", "collected", o.customer_name + "'s order picked up"); }
+    if (act === "collected" && (o = findOrder(id))) {
+      t.disabled = true;
+      return sb.from("orders").update({ status: "collected" }).eq("id", o.id)
+        .in("status", ["accepted", "preparing", "ready"]).select("id").then(function (r) {
+          if (r.error) throw r.error;
+          if (!r.data || !r.data.length) throw new Error("This order was changed on another screen.");
+          state.completed = [];
+          toast(o.customer_name + "'s order picked up");
+          refresh();
+        }).catch(function (e) { t.disabled = false; toast(errMsg(e), true); refresh(); });
+    }
     if (act === "bk-accept" && (b = findBooking(id))) {
       markSeen(b.id); t.disabled = true;
       return sb.rpc("accept_booking", { booking_id: b.id }).then(function (r) {
