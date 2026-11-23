@@ -465,3 +465,9 @@ html body .bk-panel .bk-field textarea::placeholder,html body .bk-panel .bk-fiel
 
 /* Sold out (shop tablet switch): plain grey text */
 html body .op .op-soldout,html body .op-mback .op-soldout{color:#767676!important;font-style:normal}
+
+
+/* Homepage link order: Menu, Order, Book */
+html body .s-info .s-btns .btn-menu{order:1!important}
+html body .s-info .s-btns .btn-order{order:2!important}
+html body .s-info .s-btns .btn-book,html body .s-info .s-btns a.btn.btn-book{order:3!important}
