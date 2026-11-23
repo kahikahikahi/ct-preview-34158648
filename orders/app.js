@@ -397,11 +397,37 @@
     if (o.pickup_type === "later" && o.pickup_at) return dayShort(o.pickup_at);
     return "ASAP";
   }
+  function weekdayShort(d) {
+    var day = new Intl.DateTimeFormat("en-NZ", { timeZone: TZ, weekday: "short" }).format(d instanceof Date ? d : new Date(d)).replace(/\./g, "");
+    return day ? day.charAt(0).toUpperCase() + day.slice(1).toLowerCase() : "";
+  }
+  function isTodayNZ(d) {
+    var p = nzParts(d instanceof Date ? d : new Date(d));
+    return p.year + "-" + p.month + "-" + p.day === todayNZ();
+  }
+  function dueLabel(when) {
+    if (!when) return "";
+    var dt = when instanceof Date ? when : new Date(when);
+    var time = fmtTime(dt);
+    if (!time) return "";
+    if (isTodayNZ(dt)) return "Due " + time;
+    return "Due " + weekdayShort(dt) + " " + time;
+  }
+  function orderDue(o) {
+    if (o.pickup_type === "later" && (o.ready_at || o.pickup_at)) return dueLabel(o.ready_at || o.pickup_at);
+    if (o.status !== "new" && o.ready_at) return dueLabel(o.ready_at);
+    return "ASAP";
+  }
+  function bookingDue(b) {
+    return dueLabel(bookingDateTime(b));
+  }
 
-  function summary(id, icon, day, name, st, rightHtml) {
+  function summary(id, icon, day, name, st, rightHtml, due) {
     return '<div class="top"><button type="button" class="sum" data-act="expand" data-id="' + id + '">' +
       '<span class="s-icon">' + icon + '<span class="s-day">' + esc(day) + "</span></span>" +
-      '<span class="s-mid"><span class="s-name">' + esc(name) + "</span>" + statusHtml(st, "s-status") + "</span>" +
+      '<span class="s-mid"><span class="s-name">' + esc(name) + "</span>" +
+      (due ? '<span class="s-due">' + esc(due) + "</span>" : "") +
+      statusHtml(st, "s-status") + "</span>" +
       '<span class="s-right">' + rightHtml + "</span></button>" +
       '<button type="button" class="chev-btn" data-act="expand" data-id="' + id + '" aria-label="Show details">' + CHEVRON + "</button></div>";
   }
@@ -451,14 +477,14 @@
 
   function orderCard(o) {
     var html = '<article class="card' + (state.detail === o.id ? ' is-open' : '') + '">' +
-      summary(o.id, BAG_ICON, orderDay(o), o.customer_name, orderStatus(o), esc(money(o.total_cents)));
+      summary(o.id, BAG_ICON, orderDay(o), o.customer_name, orderStatus(o), esc(money(o.total_cents)), orderDue(o));
     if (o.status === "new") html += acceptDecline("order", o.id);
     return html + "</article>";
   }
 
   function bookingCard(b) {
     var html = '<article class="card' + (state.detail === b.id ? ' is-open' : '') + '">' +
-      summary(b.id, TABLE_ICON, bookingDayShort(b), b.name, bookingStatus(b), esc(String(b.party_size)) + PEOPLE_ICON);
+      summary(b.id, TABLE_ICON, bookingDayShort(b), b.name, bookingStatus(b), esc(String(b.party_size)) + PEOPLE_ICON, bookingDue(b));
     if (b.status === "pending") html += acceptDecline("booking", b.id);
     return html + "</article>";
   }
@@ -547,9 +573,8 @@
     $("settings-main").hidden = state.settingsView !== "main";
     $("settings-menu").hidden = state.settingsView !== "menu";
     var b = $("stop-btn");
-    b.textContent = state.accepting ? "Stop receiving orders" : "Start receiving orders";
-    b.className = "settings-row " + (state.accepting ? "stop" : "start");
-    $("stop-note").textContent = state.accepting ? "The website is taking orders." : "The website is not taking orders.";
+    b.className = "settings-row" + (state.accepting ? "" : " off");
+    b.setAttribute("aria-checked", state.accepting ? "true" : "false");
   }
 
   function renderMenu() {

@@ -13,9 +13,9 @@
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-180.png" />
-  <link rel="stylesheet" href="./app.css?v=16" />
+  <link rel="stylesheet" href="./app.css?v=17" />
   <script defer src="./supabase-js-2.119.2.min.js"></script>
-  <script defer src="./app.js?v=16"></script>
+  <script defer src="./app.js?v=17"></script>
 </head>
 <body>
   <!-- Login -->
@@ -83,9 +83,11 @@
                 <span>Edit menu</span>
                 <svg class="settings-chev" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
               </button>
-              <button type="button" class="settings-row stop" id="stop-btn">Stop receiving orders</button>
+              <button type="button" class="settings-row" id="stop-btn" role="switch" aria-checked="true" aria-label="Receiving orders">
+                <span>Receiving orders</span>
+                <span class="switch" aria-hidden="true"></span>
+              </button>
             </div>
-            <p id="stop-note" class="hint"></p>
           </div>
           <div id="settings-menu" hidden>
             <p class="hint">Switch an item off when it runs out. Customers can't order it until you switch it back on.</p>

@@ -132,6 +132,7 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .s-day { font-size: 12px; font-weight: 500; color: var(--tq-deep); letter-spacing: .02em; line-height: 1; }
 .s-mid { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
 .s-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 400; color: var(--ink); }
+.s-due { font-size: 15px; font-weight: 400; color: var(--ink); }
 .s-status { font-size: 15px; font-weight: 400; color: var(--mute); }
 .s-status.ok { color: var(--go-text); }
 .s-status.new { color: var(--new); }
@@ -210,10 +211,9 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .settings-row:hover, .settings-row:active { background: var(--bg); color: inherit; }
 .settings-list .settings-row:last-child { border-bottom: 0; }
 .settings-chev { width: 20px; height: 20px; flex: none; color: #c0c0c0; }
-.settings-row.stop { color: var(--danger); }
-.settings-row.start { color: var(--go-text); }
-.settings-row.stop:hover, .settings-row.stop:active { color: var(--danger); }
-.settings-row.start:hover, .settings-row.start:active { color: var(--go-text); }
+.settings-row .switch { margin-left: auto; }
+.settings-row.off .switch { background: #c4c4c4; }
+.settings-row.off .switch::after { left: 4px; }
 #settings-menu { padding: 8px 18px; }
 #pane-settings .wrap { background: var(--bg); min-height: 100%; padding-bottom: 24px; }
 .hint { margin: 10px 18px 0; color: var(--mute); text-align: left; font-size: 15px; }
@@ -227,8 +227,8 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .menu-row .m-name { flex: 1; font-size: 20px; }
 .menu-row .m-state { font-size: 16px; color: var(--danger); }
 .menu-row.off .m-name { color: var(--mute); text-decoration: line-through; }
-.switch { flex: none; position: relative; width: 84px; height: 44px; border-radius: 22px; background: var(--go); }
-.switch::after { content: ""; position: absolute; top: 4px; left: 44px; width: 36px; height: 36px; border-radius: 50%; background: #fff; }
+.switch { flex: none; position: relative; width: 84px; height: 44px; border-radius: 22px; background: var(--go); transition: none; }
+.switch::after { content: ""; position: absolute; top: 4px; left: 44px; width: 36px; height: 36px; border-radius: 50%; background: #fff; transition: none; }
 .menu-row.off .switch { background: #c4c4c4; }
 .menu-row.off .switch::after { left: 4px; }
 .menu-row.busy { opacity: .5; }
