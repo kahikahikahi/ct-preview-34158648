@@ -474,3 +474,30 @@ html body .s-info .s-btns .btn-book,html body .s-info .s-btns a.btn.btn-book{ord
 
 /* Info lines: drag selects text instead of dragging the link */
 html body .s-info a.s-link{-webkit-user-drag:none!important;user-select:text!important;-webkit-user-select:text!important}
+
+/* Desktop side-by-side: larger homepage type (~20%), proportional spacing */
+@media (min-width: 961px) {
+  html body .s-info .s-hours,
+  html body .s-info .s-hours p,
+  html body .s-info .s-hours span,
+  html body .s-info > .s-link,
+  html body .s-info .s-btns a.btn {
+    font-size: 20px !important;
+  }
+  html body .s-info > .s-hours,
+  html body .s-info > .s-link,
+  html body .s-info > .s-hours + .s-link,
+  html body .s-info > .s-link + .s-link,
+  html body .s-info > .s-btns + *,
+  html body .s-info > .s-apps + *,
+  html body .s-info .s-logo + .s-hours {
+    margin-top: 24px !important;
+  }
+  html body .s-info > .s-btns {
+    margin-top: 0 !important;
+    column-gap: 33px !important;
+  }
+  html body .s-info > .s-hours:first-child {
+    margin-top: 0 !important;
+  }
+}
