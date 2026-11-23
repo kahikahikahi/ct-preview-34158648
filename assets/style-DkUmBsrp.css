@@ -548,3 +548,45 @@ html body .op-meze-chevron {
   display: block;
   transition: none;
 }
+
+/* Homepage buttons: staircase down to the bottom right */
+html body .s-info > .s-btns,
+html body .s-info .s-btns {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  width: max-content !important;
+  max-width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  column-gap: 0 !important;
+  row-gap: 14px !important;
+}
+html body .s-info .s-btns .btn-menu {
+  order: 1 !important;
+  margin-left: 0 !important;
+}
+html body .s-info .s-btns .btn-order {
+  order: 2 !important;
+  margin-left: 28px !important;
+}
+html body .s-info .s-btns .btn-book,
+html body .s-info .s-btns a.btn.btn-book {
+  order: 3 !important;
+  margin-left: 56px !important;
+}
+@media (max-width: 960px) {
+  html body .s-info > .s-btns,
+  html body .s-info .s-btns {
+    row-gap: 12px !important;
+  }
+  html body .s-info .s-btns .btn-order {
+    margin-left: 18px !important;
+  }
+  html body .s-info .s-btns .btn-book,
+  html body .s-info .s-btns a.btn.btn-book {
+    margin-left: 36px !important;
+  }
+}
