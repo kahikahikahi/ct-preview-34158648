@@ -240,7 +240,18 @@
       .sort(function (a, b) { return new Date(a.ready_at || a.pickup_at || a.created_at) - new Date(b.ready_at || b.pickup_at || b.created_at); });
   }
   function pendingBookings() { return state.bookings.filter(function (b) { return b.status === "pending"; }); }
-  function upcomingBookings() { return state.bookings.filter(function (b) { return b.status === "accepted"; }); }
+  function upcomingBookings() {
+    var today = todayNZ();
+    return state.bookings.filter(function (b) {
+      return b.status === "accepted" && b.booking_date >= today;
+    }).sort(function (a, b) {
+      var da = (a.booking_date || "") + "T" + String(a.booking_time || "");
+      var db = (b.booking_date || "") + "T" + String(b.booking_time || "");
+      if (da < db) return -1;
+      if (da > db) return 1;
+      return 0;
+    });
+  }
   function unseenBookings() {
     return pendingBookings().filter(function (b) { return state.seenBookings.indexOf(b.id) < 0; });
   }
