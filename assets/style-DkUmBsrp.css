@@ -501,3 +501,50 @@ html body .s-info a.s-link{-webkit-user-drag:none!important;user-select:text!imp
     margin-top: 0 !important;
   }
 }
+
+/* Optional Extra meze: collapsed header in the item options modal */
+html body button.op-group-head.op-meze-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 48px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: none;
+}
+html body button.op-group-head.op-meze-toggle:hover,
+html body button.op-group-head.op-meze-toggle:active,
+html body button.op-group-head.op-meze-toggle:focus {
+  background: none;
+  color: inherit;
+  box-shadow: none;
+  filter: none;
+}
+html body button.op-group-head.op-meze-toggle:focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 2px;
+}
+html body button.op-group-head.op-meze-toggle .op-group-rule {
+  margin-left: auto;
+}
+html body .op-meze-chevron {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  margin-left: 8px;
+  display: block;
+  transition: none;
+}
