@@ -1,4 +1,4 @@
-/* Cafe Turquoise shop tablet: orders, booking requests and sold-out switches.
+/* Café Turquoise shop tablet: orders, booking requests and sold-out switches.
    Plain JavaScript. Talks to Supabase with the publishable key; what staff can see and change
    is enforced in the database (RLS: logged-in user with app_metadata role "staff"). */
 (function () {
@@ -489,7 +489,7 @@
       $("list-booked").parentNode.hidden = !booked.length;
     }
     var n = nw.length + pb.length;
-    document.title = (n ? "(" + n + ") " : "") + "Cafe Turquoise Orders";
+    document.title = (n ? "(" + n + ") " : "") + "Café Turquoise Orders";
 
     var detailEl = $("order-detail"), listEl = $("orders-list");
     var d = state.detail ? (findOrder(state.detail) || findBooking(state.detail)) : null;
@@ -525,7 +525,7 @@
       byCat[m.category].push(m);
     });
     $("menu-list").innerHTML = cats.map(function (c) {
-      return '<section class="menu-cat"><h2>' + esc(c) + "</h2>" + byCat[c].map(function (m) {
+      return '<section class="menu-cat"><h2>' + esc(c.toLocaleUpperCase("tr-TR")) + "</h2>" + byCat[c].map(function (m) {
         return '<button type="button" class="menu-row' + (m.active ? "" : " off") + '" data-act="toggle" data-id="' + esc(m.id) +
           '" role="switch" aria-checked="' + (m.active ? "true" : "false") + '"><span class="m-name">' + esc(m.name) + "</span>" +
           (m.active ? "" : '<span class="m-state">Sold out</span>') + '<span class="switch"></span></button>';

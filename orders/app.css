@@ -1,4 +1,4 @@
-/* Cafe Turquoise shop tablet (portrait). White, black text, colour only where it means something. */
+/* Café Turquoise shop tablet (portrait). White, black text, colour only where it means something. */
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; }
 body {
@@ -149,7 +149,7 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 #pane-settings .wrap { background: #fff; min-height: 100%; padding-bottom: 24px; }
 .hint { margin: 0 0 8px; color: #444; text-align: center; }
 .menu-cat { margin-bottom: 18px; }
-.menu-cat h2 { font-size: 13px; font-weight: 500; color: #8a8a8a; margin: 10px 0 2px; letter-spacing: .06em; text-transform: uppercase; }
+.menu-cat h2 { font-size: 13px; font-weight: 500; color: #8a8a8a; margin: 10px 0 2px; letter-spacing: .06em; text-transform: none; }
 .menu-row {
   display: flex; align-items: center; gap: 12px; width: 100%;
   min-height: 66px; padding: 6px 2px; border: 0; border-bottom: 1px solid #ececec; background: #fff; text-align: left;
