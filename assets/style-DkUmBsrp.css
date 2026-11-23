@@ -550,48 +550,87 @@ html body .op-meze-chevron {
 }
 
 
-/* Homepage buttons: staircase spread across the info section */
+
+/* Homepage buttons: staircase at mid-width, Menu at the info left edge */
 html body .s-info > .s-btns,
 html body .s-info .s-btns {
-  display: flex !important;
+  display: block !important;
   flex-direction: column !important;
   flex-wrap: nowrap !important;
   align-items: stretch !important;
   justify-content: flex-start !important;
-  align-self: stretch !important;
-  width: 100% !important;
+  align-self: start !important;
+  /* Midpoint of the old tight cluster (102px) and the full info width */
+  width: calc((102px + 100%) / 2) !important;
   max-width: 100% !important;
   margin-left: 0 !important;
-  margin-right: 0 !important;
+  margin-right: auto !important;
   column-gap: 0 !important;
   row-gap: 14px !important;
   box-sizing: border-box !important;
 }
 html body .s-info .s-btns .btn-menu {
+  display: block !important;
+  width: max-content !important;
+
   order: 1 !important;
   align-self: start !important;
   justify-self: start !important;
   margin-left: 0 !important;
   margin-right: auto !important;
+  margin-bottom: 14px !important;
 }
 html body .s-info .s-btns .btn-order {
+  display: block !important;
+  width: max-content !important;
+
   order: 2 !important;
-  align-self: center !important;
-  justify-self: center !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+  align-self: start !important;
+  justify-self: start !important;
+  margin-left: calc((100% - 46px) / 2) !important;
+  margin-right: 0 !important;
+  margin-bottom: 14px !important;
 }
 html body .s-info .s-btns .btn-book,
 html body .s-info .s-btns a.btn.btn-book {
+  display: block !important;
+  width: max-content !important;
+
   order: 3 !important;
-  align-self: end !important;
-  justify-self: end !important;
-  margin-left: auto !important;
+  align-self: start !important;
+  justify-self: start !important;
+  margin-left: calc(100% - 46px) !important;
   margin-right: 0 !important;
 }
 @media (max-width: 960px) {
   html body .s-info > .s-btns,
   html body .s-info .s-btns {
-    row-gap: 12px !important;
+    /* Midpoint of the old tight cluster (70px) and the full info width */
+    width: calc((70px + 100%) / 2) !important;
   }
+  html body .s-info .s-btns .btn-menu,
+  html body .s-info .s-btns .btn-order {
+    margin-bottom: 12px !important;
+  }
+  html body .s-info .s-btns .btn-order {
+    margin-left: calc((100% - 34px) / 2) !important;
+  }
+  html body .s-info .s-btns .btn-book,
+  html body .s-info .s-btns a.btn.btn-book {
+    margin-left: calc(100% - 34px) !important;
+  }
+}
+
+/* Info text: click-and-drag selects, instead of dragging links/buttons */
+html body .s-info,
+html body .s-info * {
+  -webkit-user-select: text !important;
+  user-select: text !important;
+}
+html body .s-info a,
+html body .s-info a.s-link,
+html body .s-info .s-btns a.btn {
+  -webkit-user-drag: none !important;
+  -webkit-user-select: text !important;
+  user-select: text !important;
 }
