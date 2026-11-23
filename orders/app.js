@@ -10,8 +10,15 @@
   var POLL_MS = 30000;
   var QUICK_MINUTES = [10, 15, 20, 30, 45];
 
+  var AUTH_STORAGE_KEY = "ct-orders-auth";
   var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false, storageKey: "ct-orders-auth" }
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: false,
+      storage: window.localStorage,
+      storageKey: AUTH_STORAGE_KEY
+    }
   });
 
   var state = {
@@ -632,7 +639,6 @@
       return confirmBox("Stop receiving orders?", "The website won't take new orders until you start again.",
         "Stop orders", function () { setAccepting(false); });
     }
-    if (t.dataset.action === "signout") return signOut();
     var act = t.dataset.act, id = t.dataset.id, o, b;
     if (act === "back") { state.detail = null; return render(); }
     if (act === "expand") {
@@ -676,11 +682,6 @@
     });
   });
 
-  function signOut() {
-    stopApp();
-    sb.auth.signOut().finally(function () { state.session = null; show("login"); });
-  }
-
   var pollTimer = null, clockTimer = null;
   function stopApp() {
     state.started = false;
@@ -689,18 +690,108 @@
     if (wakeLock) { wakeLock.release().catch(function () {}); wakeLock = null; }
   }
 
+  function readStoredAuth() {
+    try {
+      var raw = window.localStorage.getItem(AUTH_STORAGE_KEY);
+      if (!raw) return null;
+      var data = JSON.parse(raw);
+      var sess = data && (data.currentSession || data.session || data);
+      if (sess && (sess.refresh_token || sess.access_token)) return sess;
+    } catch (e) {}
+    return null;
+  }
+  function hasStoredSession() {
+    var s = state.session || readStoredAuth();
+    return !!(s && (s.refresh_token || s.access_token));
+  }
+  function isTransientAuthError(err) {
+    if (!err) return false;
+    if (err.name === "AuthRetryableFetchError") return true;
+    var status = err.status;
+    if (status === 0 || status === 408 || status === 425 || status === 429 || (status >= 500 && status <= 599)) return true;
+    var m = String(err.message || "").toLowerCase();
+    return /failed to fetch|networkerror|network|offline|timeout|abort|load failed/.test(m);
+  }
+
+  function requestPersistentStorage() {
+    try {
+      if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(function () {});
+    } catch (e) {}
+  }
+
+  var authRetryTimer = null, authRetryMs = 2000, authRefreshing = null;
+  function scheduleAuthRetry() {
+    if (authRetryTimer || authRefreshing) return;
+    authRetryTimer = setTimeout(function () {
+      authRetryTimer = null;
+      refreshAuth(true);
+    }, authRetryMs);
+    authRetryMs = Math.min(Math.round(authRetryMs * 2), 60000);
+  }
+  function sessionNeedsRefresh(session) {
+    if (!session) return false;
+    if (!session.expires_at) return true;
+    return session.expires_at - Date.now() / 1000 < 60;
+  }
+  function refreshAuth(force) {
+    var sess = state.session || readStoredAuth();
+    if (!sess) return Promise.resolve();
+    if (!force && !sessionNeedsRefresh(sess)) return Promise.resolve();
+    if (authRefreshing) return authRefreshing;
+    authRefreshing = sb.auth.refreshSession().then(function (r) {
+      authRefreshing = null;
+      if (r.data && r.data.session) {
+        authRetryMs = 2000;
+        state.session = r.data.session;
+        return;
+      }
+      if (r.error && isTransientAuthError(r.error)) {
+        scheduleAuthRetry();
+        return;
+      }
+      if (!hasStoredSession()) {
+        state.session = null;
+        stopApp();
+        show("login");
+      }
+    }).catch(function (e) {
+      authRefreshing = null;
+      if (isTransientAuthError(e) || hasStoredSession()) scheduleAuthRetry();
+    });
+    return authRefreshing;
+  }
+
   function onSession(session) {
-    state.session = session;
-    if (!session) { stopApp(); return show("login"); }
-    if (!isStaff(session)) {
-      // role may have just been added: refresh the token once before saying no
-      return sb.auth.refreshSession().then(function (r) {
-        var s = r.data && r.data.session;
-        if (isStaff(s)) { state.session = s; show(state.started ? "app" : "start"); }
-        else show("denied");
-      });
+    if (session) {
+      state.session = session;
+      if (!isStaff(session)) {
+        // role may have just been added: refresh the token once before saying no
+        return sb.auth.refreshSession().then(function (r) {
+          var s = r.data && r.data.session;
+          if (isStaff(s)) { state.session = s; show(state.started ? "app" : "start"); }
+          else if (r.error && isTransientAuthError(r.error)) {
+            show(state.started ? "app" : "start");
+            scheduleAuthRetry();
+          }
+          else show("denied");
+        }).catch(function (e) {
+          if (isTransientAuthError(e) || hasStoredSession()) {
+            show(state.started ? "app" : "start");
+            scheduleAuthRetry();
+          } else show("denied");
+        });
+      }
+      show(state.started ? "app" : "start");
+      return;
     }
-    show(state.started ? "app" : "start");
+    if (hasStoredSession()) {
+      if (!state.session) state.session = readStoredAuth();
+      show(state.started ? "app" : "start");
+      scheduleAuthRetry();
+      return;
+    }
+    stopApp();
+    show("login");
   }
 
   $("start-btn").addEventListener("click", function () {
@@ -712,16 +803,56 @@
     tick(); clockTimer = setInterval(tick, 15000);
     loadMenu();
     subscribe();
+    refreshAuth(false);
     refresh();
     pollTimer = setInterval(function () { refresh(); }, POLL_MS);
   });
   function tick() { setConn(); }
 
-  window.addEventListener("online", function () { if (state.started) { subscribe(); refresh(); } });
+  function onAppVisible() { refreshAuth(false); }
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible") onAppVisible();
+  });
+  window.addEventListener("focus", onAppVisible);
+  window.addEventListener("online", function () {
+    refreshAuth(true);
+    if (state.started) { subscribe(); refresh(); }
+  });
 
   sb.auth.onAuthStateChange(function (event, session) {
-    if (event === "SIGNED_OUT") { state.session = null; stopApp(); show("login"); }
-    else if (event === "TOKEN_REFRESHED" && session) state.session = session;
+    if (event === "TOKEN_REFRESHED" && session) { state.session = session; return; }
+    if (event === "SIGNED_IN" && session) {
+      if (!state.session) onSession(session);
+      else state.session = session;
+      return;
+    }
+    if (event === "SIGNED_OUT") {
+      if (hasStoredSession()) { scheduleAuthRetry(); return; }
+      state.session = null;
+      stopApp();
+      show("login");
+    }
   });
-  sb.auth.getSession().then(function (r) { onSession(r.data.session); });
+
+  requestPersistentStorage();
+  sb.auth.getSession().then(function (r) {
+    if (r.data && r.data.session) {
+      onSession(r.data.session);
+      refreshAuth(false);
+      return;
+    }
+    if (isTransientAuthError(r.error) || readStoredAuth()) {
+      var stored = readStoredAuth();
+      if (stored) {
+        onSession(stored);
+        scheduleAuthRetry();
+        return;
+      }
+    }
+    onSession(null);
+  }).catch(function () {
+    var stored = readStoredAuth();
+    if (stored) { onSession(stored); scheduleAuthRetry(); }
+    else onSession(null);
+  });
 })();
