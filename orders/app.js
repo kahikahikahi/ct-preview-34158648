@@ -418,14 +418,14 @@
   }
 
   function orderCard(o) {
-    var html = '<article class="card">' +
+    var html = '<article class="card' + (state.detail === o.id ? ' is-open' : '') + '">' +
       summary(o.id, BAG_ICON, orderDay(o), o.customer_name, orderStatus(o), esc(money(o.total_cents)));
     if (o.status === "new") html += acceptDecline("order", o.id);
     return html + "</article>";
   }
 
   function bookingCard(b) {
-    var html = '<article class="card">' +
+    var html = '<article class="card' + (state.detail === b.id ? ' is-open' : '') + '">' +
       summary(b.id, TABLE_ICON, bookingDayShort(b), b.name, bookingStatus(b), esc(String(b.party_size)) + PEOPLE_ICON);
     if (b.status === "pending") html += acceptDecline("booking", b.id);
     return html + "</article>";
@@ -447,9 +447,9 @@
       actions = '<button type="button" class="btn" data-act="decline" data-id="' + o.id + '">Decline</button>' +
         '<button type="button" class="btn btn-go" data-act="accept" data-id="' + o.id + '">Accept</button>';
     } else if (o.status === "accepted" || o.status === "preparing") {
-      actions = '<button type="button" class="btn btn-dark" data-act="ready" data-id="' + o.id + '">Ready</button>';
+      actions = '<button type="button" class="btn btn-go" data-act="ready" data-id="' + o.id + '">Ready</button>';
     } else if (o.status === "ready") {
-      actions = '<button type="button" class="btn btn-dark" data-act="collected" data-id="' + o.id + '">Picked up</button>';
+      actions = '<button type="button" class="btn btn-go" data-act="collected" data-id="' + o.id + '">Picked up</button>';
     }
     return detailShell("Pickup", "Pickup", st, body, actions);
   }
@@ -494,11 +494,13 @@
     var detailEl = $("order-detail"), listEl = $("orders-list");
     var d = state.detail ? (findOrder(state.detail) || findBooking(state.detail)) : null;
     if (state.detail && !d) state.detail = null;
+    var split = !!(state.tab === "current" && state.detail && d && window.matchMedia("(min-width: 1180px)").matches);
+    document.body.classList.toggle("split", split);
     if (state.tab === "current" && state.detail && d) {
-      listEl.hidden = true;
+      listEl.hidden = split ? false : true;
       detailEl.hidden = false;
       detailEl.innerHTML = findOrder(state.detail) ? orderDetail(d) : bookingDetail(d);
-      if (detailEl.parentNode) detailEl.parentNode.scrollTop = 0;
+      if (!split && detailEl.parentNode) detailEl.parentNode.scrollTop = 0;
     } else if (listEl && detailEl) {
       listEl.hidden = false;
       detailEl.hidden = true;
@@ -546,8 +548,8 @@
   }
 
   // ---------- modal ----------
-  function openModal(html) { $("modal-box").innerHTML = html; $("modal").hidden = false; }
-  function closeModal() { $("modal").hidden = true; $("modal-box").innerHTML = ""; numpad = null; }
+  function openModal(html) { $("modal-box").classList.remove("is-form"); $("modal-box").innerHTML = html; $("modal").hidden = false; }
+  function closeModal() { $("modal").hidden = true; $("modal-box").innerHTML = ""; numpad = null; confirmYes = null; }
   var numpad = null; // { order, mins: "25", showKeys: bool }
 
   function openAccept(o) {
@@ -604,6 +606,46 @@
   }
   var confirmYes = null;
 
+  function hasCustomerEmail(email) {
+    return !!(email && /.+@.+\..+/.test(String(email).trim()));
+  }
+  function openDecline(kind, row) {
+    var isBk = kind === "booking";
+    var name = isBk ? row.name : row.customer_name;
+    var noun = isBk ? "booking" : "order";
+    var note = hasCustomerEmail(row.email)
+      ? "We'll email them to let them know."
+      : "This " + noun + " has no email, so they won't be notified automatically.";
+    openModal("<h3>" + esc("Decline " + name + "'s " + noun + "?") + "</h3>" +
+      '<p class="sub">' + esc(note) + "</p>" +
+      '<label class="msg-label" for="decline-msg">Message to customer (optional)</label>' +
+      '<textarea id="decline-msg" class="msg-box" maxlength="500" rows="4"></textarea>' +
+      '<div class="modal-actions"><button type="button" class="btn" data-dc="no">Cancel</button>' +
+      '<button type="button" class="btn btn-go" data-dc="yes" data-kind="' + kind + '" data-id="' + row.id + '">Send / Decline</button></div>');
+    $("modal-box").classList.add("is-form");
+    setTimeout(function () { var m = $("decline-msg"); if (m) m.focus(); }, 0);
+  }
+  function sendDecline(btn) {
+    if (btn.dataset.dc === "no") return closeModal();
+    var kind = btn.dataset.kind, id = btn.dataset.id;
+    var msgEl = $("decline-msg");
+    var msg = msgEl ? msgEl.value.trim() : "";
+    var isBk = kind === "booking";
+    var row = isBk ? findBooking(id) : findOrder(id);
+    if (!row) return closeModal();
+    btn.disabled = true;
+    if (isBk) markSeen(id);
+    var rpc = isBk ? "decline_booking" : "decline_order";
+    var args = isBk ? { booking_id: id, message: msg } : { order_id: id, message: msg };
+    sb.rpc(rpc, args).then(function (r) {
+      if (r.error) throw r.error;
+      var out = r.data && r.data[0];
+      closeModal();
+      toast((isBk ? "Booking declined" : "Order declined") + (out && out.emailed ? ". We'll email them." : ""));
+      refresh();
+    }).catch(function (e) { btn.disabled = false; toast(errMsg(e), true); refresh(); });
+  }
+
   function setAccepting(on) {
     var b = $("stop-btn"); b.disabled = true;
     sb.from("shop_settings").update({ accepting_orders: on }).eq("id", 1).select("accepting_orders").then(function (r) {
@@ -652,6 +694,7 @@
     var t = e.target.closest ? e.target.closest("button, [data-act]") : null;
     if (!t) return;
     if (t.dataset.np && numpad) return numpadClick(t);
+    if (t.dataset.dc) return sendDecline(t);
     if (t.dataset.cf) {
       var fn = confirmYes; confirmYes = null; closeModal();
       if (t.dataset.cf === "yes" && fn) fn();
@@ -676,20 +719,23 @@
       return render();
     }
     if (act === "accept" && (o = findOrder(id))) return openAccept(o);
-    if (act === "decline" && (o = findOrder(id))) {
-      return confirmBox("Decline " + o.customer_name + "'s order?", "Please phone them" + (o.phone ? " on " + o.phone : "") + " to let them know.",
-        "Yes, decline", function () { setOrderStatus(o, "new", "cancelled", "Order declined"); });
-    }
+    if (act === "decline" && (o = findOrder(id))) return openDecline("order", o);
     if (act === "ready" && (o = findOrder(id))) { t.disabled = true; return setOrderStatus(o, o.status, "ready", o.customer_name + "'s order is ready"); }
     if (act === "collected" && (o = findOrder(id))) { t.disabled = true; return setOrderStatus(o, "ready", "collected", o.customer_name + "'s order picked up"); }
-    if (act === "bk-accept" && (b = findBooking(id))) { markSeen(b.id); t.disabled = true; return setBookingStatus(b, "accepted", "Booking for " + b.name + " accepted"); }
-    if (act === "bk-decline" && (b = findBooking(id))) {
-      return confirmBox("Decline " + b.name + "'s booking?", "Please phone them on " + b.phone + " to let them know.",
-        "Yes, decline", function () { markSeen(b.id); setBookingStatus(b, "declined", "Booking declined"); });
+    if (act === "bk-accept" && (b = findBooking(id))) {
+      markSeen(b.id); t.disabled = true;
+      return sb.rpc("accept_booking", { booking_id: b.id }).then(function (r) {
+        if (r.error) throw r.error;
+        var out = r.data && r.data[0];
+        toast("Booking for " + b.name + " accepted" + (out && out.emailed ? ". We'll email them." : ""));
+        refresh();
+      }).catch(function (e) { t.disabled = false; toast(errMsg(e), true); refresh(); });
     }
+    if (act === "bk-decline" && (b = findBooking(id))) return openDecline("booking", b);
     if (act === "toggle") return toggleItem(t);
   });
   $("modal").addEventListener("click", function (e) { if (e.target === $("modal")) closeModal(); });
+  window.addEventListener("resize", function () { if (state.started) render(); });
 
   // ---------- auth + start ----------
   function isStaff(session) {
