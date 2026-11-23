@@ -133,7 +133,13 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .s-status.new { color: var(--new); }
 .s-status.bad { color: var(--danger); }
 .ticks { width: 26px; height: 14px; display: inline-block; vertical-align: -2px; margin-right: 6px; }
-.s-right { flex: none; min-width: 0; text-align: right; display: flex; align-items: center; justify-content: flex-end; gap: 6px; color: var(--ink); font-weight: 400; padding-right: 0; }
+.s-right {
+  flex: none; align-self: stretch; min-width: 0; margin: 0; padding: 0; border: 0;
+  background: transparent; font: inherit; font-size: 20px; font-weight: 400;
+  text-align: right; display: flex; align-items: center; justify-content: flex-end;
+  gap: 6px; color: var(--ink); cursor: pointer;
+}
+.s-right:hover, .s-right:active { background: transparent; color: var(--ink); }
 .people-icon { width: 26px; height: 26px; display: block; color: var(--ink); }
 .chev-btn {
   flex: none; width: 104px; min-height: 88px; margin-left: 8px; background: transparent; border: 0;
@@ -143,7 +149,7 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .chev { width: 52px; height: 52px; display: block; }
 .row-acts {
   display: flex; align-items: center; flex: none;
-  gap: 24px; padding: 0 0 0 24px;
+  gap: 24px; padding: 0 24px;
 }
 .decide-btn {
   box-sizing: border-box;
@@ -151,16 +157,15 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
   border-radius: 50%; display: flex; align-items: center; justify-content: center;
   -webkit-tap-highlight-color: transparent; transition: none;
 }
-.decide-icon { width: 22px; height: 22px; display: block; }
+.decide-icon { width: 26px; height: 26px; display: block; }
 .decide-no {
-  background: transparent; border: 1.5px solid #555; color: #333;
+  background: transparent; border: 1.5px solid #444; color: #111;
 }
-.decide-no:hover, .decide-no:active { background: transparent; border-color: #555; color: #333; }
+.decide-no:hover, .decide-no:active { background: transparent; border-color: #444; color: #111; }
 .decide-yes {
   background: #111; border: 1.5px solid #111; color: #fff;
 }
 .decide-yes:hover, .decide-yes:active { background: #111; border-color: #111; color: #fff; }
-.top:has(.row-acts) .chev-btn { width: 64px; min-width: 64px; margin-left: 24px; }
 .actions.under { margin: 12px 112px 0 16px; padding: 0 0 18px; justify-content: flex-end; }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 16px; }
 .actions .btn {
@@ -297,13 +302,12 @@ button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
   .type-icon { width: 24px; height: 24px; }
   .s-name { font-size: 16px; }
   .s-due, .s-status { font-size: 13px; }
+  .s-right { font-size: 16px; }
   .chev-btn { width: 56px; min-width: 56px; margin-left: 4px; }
   .chev { width: 40px; height: 40px; }
-  .row-acts { gap: 16px; padding-left: 16px; }
+  .row-acts { gap: 16px; padding: 0 16px; }
   .decide-btn { width: 48px; height: 48px; }
-  .decide-icon { width: 20px; height: 20px; }
-  .top:has(.row-acts) .chev-btn { width: 48px; min-width: 48px; margin-left: 16px; }
-  .top:has(.row-acts) .chev { width: 36px; height: 36px; }
+  .decide-icon { width: 24px; height: 24px; }
 }
 @media (max-width: 960px) {
   .actions.under { margin: 12px 112px 0 16px; }
