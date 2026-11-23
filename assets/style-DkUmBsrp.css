@@ -665,3 +665,18 @@ html body .s-info .s-btns a.btn {
     margin-top: 0 !important;
   }
 }
+
+
+/* Phone portrait: only the shopfront scales so the info block fits the first
+   screen. Spacing, steps, type, crop and desktop layout stay as in v110. */
+@media (max-width: 960px) and (hover: none) and (orientation: portrait) {
+  html body .s-photo {
+    height: clamp(120px, calc(100vh - 280px), 420px) !important;
+    height: clamp(120px, calc(100svh - 280px), 420px) !important;
+    height: clamp(120px, calc(100dvh - 280px), 420px) !important;
+    width: calc(clamp(120px, calc(100vh - 280px), 420px) * 360 / 532) !important;
+    width: calc(clamp(120px, calc(100svh - 280px), 420px) * 360 / 532) !important;
+    width: calc(clamp(120px, calc(100dvh - 280px), 420px) * 360 / 532) !important;
+    aspect-ratio: 360 / 532 !important;
+  }
+}
