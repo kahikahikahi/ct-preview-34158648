@@ -812,3 +812,165 @@ html body .s-info > .s-btns {
     padding-top: 24px !important;
   }
 }
+
+
+/* Homepage Menu / Order / Book: standard equal bars under the info.
+   Visual order matches the DOM so drag-to-select still works. */
+html body .s-info > .s-btns,
+html body .s-info .s-btns {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  column-gap: 10px !important;
+  row-gap: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+  padding-top: 24px !important;
+  justify-items: stretch !important;
+  align-items: stretch !important;
+}
+html body .s-info .s-btns::before,
+html body .s-info .s-btns::after {
+  content: none !important;
+  display: none !important;
+}
+html body .s-info .s-btns .s-apps-row,
+html body .s-info .s-btns .s-apps-inline {
+  display: none !important;
+}
+html body .s-info .s-btns .btn-menu {
+  order: 1 !important;
+}
+html body .s-info .s-btns .s-order-row {
+  order: 2 !important;
+  display: flex !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+html body .s-info .s-btns .btn-book,
+html body .s-info .s-btns a.btn.btn-book {
+  order: 3 !important;
+}
+html body .s-info .s-btns a.btn,
+html body .s-info .s-btns a.btn:link,
+html body .s-info .s-btns a.btn:visited,
+html body .s-info .s-btns a.btn:hover,
+html body .s-info .s-btns a.btn:active,
+html body .s-info .s-btns a.btn:focus,
+html body .s-info .s-btns a.btn.btn-menu,
+html body .s-info .s-btns a.btn.btn-order,
+html body .s-info .s-btns a.btn.btn-book {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  max-width: none !important;
+  flex: 1 1 auto !important;
+  align-self: stretch !important;
+  justify-self: stretch !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+  padding: 0 8px !important;
+  min-height: 60px !important;
+  height: 60px !important;
+  font-family: var(--display) !important;
+  font-size: 22px !important;
+  font-weight: 400 !important;
+  letter-spacing: normal !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
+  text-transform: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: #000 !important;
+  color: #fff !important;
+  cursor: pointer !important;
+  transition: none !important;
+  filter: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+html body .s-info .s-btns a.btn::before,
+html body .s-info .s-btns a.btn::after {
+  content: none !important;
+  display: none !important;
+}
+
+@media (max-width: 960px) {
+  html body .s-info > .s-btns,
+  html body .s-info .s-btns {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    width: 100% !important;
+    column-gap: 0 !important;
+    row-gap: 8px !important;
+    gap: 8px !important;
+    padding-top: 20px !important;
+  }
+  html body .s-info .s-btns a.btn,
+  html body .s-info .s-btns a.btn:link,
+  html body .s-info .s-btns a.btn:visited,
+  html body .s-info .s-btns a.btn:hover,
+  html body .s-info .s-btns a.btn:active,
+  html body .s-info .s-btns a.btn:focus,
+  html body .s-info .s-btns a.btn.btn-menu,
+  html body .s-info .s-btns a.btn.btn-order,
+  html body .s-info .s-btns a.btn.btn-book {
+    min-height: 56px !important;
+    height: 56px !important;
+    font-size: 20px !important;
+  }
+}
+@media (max-width: 960px) and (hover: none) {
+  html body .s-info > .s-btns,
+  html body .s-info .s-btns {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    width: 100% !important;
+    gap: 8px !important;
+    row-gap: 8px !important;
+    padding-top: 20px !important;
+  }
+  html body .s-info .s-btns a.btn,
+  html body .s-info .s-btns a.btn:link,
+  html body .s-info .s-btns a.btn:visited,
+  html body .s-info .s-btns a.btn:hover,
+  html body .s-info .s-btns a.btn:active,
+  html body .s-info .s-btns a.btn:focus,
+  html body .s-info .s-btns a.btn.btn-menu,
+  html body .s-info .s-btns a.btn.btn-order,
+  html body .s-info .s-btns a.btn.btn-book {
+    min-height: 56px !important;
+    height: 56px !important;
+    font-size: 20px !important;
+  }
+}
+
+/* Phone portrait: the three Menu / Order / Book bars need more height than
+   the old steps, so the photo clamp reserve is 368px (was 280). Only the
+   shopfront shrinks; hours, address and phone are unchanged. Max 420. */
+@media (max-width: 960px) and (hover: none) and (orientation: portrait) {
+  html body .s-photo {
+    height: clamp(120px, calc(100vh - 368px), 420px) !important;
+    height: clamp(120px, calc(100svh - 368px), 420px) !important;
+    height: clamp(120px, calc(100dvh - 368px), 420px) !important;
+    width: calc(clamp(120px, calc(100vh - 368px), 420px) * 360 / 532) !important;
+    width: calc(clamp(120px, calc(100svh - 368px), 420px) * 360 / 532) !important;
+    width: calc(clamp(120px, calc(100dvh - 368px), 420px) * 360 / 532) !important;
+    aspect-ratio: 360 / 532 !important;
+  }
+}
