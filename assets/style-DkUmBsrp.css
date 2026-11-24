@@ -680,3 +680,16 @@ html body .s-info .s-btns a.btn {
     aspect-ratio: 360 / 532 !important;
   }
 }
+
+
+/* Reorder: same solid button as checkout, at the top of the ordering menu */
+html body .op .op-menu-top{
+  display:block!important;
+  padding:0 0 16px!important;
+  margin:0!important;
+}
+html body .op .op-menu-top .op-btn,
+html body .op #op-reorder{
+  width:100%!important;
+  min-height:46px!important;
+}
