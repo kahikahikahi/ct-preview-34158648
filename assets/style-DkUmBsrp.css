@@ -974,3 +974,20 @@ html body .s-info .s-btns a.btn::after {
     aspect-ratio: 360 / 532 !important;
   }
 }
+
+
+/* Desktop-only hover on the homepage Menu / Order / Book bars.
+   Phones are excluded: no tap flash. Instant, no size change. */
+@media (hover: hover) and (pointer: fine) {
+  html body .s-info .s-btns a.btn:hover,
+  html body .s-info .s-btns a.btn.btn-menu:hover,
+  html body .s-info .s-btns a.btn.btn-order:hover,
+  html body .s-info .s-btns a.btn.btn-book:hover {
+    background: #333 !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}
