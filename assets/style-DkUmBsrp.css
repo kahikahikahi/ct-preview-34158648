@@ -695,55 +695,81 @@ html body .op #op-reorder{
 }
 
 
-/* Homepage steps: larger Menu / Order / Book, offsets scaled in proportion */
+/* Homepage steps: roughly double the original (v111) Menu / Order / Book size.
+   Offsets scale in proportion and cap at the info width so the stairs stay centred. */
 html body .s-info .s-btns a.btn {
-  font-size: 26px !important;
-  line-height: 39px !important;
+  font-size: 40px !important;
+  line-height: 60px !important;
 }
 html body .s-info > .s-btns,
 html body .s-info .s-btns {
-  width: calc((251px + 100%) / 2) !important;
+  width: 100% !important;
+  row-gap: 28px !important;
+}
+html body .s-info .s-btns .btn-menu,
+html body .s-info .s-btns .btn-order {
+  margin-bottom: 28px !important;
 }
 html body .s-info .s-btns .btn-order {
-  margin-left: calc((100% - 59px) / 2) !important;
+  margin-left: calc((100% - 91px) / 2) !important;
 }
 html body .s-info .s-btns .btn-book,
 html body .s-info .s-btns a.btn.btn-book {
-  margin-left: calc(100% - 59px) !important;
+  margin-left: calc(100% - 91px) !important;
 }
 @media (max-width: 960px) {
   html body .s-info .s-btns a.btn {
-    font-size: 19px !important;
-    line-height: 28px !important;
+    font-size: 30px !important;
+    line-height: 44px !important;
   }
   html body .s-info > .s-btns,
   html body .s-info .s-btns {
-    width: calc((182px + 100%) / 2) !important;
+    width: 100% !important;
+    row-gap: 24px !important;
+  }
+  html body .s-info .s-btns .btn-menu,
+  html body .s-info .s-btns .btn-order {
+    margin-bottom: 24px !important;
   }
   html body .s-info .s-btns .btn-order {
-    margin-left: calc((100% - 43px) / 2) !important;
+    margin-left: calc((100% - 68px) / 2) !important;
   }
   html body .s-info .s-btns .btn-book,
   html body .s-info .s-btns a.btn.btn-book {
-    margin-left: calc(100% - 43px) !important;
+    margin-left: calc(100% - 68px) !important;
   }
 }
 @media (max-width: 960px) and (hover: none) {
   html body .s-info .s-btns a.btn {
-    font-size: 19px !important;
-    line-height: 28px !important;
+    font-size: 30px !important;
+    line-height: 44px !important;
   }
 }
 
 /* Phone portrait: photo absorbs the taller steps so the landing still fits */
 @media (max-width: 960px) and (hover: none) and (orientation: portrait) {
   html body .s-photo {
-    height: clamp(120px, calc(100vh - 298px), 420px) !important;
-    height: clamp(120px, calc(100svh - 298px), 420px) !important;
-    height: clamp(120px, calc(100dvh - 298px), 420px) !important;
-    width: calc(clamp(120px, calc(100vh - 298px), 420px) * 360 / 532) !important;
-    width: calc(clamp(120px, calc(100svh - 298px), 420px) * 360 / 532) !important;
-    width: calc(clamp(120px, calc(100dvh - 298px), 420px) * 360 / 532) !important;
+    height: clamp(120px, calc(100vh - 370px), 420px) !important;
+    height: clamp(120px, calc(100svh - 370px), 420px) !important;
+    height: clamp(120px, calc(100dvh - 370px), 420px) !important;
+    width: calc(clamp(120px, calc(100vh - 370px), 420px) * 360 / 532) !important;
+    width: calc(clamp(120px, calc(100svh - 370px), 420px) * 360 / 532) !important;
+    width: calc(clamp(120px, calc(100dvh - 370px), 420px) * 360 / 532) !important;
     aspect-ratio: 360 / 532 !important;
+  }
+}
+
+
+/* Address and phone: hand cursor on desktop hover; drag-to-select is unchanged */
+@media (hover: hover) and (pointer: fine), (min-width: 961px) {
+  html body .s-info > .s-link,
+  html body .s-info > .s-link:link,
+  html body .s-info > .s-link:visited,
+  html body .s-info > .s-link:hover,
+  html body .s-info a[href^="tel"],
+  html body .s-info a[href^="tel"]:link,
+  html body .s-info a[href^="tel"]:visited,
+  html body .s-info a[href^="tel"]:hover {
+    cursor: pointer !important;
   }
 }
