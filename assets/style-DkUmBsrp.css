@@ -695,66 +695,66 @@ html body .op #op-reorder{
 }
 
 
-/* Homepage steps: roughly double the original (v111) Menu / Order / Book size.
-   Offsets scale in proportion and cap at the info width so the stairs stay centred. */
+/* Homepage steps: as large as they can go inside the info width (and, on
+   phone, still fit the first screen). Offsets stay even and centred. */
 html body .s-info .s-btns a.btn {
-  font-size: 40px !important;
-  line-height: 60px !important;
+  font-size: 53px !important;
+  line-height: 80px !important;
 }
 html body .s-info > .s-btns,
 html body .s-info .s-btns {
   width: 100% !important;
-  row-gap: 28px !important;
+  row-gap: 37px !important;
 }
 html body .s-info .s-btns .btn-menu,
 html body .s-info .s-btns .btn-order {
-  margin-bottom: 28px !important;
+  margin-bottom: 37px !important;
 }
 html body .s-info .s-btns .btn-order {
-  margin-left: calc((100% - 91px) / 2) !important;
+  margin-left: calc((100% - 121px) / 2) !important;
 }
 html body .s-info .s-btns .btn-book,
 html body .s-info .s-btns a.btn.btn-book {
-  margin-left: calc(100% - 91px) !important;
+  margin-left: calc(100% - 121px) !important;
 }
 @media (max-width: 960px) {
   html body .s-info .s-btns a.btn {
-    font-size: 30px !important;
-    line-height: 44px !important;
+    font-size: 46px !important;
+    line-height: 67px !important;
   }
   html body .s-info > .s-btns,
   html body .s-info .s-btns {
     width: 100% !important;
-    row-gap: 24px !important;
+    row-gap: 37px !important;
   }
   html body .s-info .s-btns .btn-menu,
   html body .s-info .s-btns .btn-order {
-    margin-bottom: 24px !important;
+    margin-bottom: 37px !important;
   }
   html body .s-info .s-btns .btn-order {
-    margin-left: calc((100% - 68px) / 2) !important;
+    margin-left: calc((100% - 105px) / 2) !important;
   }
   html body .s-info .s-btns .btn-book,
   html body .s-info .s-btns a.btn.btn-book {
-    margin-left: calc(100% - 68px) !important;
+    margin-left: calc(100% - 105px) !important;
   }
 }
 @media (max-width: 960px) and (hover: none) {
   html body .s-info .s-btns a.btn {
-    font-size: 30px !important;
-    line-height: 44px !important;
+    font-size: 46px !important;
+    line-height: 67px !important;
   }
 }
 
 /* Phone portrait: photo absorbs the taller steps so the landing still fits */
 @media (max-width: 960px) and (hover: none) and (orientation: portrait) {
   html body .s-photo {
-    height: clamp(120px, calc(100vh - 370px), 420px) !important;
-    height: clamp(120px, calc(100svh - 370px), 420px) !important;
-    height: clamp(120px, calc(100dvh - 370px), 420px) !important;
-    width: calc(clamp(120px, calc(100vh - 370px), 420px) * 360 / 532) !important;
-    width: calc(clamp(120px, calc(100svh - 370px), 420px) * 360 / 532) !important;
-    width: calc(clamp(120px, calc(100dvh - 370px), 420px) * 360 / 532) !important;
+    height: clamp(120px, calc(100vh - 465px), 420px) !important;
+    height: clamp(120px, calc(100svh - 465px), 420px) !important;
+    height: clamp(120px, calc(100dvh - 465px), 420px) !important;
+    width: calc(clamp(120px, calc(100vh - 465px), 420px) * 360 / 532) !important;
+    width: calc(clamp(120px, calc(100svh - 465px), 420px) * 360 / 532) !important;
+    width: calc(clamp(120px, calc(100dvh - 465px), 420px) * 360 / 532) !important;
     aspect-ratio: 360 / 532 !important;
   }
 }
