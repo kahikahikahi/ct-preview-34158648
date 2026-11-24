@@ -124,7 +124,14 @@
     var ap = String(p.dayPeriod || "pm").replace(/[\s.]/g, "").toUpperCase();
     return p.weekday + " " + p.day + " " + p.month + " - " + hour + ":" + p.minute + ap;
   }
-  function telHref(p) { return "tel:" + String(p || "").replace(/[^\d+]/g, ""); }
+  function telHref(p) {
+    var e164 = typeof ctParsePhone === "function" ? ctParsePhone(p) : null;
+    return "tel:" + (e164 || String(p || "").replace(/[^\d+]/g, ""));
+  }
+  function displayPhone(p) {
+    var shown = typeof ctFormatPhone === "function" ? ctFormatPhone(p) : "";
+    return shown || String(p || "");
+  }
   function loadSeen() { try { return JSON.parse(localStorage.getItem("ct-seen-bookings") || "[]"); } catch (e) { return []; } }
   function saveSeen() { try { localStorage.setItem("ct-seen-bookings", JSON.stringify(state.seenBookings.slice(-300))); } catch (e) {} }
 
@@ -495,7 +502,7 @@
   }
   function customerBlock(name, phone, email) {
     return '<div class="cust"><div class="cust-name">' + esc(name) + "</div>" +
-      (phone ? '<a class="cust-line" href="' + esc(telHref(phone)) + '">' + PHONE_ICON + "<span>" + esc(phone) + "</span></a>" : "") +
+      (phone ? '<a class="cust-line" href="' + esc(telHref(phone)) + '">' + PHONE_ICON + "<span>" + esc(displayPhone(phone)) + "</span></a>" : "") +
       (email ? '<div class="cust-line">' + MAIL_ICON + "<span>" + esc(email) + "</span></div>" : "") +
       "</div>";
   }

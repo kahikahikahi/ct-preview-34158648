@@ -991,3 +991,28 @@ html body .s-info .s-btns a.btn::after {
     transition: none !important;
   }
 }
+
+
+/* Small plain Privacy link in the site footer */
+html body footer .ft-privacy,
+html body footer a.ft-privacy,
+html body footer a.ft-privacy:link,
+html body footer a.ft-privacy:visited,
+html body footer a.ft-privacy:hover,
+html body footer a.ft-privacy:active {
+  display: block;
+  margin: 8px 0 0 !important;
+  padding: 0 !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  letter-spacing: normal !important;
+  line-height: 1.4 !important;
+  color: #000 !important;
+  text-decoration: underline !important;
+  text-decoration-thickness: 1px !important;
+  text-underline-offset: 3px !important;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+}
