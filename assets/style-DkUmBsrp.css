@@ -1007,3 +1007,32 @@ html body .s-info .s-btns a.btn.btn-order,
 html body .s-info .s-btns a.btn.btn-book {
   font-style: normal !important;
 }
+
+
+/* Homepage: hours, address and phone first, then the Menu / Order / Book row. */
+html body .s-info > .s-hours,
+html body .s-info .s-logo + .s-hours {
+  order: 1 !important;
+  margin-top: 0 !important;
+}
+html body .s-info > .s-link,
+html body .s-info > .s-hours + .s-link,
+html body .s-info > .s-link + .s-link {
+  order: 2 !important;
+}
+html body .s-info > .s-btns {
+  order: 4 !important;
+  margin-top: 20px !important;
+  padding-top: 0 !important;
+}
+@media (hover: hover) and (pointer: fine), (min-width: 961px) {
+  html body .s-info > .s-hours,
+  html body .s-info .s-logo + .s-hours {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  html body .s-info > .s-btns {
+    margin-top: 0 !important;
+    padding-top: 24px !important;
+  }
+}
