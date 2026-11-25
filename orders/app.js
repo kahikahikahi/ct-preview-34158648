@@ -536,10 +536,13 @@
   function acceptDecline(kind, id) {
     var d = kind === "booking" ? "bk-decline" : "decline";
     var a = kind === "booking" ? "bk-accept" : "accept";
-    return '<div class="row-acts">' +
-      '<button type="button" class="decide-btn decide-no" data-act="' + d + '" data-id="' + id + '" aria-label="Decline">Decline</button>' +
-      '<button type="button" class="decide-btn decide-yes" data-act="' + a + '" data-id="' + id + '" aria-label="Accept">Accept</button>' +
-      "</div>";
+    var o = kind === "order" ? findOrder(id) : null;
+    var blockAccept = !!(o && o.payment_method === "online" && o.payment_status !== "paid");
+    var html = '<div class="row-acts">' +
+      '<button type="button" class="decide-btn decide-no" data-act="' + d + '" data-id="' + id + '" aria-label="Decline">Decline</button>';
+    if (blockAccept) html += '<span class="decide-unpaid">Not paid</span>';
+    else html += '<button type="button" class="decide-btn decide-yes" data-act="' + a + '" data-id="' + id + '" aria-label="Accept">Accept</button>';
+    return html + "</div>";
   }
 
   function orderCard(o) {
@@ -794,16 +797,14 @@
     var isBk = kind === "booking";
     var name = isBk ? row.name : row.customer_name;
     var noun = isBk ? "booking" : "order";
-    var note = hasCustomerEmail(row.email)
-      ? "We'll email them to let them know."
-      : "This " + noun + " has no email, so they won't be notified automatically.";
+    var note = "You can add an optional message. It is saved with the decline.";
     openModal('<div class="modal-body"><h3>Decline ' + noun + "</h3>" +
       '<p class="sub">' + esc(name) + "</p>" +
       '<p class="sub">' + esc(note) + "</p>" +
-      '<label class="msg-label" for="decline-msg">Message to customer (optional)</label>' +
+      '<label class="msg-label" for="decline-msg">Message (optional)</label>' +
       '<textarea id="decline-msg" class="msg-box" maxlength="500" rows="4"></textarea></div>' +
       '<div class="modal-actions"><button type="button" class="btn" data-dc="no">Cancel</button>' +
-      '<button type="button" class="btn btn-go" data-dc="yes" data-kind="' + kind + '" data-id="' + row.id + '">Send / Decline</button></div>');
+      '<button type="button" class="btn btn-go" data-dc="yes" data-kind="' + kind + '" data-id="' + row.id + '">Decline</button></div>');
     $("modal-box").classList.add("is-form");
     setTimeout(function () { var m = $("decline-msg"); if (m) m.focus(); }, 0);
   }
@@ -823,7 +824,7 @@
       if (r.error) throw r.error;
       var out = r.data && r.data[0];
       closeModal();
-      toast((isBk ? "Booking declined" : "Order declined") + (out && out.emailed ? ". We'll email them." : ""));
+      toast(isBk ? "Booking declined" : "Order declined");
       refresh();
     }).catch(function (e) { btn.disabled = false; toast(errMsg(e), true); refresh(); });
   }
@@ -915,14 +916,17 @@
       if (findBooking(id)) markSeen(id);
       return render();
     }
-    if (act === "accept" && (o = findOrder(id))) return openAccept(o);
+    if (act === "accept" && (o = findOrder(id))) {
+      if (o.payment_method === "online" && o.payment_status !== "paid") return toast("This online order is not paid.", true);
+      return openAccept(o);
+    }
     if (act === "decline" && (o = findOrder(id))) return openDecline("order", o);
     if (act === "bk-accept" && (b = findBooking(id))) {
       markSeen(b.id); t.disabled = true;
       return sb.rpc("accept_booking", { booking_id: b.id }).then(function (r) {
         if (r.error) throw r.error;
         var out = r.data && r.data[0];
-        toast("Booking for " + b.name + " accepted" + (out && out.emailed ? ". We'll email them." : ""));
+        toast("Booking for " + b.name + " accepted");
         refresh();
       }).catch(function (e) { t.disabled = false; toast(errMsg(e), true); refresh(); });
     }

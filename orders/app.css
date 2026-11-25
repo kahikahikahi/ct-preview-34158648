@@ -362,3 +362,14 @@ button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
   .items { margin-top: 4px; }
   .totals { margin-top: 4px; padding: 8px 0 2px; }
 }
+
+.decide-unpaid {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 96px;
+  padding: 0 12px;
+  color: var(--danger);
+  font-size: 15px;
+  font-weight: 500;
+}
