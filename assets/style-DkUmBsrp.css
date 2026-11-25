@@ -860,3 +860,29 @@ html body .s-info .s-btns a.btn.btn-book {
     column-gap: 28px !important;
   }
 }
+
+
+/* Phones (portrait): scale only the shopfront so the landing (photo, info, links, Delivery on) fits one screen, including the visible area under iOS Safari bars. No crop; desktop unchanged. */
+@media (max-width: 960px) and (hover: none) and (orientation: portrait) {
+  html body .s-photo {
+    height: clamp(120px, calc(100vh - 340px), 420px) !important;
+    height: clamp(120px, calc(100svh - 340px), 420px) !important;
+    height: clamp(120px, calc(100dvh - 340px), 420px) !important;
+    width: calc(clamp(120px, calc(100vh - 340px), 420px) * 360 / 532) !important;
+    width: calc(clamp(120px, calc(100svh - 340px), 420px) * 360 / 532) !important;
+    width: calc(clamp(120px, calc(100dvh - 340px), 420px) * 360 / 532) !important;
+    max-height: none !important;
+    aspect-ratio: 360 / 532 !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
+  html body .s-info > .s-apps > span {
+    font-size: 15px !important;
+  }
+  html body .s-info .s-btns a.btn,
+  html body .s-info .s-btns a.btn.btn-menu,
+  html body .s-info .s-btns a.btn.btn-order,
+  html body .s-info .s-btns a.btn.btn-book {
+    min-width: 44px !important;
+  }
+}
