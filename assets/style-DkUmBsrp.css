@@ -1016,3 +1016,6 @@ html body footer a.ft-privacy:active {
   box-shadow: none !important;
   cursor: pointer !important;
 }
+
+/* Keep the required email field in the same details group as name and phone, always visible as a full-width row. */
+.op-field-row .op-field-email{grid-column:1/-1}
