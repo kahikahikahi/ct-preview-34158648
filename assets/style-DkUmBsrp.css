@@ -814,7 +814,7 @@ html body .s-info > .s-btns {
 }
 
 
-/* Homepage Menu / Order / Book: standard equal bars under the info.
+/* Homepage Menu / Order / Book: Order is the primary action; Menu and Book are secondary.
    Visual order matches the DOM so drag-to-select still works. */
 html body .s-info > .s-btns,
 html body .s-info .s-btns {
@@ -882,25 +882,35 @@ html body .s-info .s-btns a.btn.btn-book {
   margin-right: 0 !important;
   margin-bottom: 0 !important;
   margin-top: 0 !important;
-  padding: 0 8px !important;
-  min-height: 60px !important;
-  height: 60px !important;
+  padding: 0 16px !important;
+  min-height: 48px !important;
+  height: 48px !important;
   font-family: var(--display) !important;
-  font-size: 22px !important;
+  font-size: 16px !important;
   font-weight: 400 !important;
   letter-spacing: normal !important;
   line-height: 1 !important;
   text-decoration: none !important;
   text-transform: none !important;
-  border: 0 !important;
-  border-radius: 0 !important;
+  border: 1px solid #d6d6d6 !important;
+  border-radius: 6px !important;
   box-shadow: none !important;
-  background: #000 !important;
-  color: #fff !important;
+  background: #f2f2f2 !important;
+  color: #111 !important;
   cursor: pointer !important;
   transition: none !important;
   filter: none !important;
   -webkit-tap-highlight-color: transparent !important;
+}
+html body .s-info .s-btns a.btn.btn-order,
+html body .s-info .s-btns a.btn.btn-order:link,
+html body .s-info .s-btns a.btn.btn-order:visited,
+html body .s-info .s-btns a.btn.btn-order:active,
+html body .s-info .s-btns a.btn.btn-order:focus {
+  background: #222 !important;
+  color: #fff !important;
+  border-color: #222 !important;
+  font-weight: 500 !important;
 }
 html body .s-info .s-btns a.btn::before,
 html body .s-info .s-btns a.btn::after {
@@ -929,9 +939,9 @@ html body .s-info .s-btns a.btn::after {
   html body .s-info .s-btns a.btn.btn-menu,
   html body .s-info .s-btns a.btn.btn-order,
   html body .s-info .s-btns a.btn.btn-book {
-    min-height: 56px !important;
-    height: 56px !important;
-    font-size: 20px !important;
+    min-height: 48px !important;
+    height: 48px !important;
+    font-size: 16px !important;
   }
 }
 @media (max-width: 960px) and (hover: none) {
@@ -954,9 +964,9 @@ html body .s-info .s-btns a.btn::after {
   html body .s-info .s-btns a.btn.btn-menu,
   html body .s-info .s-btns a.btn.btn-order,
   html body .s-info .s-btns a.btn.btn-book {
-    min-height: 56px !important;
-    height: 56px !important;
-    font-size: 20px !important;
+    min-height: 48px !important;
+    height: 48px !important;
+    font-size: 16px !important;
   }
 }
 
@@ -976,15 +986,24 @@ html body .s-info .s-btns a.btn::after {
 }
 
 
-/* Desktop-only hover on the homepage Menu / Order / Book bars.
+/* Desktop-only hover on the homepage Menu / Order / Book buttons.
    Phones are excluded: no tap flash. Instant, no size change. */
 @media (hover: hover) and (pointer: fine) {
   html body .s-info .s-btns a.btn:hover,
   html body .s-info .s-btns a.btn.btn-menu:hover,
-  html body .s-info .s-btns a.btn.btn-order:hover,
   html body .s-info .s-btns a.btn.btn-book:hover {
+    background: #e8e8e8 !important;
+    color: #111 !important;
+    border-color: #d0d0d0 !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+  html body .s-info .s-btns a.btn.btn-order:hover {
     background: #333 !important;
     color: #fff !important;
+    border-color: #333 !important;
     text-decoration: none !important;
     box-shadow: none !important;
     filter: none !important;
