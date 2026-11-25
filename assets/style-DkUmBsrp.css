@@ -865,12 +865,12 @@ html body .s-info .s-btns a.btn.btn-book {
 /* Phones (portrait): scale only the shopfront so the landing (photo, info, links) fits one screen, including the visible area under iOS Safari bars. No crop; desktop unchanged. */
 @media (max-width: 960px) and (hover: none) and (orientation: portrait) {
   html body .s-photo {
-    height: clamp(120px, calc(100vh - 240px), 420px) !important;
-    height: clamp(120px, calc(100svh - 240px), 420px) !important;
-    height: clamp(120px, calc(100dvh - 240px), 420px) !important;
-    width: calc(clamp(120px, calc(100vh - 240px), 420px) * 360 / 532) !important;
-    width: calc(clamp(120px, calc(100svh - 240px), 420px) * 360 / 532) !important;
-    width: calc(clamp(120px, calc(100dvh - 240px), 420px) * 360 / 532) !important;
+    height: clamp(120px, calc(100vh - 320px), 420px) !important;
+    height: clamp(120px, calc(100svh - 320px), 420px) !important;
+    height: clamp(120px, calc(100dvh - 320px), 420px) !important;
+    width: calc(clamp(120px, calc(100vh - 320px), 420px) * 360 / 532) !important;
+    width: calc(clamp(120px, calc(100svh - 320px), 420px) * 360 / 532) !important;
+    width: calc(clamp(120px, calc(100dvh - 320px), 420px) * 360 / 532) !important;
     max-height: none !important;
     aspect-ratio: 360 / 532 !important;
     object-fit: contain !important;
@@ -888,4 +888,46 @@ html body .s-info .s-btns a.btn.btn-book {
 /* Homepage: hide the Delivery on row (label and app icons). */
 html body .s-info > .s-apps {
   display: none !important;
+}
+
+
+/* Café Turquoise logo centred above the shopfront, phone and desktop. */
+html body .s-toplogo {
+  display: block !important;
+  width: 150px !important;
+  max-width: 100% !important;
+  height: auto !important;
+  margin: 0 auto 8px !important;
+  order: -2 !important;
+  flex: 0 0 auto !important;
+}
+
+/* Desktop: sit the logo in the photo column, centred above the shopfront. */
+@media (min-width: 961px), (hover: hover) and (pointer: fine) {
+  html body .s-top {
+    grid-template-areas:
+      "logo info"
+      "photo info" !important;
+    grid-template-rows: auto auto !important;
+    row-gap: 12px !important;
+  }
+  html body .s-toplogo {
+    grid-area: logo !important;
+    justify-self: center !important;
+    align-self: end !important;
+    margin: 0 auto 0 !important;
+  }
+  html body .s-media {
+    grid-area: photo !important;
+  }
+  html body .s-info {
+    grid-area: info !important;
+  }
+}
+
+/* Phone landscape stays the compact two-column layout, without the logo. */
+@media (max-width: 960px) and (hover: none) and (orientation: landscape) {
+  html body .s-toplogo {
+    display: none !important;
+  }
 }
