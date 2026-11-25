@@ -959,3 +959,32 @@ html body .s-toplogo {
     line-height: 1.5 !important;
   }
 }
+
+
+/* Homepage: Menu / Order / Book row first, then hours, address and phone. */
+html body .s-info > .s-btns {
+  order: 1 !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+html body .s-info > .s-hours,
+html body .s-info .s-logo + .s-hours {
+  order: 2 !important;
+  margin-top: 20px !important;
+}
+html body .s-info > .s-link,
+html body .s-info > .s-hours + .s-link,
+html body .s-info > .s-link + .s-link {
+  order: 3 !important;
+}
+@media (hover: hover) and (pointer: fine), (min-width: 961px) {
+  html body .s-info > .s-btns {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  html body .s-info > .s-hours,
+  html body .s-info .s-logo + .s-hours {
+    margin-top: 0 !important;
+    padding-top: 24px !important;
+  }
+}
