@@ -13,11 +13,11 @@
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-180.png" />
-  <link rel="stylesheet" href="./app.css?v=32" />
+  <link rel="stylesheet" href="./app.css?v=34" />
   <script defer src="./supabase-js-2.119.2.min.js"></script>
   <script defer src="../assets/libphonenumber-min.js?v=122"></script>
   <script defer src="../assets/phone.js?v=122"></script>
-  <script defer src="./app.js?v=33"></script>
+  <script defer src="./app.js?v=34"></script>
 </head>
 <body>
   <!-- Login -->
@@ -114,5 +114,9 @@
     <div class="modal-box" id="modal-box" role="dialog" aria-modal="true"></div>
   </div>
   <div id="toast" class="toast" hidden></div>
+  <div id="order-takeover" class="takeover" hidden data-act="view-incoming" role="button" tabindex="0">
+    <p class="takeover-title">Order received</p>
+    <p class="takeover-hint">Tap to view</p>
+  </div>
 </body>
 </html>

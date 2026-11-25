@@ -43,7 +43,8 @@
     channel: null,
     live: false,
     lastOk: 0,
-    seenBookings: loadSeen()
+    seenBookings: loadSeen(),
+    editing: null
   };
 
   // ---------- helpers ----------
@@ -146,6 +147,7 @@
 
   function show(screen) {
     ["login", "denied", "app"].forEach(function (s) { $("screen-" + s).hidden = s !== screen; });
+    if (screen !== "app") showTakeover(false);
   }
 
   // ---------- sound (Web Audio, no files) ----------
@@ -584,7 +586,12 @@
       '<div class="pay-line"><span>Payment</span><span>' + payText(o) + "</span></div>";
     var actions = "";
     if (o.status === "new") {
-      actions = acceptDecline("order", o.id);
+      var blockAccept = o.payment_method === "online" && o.payment_status !== "paid";
+      actions = '<div class="row-acts">';
+      if (blockAccept) actions += '<span class="decide-unpaid">Not paid</span>';
+      else actions += '<button type="button" class="decide-btn decide-yes" data-act="accept" data-id="' + o.id + '" aria-label="Accept">Accept</button>';
+      if (canEditOrder(o)) actions += '<button type="button" class="decide-btn decide-edit" data-act="edit" data-id="' + o.id + '">Edit</button>';
+      actions += '<button type="button" class="decide-btn decide-no" data-act="decline" data-id="' + o.id + '" aria-label="Decline">Decline</button></div>';
     }
     return detailShell("Pickup", "Pickup", st, body, actions);
   }
@@ -609,6 +616,84 @@
     $(id).innerHTML = html || (emptyText ? '<div class="empty">' + emptyText + "</div>" : "");
   }
 
+
+  function canEditOrder(o) {
+    return !!(o && o.status === "new" && o.payment_status !== "paid");
+  }
+  function oldestNewOrder() {
+    var nw = newOrders();
+    return nw.length ? nw[0] : null;
+  }
+  function showTakeover(on) {
+    var el = $("order-takeover");
+    if (!el) return;
+    el.hidden = !on;
+    document.body.classList.toggle("has-takeover", !!on);
+  }
+  function startEdit(o) {
+    state.editing = {
+      items: (o.order_items || []).slice().sort(function (a, b) { return a.id - b.id; }).map(function (it) {
+        return { id: it.id, name: it.name, qty: Number(it.qty) || 1, unit_cents: Number(it.unit_cents) || 0, note: it.note || "", options: it.options || {}, menu_item_id: it.menu_item_id };
+      }),
+      notes: o.notes || "",
+      dirty: false
+    };
+  }
+  function editTotal(d) {
+    return (d.items || []).reduce(function (s, it) { return s + Number(it.qty) * Number(it.unit_cents || 0); }, 0);
+  }
+  function findEditItem(id) {
+    var n = Number(id);
+    return state.editing && state.editing.items.filter(function (it) { return Number(it.id) === n; })[0];
+  }
+  function orderEdit(o) {
+    var d = state.editing;
+    var body = '<ul class="items edit-items">' + d.items.map(function (it) {
+      return '<li data-item="' + it.id + '"><div class="it-top"><span class="it-name">' + esc(it.name) +
+        '</span><span class="it-price">' + money(it.qty * it.unit_cents) + "</span></div>" +
+        optionLines(it) +
+        '<div class="edit-qty" role="group" aria-label="Quantity">' +
+          '<button type="button" class="edit-step" data-act="qty-down" data-id="' + it.id + '" aria-label="Fewer">−</button>' +
+          '<span class="edit-n">' + it.qty + "</span>" +
+          '<button type="button" class="edit-step" data-act="qty-up" data-id="' + it.id + '" aria-label="More">+</button>' +
+          (d.items.length > 1 ? '<button type="button" class="edit-remove" data-act="qty-remove" data-id="' + it.id + '">Remove</button>' : "") +
+        "</div>" +
+        '<label class="edit-note-label">Note<textarea class="edit-note" data-act="item-note" data-id="' + it.id + '" rows="2" maxlength="200">' + esc(it.note) + "</textarea></label></li>";
+    }).join("") + "</ul>" +
+      '<label class="edit-note-label">Order note<textarea class="edit-note" id="edit-order-notes" data-act="order-note" rows="3" maxlength="500">' + esc(d.notes) + "</textarea></label>" +
+      '<div class="totals"><span>Total</span><span>' + money(editTotal(d)) + "</span></div>";
+    return '<div id="order-edit">' + detailShell("Edit order", "Pickup", null, body, "") + "</div>";
+  }
+  function paintEdit() {
+    var o = findOrder(state.detail);
+    var detailEl = $("order-detail"), listEl = $("orders-list");
+    if (!o || !state.editing || !detailEl) return;
+    $("pane-current").hidden = false;
+    $("pane-settings").hidden = true;
+    if (listEl) listEl.hidden = true;
+    detailEl.hidden = false;
+    detailEl.innerHTML = orderEdit(o);
+    if (detailEl.parentNode) detailEl.parentNode.scrollTop = 0;
+  }
+  function saveEdit() {
+    var d = state.editing, id = state.detail;
+    if (!d) return Promise.resolve();
+    if (!d.items.length) {
+      toast("An order needs at least one item.", true);
+      return Promise.reject(new Error("An order needs at least one item."));
+    }
+    if (!d.dirty) { state.editing = null; return Promise.resolve(); }
+    return sb.rpc("edit_order", {
+      p_order_id: id,
+      p_items: d.items.map(function (it) { return { id: it.id, qty: it.qty, note: it.note || "" }; }),
+      p_notes: d.notes || ""
+    }).then(function (r) {
+      if (r.error) throw r.error;
+      state.editing = null;
+      return refresh();
+    });
+  }
+
   function render() {
     var nw = newOrders(), pb = pendingBookings();
     if (state.loadedOnce) {
@@ -627,8 +712,39 @@
 
     var detailEl = $("order-detail"), listEl = $("orders-list");
     var d = state.detail ? (findOrder(state.detail) || findBooking(state.detail)) : null;
-    if (state.detail && !d) state.detail = null;
+    if (state.detail && !d) { state.detail = null; state.editing = null; }
     document.body.classList.remove("split");
+
+    var oldest = oldestNewOrder();
+    if (state.editing) {
+      var ed = findOrder(state.detail);
+      if (!ed || !canEditOrder(ed)) state.editing = null;
+      else {
+        showTakeover(false);
+        $("pane-current").hidden = false;
+        $("pane-settings").hidden = true;
+        if (listEl) listEl.hidden = true;
+        if (detailEl) detailEl.hidden = false;
+        if (!$("order-edit") && !$("edit-order-notes")) paintEdit();
+        renderSettings();
+        setConn();
+        updateRinging();
+        return;
+      }
+    }
+
+    // A new order that belongs on New takes over the whole screen until it is
+    // opened, then accepted or declined. Oldest unhandled first.
+    if (oldest && state.detail !== oldest.id) {
+      state.editing = null;
+      showTakeover(true);
+      renderSettings();
+      setConn();
+      updateRinging();
+      return;
+    }
+    showTakeover(false);
+
     if (state.detail && d) {
       $("pane-current").hidden = false;
       $("pane-settings").hidden = true;
@@ -907,6 +1023,9 @@
     }
     var act = t.dataset.act, id = t.dataset.id, o, b;
     if (act === "back") {
+      if (state.editing) {
+        return saveEdit().then(function () { render(); }).catch(function (e) { toast(errMsg(e), true); });
+      }
       state.detail = null;
       if (state.detailFrom === "due") {
         state.detailFrom = null;
@@ -914,6 +1033,34 @@
         state.settingsView = "due";
       }
       return render();
+    }
+    if (act === "view-incoming") {
+      var incoming = oldestNewOrder();
+      if (incoming) {
+        state.tab = "current";
+        state.detail = incoming.id;
+        state.detailFrom = null;
+        state.editing = null;
+      }
+      return render();
+    }
+    if (act === "edit" && (o = findOrder(id))) {
+      if (!canEditOrder(o)) return;
+      startEdit(o);
+      return render();
+    }
+    if ((act === "qty-up" || act === "qty-down" || act === "qty-remove") && state.editing) {
+      var it = findEditItem(id);
+      if (!it) return;
+      if (act === "qty-up") { if (it.qty < 99) it.qty += 1; }
+      else if (act === "qty-down") { if (it.qty > 1) it.qty -= 1; }
+      else if (act === "qty-remove") {
+        if (state.editing.items.length < 2) return toast("An order needs at least one item.", true);
+        state.editing.items = state.editing.items.filter(function (x) { return Number(x.id) !== Number(it.id); });
+      }
+      state.editing.dirty = true;
+      paintEdit();
+      return;
     }
     if (act === "expand") {
       state.detailFrom = (state.tab === "settings" && state.settingsView === "due") ? "due" : null;
@@ -939,6 +1086,15 @@
     if (act === "toggle") return toggleItem(t);
   });
   $("modal").addEventListener("click", function (e) { if (e.target === $("modal")) closeModal(); });
+  document.addEventListener("input", function (e) {
+    if (!state.editing || !e.target) return;
+    var act = e.target.getAttribute("data-act");
+    if (act === "item-note") {
+      var it = findEditItem(e.target.getAttribute("data-id"));
+      if (it) { it.note = e.target.value; state.editing.dirty = true; }
+    }
+    if (act === "order-note") { state.editing.notes = e.target.value; state.editing.dirty = true; }
+  });
   window.addEventListener("resize", function () { if (state.started) render(); });
 
   // ---------- auth + start ----------
@@ -964,6 +1120,8 @@
   var pollTimer = null, clockTimer = null;
   function stopApp() {
     state.started = false;
+    state.editing = null;
+    showTakeover(false);
     clearInterval(pollTimer); clearInterval(clockTimer); updateRinging();
     if (subscribeRetry) { clearTimeout(subscribeRetry); subscribeRetry = null; }
     if (state.channel) { sb.removeChannel(state.channel); state.channel = null; state.live = false; }
