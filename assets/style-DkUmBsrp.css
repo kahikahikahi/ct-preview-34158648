@@ -818,7 +818,7 @@ html body .s-info .s-btns {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
-  justify-content: flex-start !important;
+  justify-content: center !important;
   align-items: center !important;
   column-gap: 32px !important;
   row-gap: 0 !important;
