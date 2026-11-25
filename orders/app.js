@@ -246,7 +246,12 @@
   });
 
   // ---------- data ----------
-  function newOrders() { return state.orders.filter(function (o) { return o.status === "new"; }); }
+  function awaitingPayment(o) {
+    return o.payment_method === "online" && o.payment_status === "unpaid";
+  }
+  function newOrders() {
+    return state.orders.filter(function (o) { return o.status === "new" && !awaitingPayment(o); });
+  }
   function orderDueAt(o) {
     if (o.ready_at) return new Date(o.ready_at);
     if (o.pickup_type === "later" && o.pickup_at) return new Date(o.pickup_at);
