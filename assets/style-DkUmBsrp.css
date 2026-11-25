@@ -988,3 +988,22 @@ html body .s-info > .s-link + .s-link {
     padding-top: 24px !important;
   }
 }
+
+
+/* Homepage: hours, address and phone in italics; Menu / Order / Book stay roman. */
+html body .s-info > .s-hours,
+html body .s-info > .s-hours p,
+html body .s-info > .s-hours span,
+html body .s-info .s-logo + .s-hours,
+html body .s-info > .s-link,
+html body .s-info > .s-hours + .s-link,
+html body .s-info > .s-link + .s-link,
+html body .s-info a[href^="tel"] {
+  font-style: italic !important;
+}
+html body .s-info .s-btns a.btn,
+html body .s-info .s-btns a.btn.btn-menu,
+html body .s-info .s-btns a.btn.btn-order,
+html body .s-info .s-btns a.btn.btn-book {
+  font-style: normal !important;
+}
