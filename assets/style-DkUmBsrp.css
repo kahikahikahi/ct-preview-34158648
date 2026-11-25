@@ -865,12 +865,12 @@ html body .s-info .s-btns a.btn.btn-book {
 /* Phones (portrait): scale only the shopfront so the landing (photo, info, links) fits one screen, including the visible area under iOS Safari bars. No crop; desktop unchanged. */
 @media (max-width: 960px) and (hover: none) and (orientation: portrait) {
   html body .s-photo {
-    height: clamp(120px, calc(100vh - 320px), 420px) !important;
-    height: clamp(120px, calc(100svh - 320px), 420px) !important;
-    height: clamp(120px, calc(100dvh - 320px), 420px) !important;
-    width: calc(clamp(120px, calc(100vh - 320px), 420px) * 360 / 532) !important;
-    width: calc(clamp(120px, calc(100svh - 320px), 420px) * 360 / 532) !important;
-    width: calc(clamp(120px, calc(100dvh - 320px), 420px) * 360 / 532) !important;
+    height: clamp(120px, calc(100vh - 240px), 420px) !important;
+    height: clamp(120px, calc(100svh - 240px), 420px) !important;
+    height: clamp(120px, calc(100dvh - 240px), 420px) !important;
+    width: calc(clamp(120px, calc(100vh - 240px), 420px) * 360 / 532) !important;
+    width: calc(clamp(120px, calc(100svh - 240px), 420px) * 360 / 532) !important;
+    width: calc(clamp(120px, calc(100dvh - 240px), 420px) * 360 / 532) !important;
     max-height: none !important;
     aspect-ratio: 360 / 532 !important;
     object-fit: contain !important;
@@ -929,5 +929,33 @@ html body .s-toplogo {
 @media (max-width: 960px) and (hover: none) and (orientation: landscape) {
   html body .s-toplogo {
     display: none !important;
+  }
+}
+
+
+/* Hide the logo above the shopfront (back to the v132 layout). */
+html body .s-toplogo {
+  display: none !important;
+}
+@media (min-width: 961px), (hover: hover) and (pointer: fine) {
+  html body .s-top {
+    grid-template-areas: "photo info" !important;
+    grid-template-rows: 532px !important;
+    row-gap: 0 !important;
+  }
+}
+
+/* Desktop: normal website size for the homepage hours, address, phone, and Menu / Order / Book. */
+@media (min-width: 961px) {
+  html body .s-info .s-hours,
+  html body .s-info .s-hours p,
+  html body .s-info .s-hours span,
+  html body .s-info > .s-link,
+  html body .s-info .s-btns a.btn,
+  html body .s-info .s-btns a.btn.btn-menu,
+  html body .s-info .s-btns a.btn.btn-order,
+  html body .s-info .s-btns a.btn.btn-book {
+    font-size: 16px !important;
+    line-height: 1.5 !important;
   }
 }
