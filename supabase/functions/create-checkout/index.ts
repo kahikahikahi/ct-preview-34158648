@@ -23,16 +23,23 @@ function json(status: number, body: Record<string, unknown>) {
 }
 
 function serviceKey(): string {
+  // Legacy service_role JWT is the most compatible with supabase-js Authorization.
+  // Prefer it so admin reads are not accidentally made with a publishable/secret-key mismatch.
+  const legacy = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+  if (legacy) return legacy;
   const raw = Deno.env.get("SUPABASE_SECRET_KEYS");
   if (raw) {
     try {
       const parsed = JSON.parse(raw) as Record<string, string>;
-      return parsed.default || parsed.service_role || Object.values(parsed)[0] || "";
+      const candidate = parsed.service_role || parsed.default || Object.values(parsed)[0] || "";
+      if (candidate && !candidate.startsWith("sb_publishable_") && candidate !== (Deno.env.get("SUPABASE_ANON_KEY") || "")) {
+        return candidate;
+      }
     } catch {
       /* fall through */
     }
   }
-  return Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+  return "";
 }
 
 function allowedReturnBase(raw: unknown): string {
@@ -76,7 +83,11 @@ Deno.serve(async (req) => {
     let q = supabase.from("orders").select("id, ref, request_id, email, payment_method, payment_status, payment_ref, status, total_cents, order_items(id, name, qty, unit_cents, line_cents)").eq("request_id", requestId);
     q = id ? q.eq("id", id) : q.eq("ref", ref);
     const { data: order, error } = await q.maybeSingle();
-    if (error || !order) return json(404, { message: "Order not found." });
+    if (error) {
+      console.error("order lookup failed", error.code, error.message, error.details, error.hint);
+      return json(500, { message: "Sorry, that didn't go through. Please try again, or call us on 06 757 8921." });
+    }
+    if (!order) return json(404, { message: "Order not found." });
     if (order.payment_method !== "online") return json(400, { message: "This order is not an online payment." });
     if (order.payment_status === "paid") return json(409, { message: "This order is already paid." });
     if (order.status === "cancelled") return json(400, { message: "This order was cancelled." });

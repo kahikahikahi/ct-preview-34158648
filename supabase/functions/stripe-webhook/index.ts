@@ -2,16 +2,23 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import Stripe from "npm:stripe@17.7.0";
 
 function serviceKey(): string {
+  // Legacy service_role JWT is the most compatible with supabase-js Authorization.
+  // Prefer it so admin reads are not accidentally made with a publishable/secret-key mismatch.
+  const legacy = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+  if (legacy) return legacy;
   const raw = Deno.env.get("SUPABASE_SECRET_KEYS");
   if (raw) {
     try {
       const parsed = JSON.parse(raw) as Record<string, string>;
-      return parsed.default || parsed.service_role || Object.values(parsed)[0] || "";
+      const candidate = parsed.service_role || parsed.default || Object.values(parsed)[0] || "";
+      if (candidate && !candidate.startsWith("sb_publishable_") && candidate !== (Deno.env.get("SUPABASE_ANON_KEY") || "")) {
+        return candidate;
+      }
     } catch {
       /* fall through */
     }
   }
-  return Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+  return "";
 }
 
 function orderIdFrom(session: Stripe.Checkout.Session): string | null {
