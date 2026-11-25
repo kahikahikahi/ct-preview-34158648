@@ -13,9 +13,58 @@
   <script defer src="./assets/phone.js?v=122"></script>
   <script defer src="./assets/index-WxNpLFjL.js?v=122"></script>
   <script defer src="./assets/info-select.js?v=119"></script>
-  <link rel="stylesheet" href="./assets/style-DkUmBsrp.css?v=123">
+  <link rel="stylesheet" href="./assets/style-DkUmBsrp.css?v=124">
 </head>
 <body id="top">
+  <header class="site-head">
+    <div class="site-bar">
+      <button type="button" class="site-burger" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+        <svg class="site-burger-ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="site-burger-x" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <a class="site-logo" href="#" aria-label="Café Turquoise – back to top">
+        <img src="./logo-sm.png" alt="Café Turquoise – Turkish Cuisine" width="1024" height="437" />
+      </a>
+      <nav class="site-nav" id="site-nav">
+        <a class="site-link" href="#menu">Menu</a>
+        <a class="site-link" href="#book">Book</a>
+      </nav>
+      <a class="site-order" href="#order">Order</a>
+    </div>
+  </header>
   <div id="root"></div>
-<script>document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest('a[href="#menu"]');if(!a)return;var m=document.getElementById("menu");if(!m)return;e.preventDefault();var h=document.querySelector(".ph-head"),o=0;if(h){var cs=getComputedStyle(h);if(cs.display!=="none"&&cs.position==="fixed")o=h.offsetHeight}window.scrollTo({top:m.getBoundingClientRect().top+window.pageYOffset-o,behavior:"smooth"})});</script><script>(function(){var d=document.documentElement,w=0;function f(){var h=window.innerHeight,sh=screen.height||h;if(!h||h>sh+2||h<300)return;if(innerWidth===w&&d.style.getPropertyValue("--avail"))return;w=innerWidth;d.style.setProperty("--avail",h+"px");d.classList.add("fit")}f();addEventListener("load",f);addEventListener("resize",f);addEventListener("orientationchange",function(){w=0;setTimeout(f,300)})})();</script><script>(function(){var n=navigator,ios=/iPhone|iPad|iPod/.test(n.userAgent)||(n.platform==="MacIntel"&&n.maxTouchPoints>1);if(!ios)return;var A="https://maps.apple.com/?q=Cafe+Turquoise&address=81+Devon+Street+West,+New+Plymouth";function f(t){var l=t&&t.closest?[t.closest('a[href*="google.com/maps"]')]:document.querySelectorAll('a[href*="google.com/maps"]');for(var i=0;i<l.length;i++)if(l[i])l[i].href=A}f();if(window.MutationObserver)new MutationObserver(function(){f()}).observe(document.getElementById("root")||document.body,{childList:true,subtree:true});document.addEventListener("touchstart",function(e){f(e.target)},{capture:true,passive:true});document.addEventListener("click",function(e){f(e.target)},true)})();</script></body>
+<script>
+(function(){
+  var d=document.documentElement;
+  var burger=document.querySelector(".site-burger");
+  var logo=document.querySelector(".site-logo");
+  function closeNav(){
+    d.classList.remove("nav-open");
+    if(burger){burger.setAttribute("aria-expanded","false");burger.setAttribute("aria-label","Open menu");}
+  }
+  function toggleNav(){
+    var open=d.classList.toggle("nav-open");
+    if(burger){burger.setAttribute("aria-expanded",open?"true":"false");burger.setAttribute("aria-label",open?"Close menu":"Open menu");}
+  }
+  if(burger) burger.addEventListener("click",function(e){e.preventDefault();toggleNav();});
+  if(logo) logo.addEventListener("click",function(e){e.preventDefault();closeNav();window.scrollTo(0,0);});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")closeNav();});
+  document.addEventListener("click",function(e){
+    var t=e.target.closest&&e.target.closest(".site-nav a, .site-order");
+    if(t) closeNav();
+  });
+  addEventListener("resize",function(){if(window.innerWidth>=961)closeNav();});
+  document.addEventListener("click",function(e){
+    var a=e.target.closest&&e.target.closest('a[href="#menu"]');
+    if(!a)return;
+    var m=document.getElementById("menu");
+    if(!m)return;
+    e.preventDefault();
+    closeNav();
+    var h=document.querySelector(".site-head"),o=0;
+    if(h){var cs=getComputedStyle(h);if(cs.display!=="none"&&cs.position==="fixed")o=h.offsetHeight;}
+    window.scrollTo({top:m.getBoundingClientRect().top+window.pageYOffset-o,behavior:"smooth"});
+  });
+})();
+</script><script>(function(){var d=document.documentElement,w=0;function f(){var h=window.innerHeight,sh=screen.height||h;if(!h||h>sh+2||h<300)return;if(innerWidth===w&&d.style.getPropertyValue("--avail"))return;w=innerWidth;d.style.setProperty("--avail",h+"px");d.classList.add("fit")}f();addEventListener("load",f);addEventListener("resize",f);addEventListener("orientationchange",function(){w=0;setTimeout(f,300)})})();</script><script>(function(){var n=navigator,ios=/iPhone|iPad|iPod/.test(n.userAgent)||(n.platform==="MacIntel"&&n.maxTouchPoints>1);if(!ios)return;var A="https://maps.apple.com/?q=Cafe+Turquoise&address=81+Devon+Street+West,+New+Plymouth";function f(t){var l=t&&t.closest?[t.closest('a[href*="google.com/maps"]')]:document.querySelectorAll('a[href*="google.com/maps"]');for(var i=0;i<l.length;i++)if(l[i])l[i].href=A}f();if(window.MutationObserver)new MutationObserver(function(){f()}).observe(document.getElementById("root")||document.body,{childList:true,subtree:true});document.addEventListener("touchstart",function(e){f(e.target)},{capture:true,passive:true});document.addEventListener("click",function(e){f(e.target)},true)})();</script></body>
 </html>
