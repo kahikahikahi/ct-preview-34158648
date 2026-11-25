@@ -810,3 +810,38 @@ html body .s-info > .s-apps {
     padding-top: 24px !important;
   }
 }
+
+
+/* Menu, Order and Book: one straight column, left-aligned with the info block. */
+html body .s-info > .s-btns,
+html body .s-info .s-btns {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  align-self: stretch !important;
+}
+html body .s-info .s-btns .btn-menu,
+html body .s-info .s-btns .btn-order,
+html body .s-info .s-btns .btn-book,
+html body .s-info .s-btns a.btn.btn-book {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  align-self: start !important;
+  justify-self: start !important;
+}
+@media (max-width: 960px) {
+  /* Size the info column to the hours line so the links share its left edge. */
+  html body .s-info {
+    display: grid !important;
+    justify-content: center !important;
+    justify-items: stretch !important;
+    grid-template-columns: max-content !important;
+  }
+  html body .s-info > .s-btns,
+  html body .s-info .s-btns {
+    width: auto !important;
+    max-width: 100% !important;
+    justify-self: stretch !important;
+  }
+}
