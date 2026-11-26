@@ -865,12 +865,12 @@ html body .s-info .s-btns a.btn.btn-book {
 /* Phones (portrait): scale only the shopfront so the landing (photo, info, links) fits one screen, including the visible area under iOS Safari bars. No crop; desktop unchanged. */
 @media (max-width: 960px) and (hover: none) and (orientation: portrait) {
   html body .s-photo {
-    height: clamp(120px, calc(100vh - 256px), 420px) !important;
-    height: clamp(120px, calc(100svh - 256px), 420px) !important;
-    height: clamp(120px, calc(100dvh - 256px), 420px) !important;
-    width: calc(clamp(120px, calc(100vh - 256px), 420px) * 360 / 532) !important;
-    width: calc(clamp(120px, calc(100svh - 256px), 420px) * 360 / 532) !important;
-    width: calc(clamp(120px, calc(100dvh - 256px), 420px) * 360 / 532) !important;
+    height: clamp(120px, calc(100vh - 240px), 420px) !important;
+    height: clamp(120px, calc(100svh - 240px), 420px) !important;
+    height: clamp(120px, calc(100dvh - 240px), 420px) !important;
+    width: calc(clamp(120px, calc(100vh - 240px), 420px) * 360 / 532) !important;
+    width: calc(clamp(120px, calc(100svh - 240px), 420px) * 360 / 532) !important;
+    width: calc(clamp(120px, calc(100dvh - 240px), 420px) * 360 / 532) !important;
     max-height: none !important;
     aspect-ratio: 360 / 532 !important;
     object-fit: contain !important;
@@ -1034,100 +1034,6 @@ html body .s-info > .s-btns {
   html body .s-info > .s-btns {
     margin-top: 0 !important;
     padding-top: 24px !important;
-  }
-}
-
-
-/* Phones (portrait): Menu / Order / Book as a full-width band of three equal blocks under the info. */
-@media (max-width: 960px) and (hover: none) and (orientation: portrait) {
-  html body,
-  html body .s-top,
-  html body .s-info {
-    overflow-x: hidden !important;
-  }
-  html body .s-info > .s-btns,
-  html body .s-info .s-btns {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    align-items: stretch !important;
-    justify-content: stretch !important;
-    column-gap: 0 !important;
-    row-gap: 0 !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    margin-top: 20px !important;
-    margin-bottom: 0 !important;
-    margin-left: calc(50% - 50vw) !important;
-    margin-right: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    background: #0f6e6e !important;
-    justify-self: start !important;
-    align-self: start !important;
-  }
-  html body .s-info .s-btns .s-order-row {
-    display: contents !important;
-  }
-  html body .s-info .s-btns .s-apps-inline {
-    display: none !important;
-  }
-  html body .s-info .s-btns a.btn,
-  html body .s-info .s-btns a.btn:link,
-  html body .s-info .s-btns a.btn:visited,
-  html body .s-info .s-btns a.btn:hover,
-  html body .s-info .s-btns a.btn:active,
-  html body .s-info .s-btns a.btn:focus,
-  html body .s-info .s-btns a.btn.btn-menu,
-  html body .s-info .s-btns a.btn.btn-order,
-  html body .s-info .s-btns a.btn.btn-book,
-  html body .s-info .s-btns a.btn.btn-menu:hover,
-  html body .s-info .s-btns a.btn.btn-order:hover,
-  html body .s-info .s-btns a.btn.btn-book:hover,
-  html body .s-info .s-btns a.btn.btn-menu:active,
-  html body .s-info .s-btns a.btn.btn-order:active,
-  html body .s-info .s-btns a.btn.btn-book:active {
-    display: flex !important;
-    flex: 1 1 0 !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: auto !important;
-    max-width: none !important;
-    min-width: 0 !important;
-    height: 56px !important;
-    min-height: 56px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    background: #0f6e6e !important;
-    background-image: none !important;
-    color: #fff !important;
-    -webkit-text-fill-color: #fff !important;
-    font-weight: 400 !important;
-    font-style: normal !important;
-    font-size: 16px !important;
-    line-height: 1.2 !important;
-    letter-spacing: normal !important;
-    text-decoration: none !important;
-    text-transform: none !important;
-    transition: none !important;
-    -webkit-tap-highlight-color: transparent !important;
-    -webkit-appearance: none !important;
-    appearance: none !important;
-    align-self: stretch !important;
-  }
-  html body .s-info .s-btns a.btn.btn-order,
-  html body .s-info .s-btns a.btn.btn-book {
-    border-left: 1px solid rgba(255,255,255,0.35) !important;
-  }
-  html body .s-info .s-btns a.btn::before,
-  html body .s-info .s-btns a.btn::after {
-    content: none !important;
-    display: none !important;
   }
 }
 
