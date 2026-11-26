@@ -724,14 +724,6 @@ html body footer a.ft-privacy:active {
 
 /* Hand cursor on address, phone, and the Menu / Order / Book text links */
 @media (hover: hover) and (pointer: fine), (min-width: 961px) {
-  html body .s-info > .s-link,
-  html body .s-info > .s-link:link,
-  html body .s-info > .s-link:visited,
-  html body .s-info > .s-link:hover,
-  html body .s-info a[href^="tel"],
-  html body .s-info a[href^="tel"]:link,
-  html body .s-info a[href^="tel"]:visited,
-  html body .s-info a[href^="tel"]:hover,
   html body .s-info .s-btns a.btn,
   html body .s-info .s-btns a.btn:link,
   html body .s-info .s-btns a.btn:visited,
@@ -745,8 +737,7 @@ html body footer a.ft-privacy:active {
   }
 }
 
-html body .s-info .s-btns a.btn,
-html body .s-info > .s-link {
+html body .s-info .s-btns a.btn {
   cursor: pointer !important;
   -webkit-tap-highlight-color: transparent !important;
 }
@@ -1051,53 +1042,21 @@ html body .s-info a[href^="tel"] {
 }
 
 
-/* Order page: lowkey delivery links under the Order for pickup title. */
-html body .op .op-top-in {
-  height: auto !important;
-  min-height: 64px !important;
-}
-html body .op .op-top-pick {
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 2px !important;
-  line-height: 1.2 !important;
-}
-html body .op .op-apps {
-  display: block !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: none !important;
-  box-shadow: none !important;
-  text-align: center !important;
-  font-family: Arial, Helvetica, sans-serif !important;
-  font-size: 14px !important;
-  font-weight: 400 !important;
-  font-style: normal !important;
-  line-height: 1.3 !important;
-  color: #666 !important;
-  white-space: nowrap !important;
-}
-html body .op .op-apps a,
-html body .op .op-apps a:link,
-html body .op .op-apps a:visited,
-html body .op .op-apps a:hover,
-html body .op .op-apps a:active {
-  color: #666 !important;
-  font-size: 14px !important;
-  font-weight: 400 !important;
-  font-style: normal !important;
-  background: none !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  text-decoration: underline !important;
-  text-underline-offset: 2px !important;
-  cursor: pointer !important;
+/* Homepage info (hours, address, phone): selectable plain text on phones and desktop.
+   Address and phone are no longer links, so a long-press can highlight instead of opening a link. */
+html body .s-info,
+html body .s-info .s-hours,
+html body .s-info .s-hours p,
+html body .s-info .s-hours span,
+html body .s-info > .s-link,
+html body .s-info .s-link {
+  -webkit-user-select: text !important;
+  user-select: text !important;
+  -webkit-touch-callout: default !important;
+  cursor: text !important;
 }
 
-html body .op.op-step-cart .op-apps,
-html body .op.op-step-checkout .op-apps {
-  display: none !important;
+/* Keep no-tap-flash on the Menu / Order / Book words. */
+html body .s-info .s-btns a.btn {
+  -webkit-tap-highlight-color: transparent !important;
 }
