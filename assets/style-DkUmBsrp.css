@@ -1077,3 +1077,622 @@ html body .s-info a.s-link[href^="tel"]:active {
 html body .s-info .s-btns a.btn {
   -webkit-tap-highlight-color: transparent !important;
 }
+
+
+/* Automatic night mode: follows the phone or computer's color scheme.
+   Flat palette, no glow, no shadows, no toggle. Shopfront photo is left as-is. */
+@media (prefers-color-scheme: dark) {
+  :root, html, html body {
+    color-scheme: dark;
+    --white: #121212 !important;
+    --ink: #eaeaea !important;
+    --muted: #9a9a9a !important;
+    --teal-ink: #eaeaea !important;
+    --pale: #1c1c1c !important;
+    --hair: #2a2a2a !important;
+    --bg-pale: #121212 !important;
+    --op-card: #121212 !important;
+    --op-line: #2a2a2a !important;
+    --op-soft: #1a1a1a !important;
+    --op-ink: #eaeaea !important;
+    --op-mute: #9a9a9a !important;
+    --m-ink: #eaeaea !important;
+    --m-muted: #9a9a9a !important;
+    --m-teal-ink: #eaeaea !important;
+    --m-lead: #2a2a2a !important;
+  }
+
+  html { color-scheme: dark; }
+
+  html, body, #root, main {
+    background: #121212 !important;
+    background-color: #121212 !important;
+    color: #eaeaea !important;
+  }
+
+  /* Public surfaces that are white in light mode */
+  html body .s-top,
+  html body .s-media,
+  html body .s-info,
+  html body .s-info .s-hours,
+  html body footer,
+  html body .ct-menu,
+  html body #menu,
+  html body .ph-head,
+  html body .ph-bar,
+  html body .ph-nav,
+  html body .op,
+  html body .op-panel,
+  html body .op-scroll,
+  html body .op-layout,
+  html body .op-top,
+  html body .op-top-in,
+  html body #op-menu,
+  html body .op-menu-card,
+  html body .op-menu-top,
+  html body .op-category,
+  html body .op-items,
+  html body .op-item,
+  html body .op-info-tile,
+  html body .op-info-link,
+  html body .op-cart-card,
+  html body .op-cart-box,
+  html body .op-cart-h,
+  html body .op-co,
+  html body .op-co-main,
+  html body .op-co-sec,
+  html body .op-co-sum,
+  html body .op-confirm,
+  html body .op-mobile-bar,
+  html body .op-modal,
+  html body .op-modal-head,
+  html body .op-modal-body,
+  html body .op-modal-foot,
+  html body .op-inner,
+  html body .op-card,
+  html body .op-pills,
+  html body .op-pill,
+  html body .bk,
+  html body .bk-panel,
+  html body .bk-top,
+  html body .bk-top-in,
+  html body .bk-scroll,
+  html body .bk-wrap,
+  html body .bk-confirm {
+    background: #121212 !important;
+    background-color: #121212 !important;
+    color: #eaeaea !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Do not invert or filter the shopfront photo */
+  html body .s-photo img,
+  html body .s-gal img,
+  html body .s-media img,
+  html body img[src*="front-"] {
+    filter: none !important;
+    opacity: 1 !important;
+  }
+
+  /* Logo is colourful (teal wordmark + eye), not a simple dark mark — leave it. */
+
+  /* Text that is forced black in light mode */
+  html body .s-info,
+  html body .s-info .s-hours,
+  html body .s-info .s-hours p,
+  html body .s-info .s-hours span,
+  html body .s-info > .s-link,
+  html body .s-info .s-link,
+  html body .s-info a[href^="tel"],
+  html body .s-info a[href^="tel"]:link,
+  html body .s-info a[href^="tel"]:visited,
+  html body .s-info a[href^="tel"]:hover,
+  html body .s-info a[href^="tel"]:active,
+  html body .s-info a[href^="tel"]:focus,
+  html body .s-info a[href^="tel"]:focus-visible,
+  html body .s-info .s-btns a.btn,
+  html body .s-info .s-btns a.btn:link,
+  html body .s-info .s-btns a.btn:visited,
+  html body .s-info .s-btns a.btn:hover,
+  html body .s-info .s-btns a.btn:active,
+  html body footer,
+  html body footer .ft-privacy,
+  html body footer a.ft-privacy,
+  html body footer a.ft-privacy:link,
+  html body footer a.ft-privacy:visited,
+  html body footer a.ft-privacy:hover,
+  html body footer a.ft-privacy:active,
+  html body .op,
+  html body .op-mback,
+  html body .op h1,
+  html body .op h2,
+  html body .op h3,
+  html body .op h4,
+  html body .op-mback h3,
+  html body .op-mback h4,
+  html body .op .op-item-name,
+  html body .op .op-item-desc,
+  html body .op .op-item-price,
+  html body .op .op-item-note,
+  html body .op .op-cat-desc,
+  html body .op .op-line-name,
+  html body .op .op-line-opts,
+  html body .op .op-line-note,
+  html body .op .op-top-title,
+  html body .op .op-top-pick,
+  html body .op .op-empty,
+  html body .op .op-hint,
+  html body .op .op-co-where,
+  html body .op .op-co-title,
+  html body .op .op-label,
+  html body .op .op-totals,
+  html body .op .op-totals .op-total,
+  html body .op .op-total,
+  html body .op .op-closed-note,
+  html body .op .op-edit,
+  html body .op .op-remove,
+  html body .op .op-back,
+  html body .op .op-confirm-act:not(.op-btn),
+  html body .op .op-info-link,
+  html body .op .op-cart-h,
+  html body .op-mback .op-m-desc,
+  html body .op-mback .op-m-price,
+  html body .op-mback .op-group-rule,
+  html body .op-mback .op-group-rule.op-req,
+  html body .op .op-opt,
+  html body .op-mback .op-opt,
+  html body .op .op-opt-name,
+  html body .op .op-opt-price,
+  html body .op .op-x,
+  html body .op-mback .op-close,
+  html body .op .op-item:after,
+  html body .op .op-item:hover:after,
+  html body .bk-panel,
+  html body .bk-panel h1,
+  html body .bk-panel h2,
+  html body .bk-panel h3,
+  html body .bk-panel h4,
+  html body .bk-panel .bk-confirm h2,
+  html body .bk-panel .bk-confirm,
+  html body .bk-panel .bk-confirm p,
+  html body .bk-panel .bk-confirm p:last-of-type,
+  html body .bk-panel .bk-pick,
+  html body .bk-panel .bk-k,
+  html body .bk-panel .bk-title,
+  html body .bk-panel .bk-sub,
+  html body .bk-panel .bk-hint,
+  html body .bk-panel .bk-field label,
+  html body .bk-panel .bk-field label span,
+  html body .bk-panel .bk-sum span,
+  html body .bk-panel .bk-sum span:first-child,
+  html body .bk-panel .bk-sum span:last-child,
+  html body .bk-panel .bk-x,
+  html body .bk-panel a,
+  html body .bk-panel .bk-addr,
+  html body #menu,
+  html body #menu .m-head h2,
+  html body #menu .line .price,
+  html body #menu .line .name,
+  html body #menu .wi .name {
+    color: #eaeaea !important;
+    -webkit-text-fill-color: #eaeaea !important;
+  }
+
+  /* Secondary / muted */
+  html body .op .op-hint,
+  html body .op .op-co-where,
+  html body .op .op-cat-desc,
+  html body .op .op-item-desc,
+  html body .op .op-line-opts,
+  html body .op .op-line-note,
+  html body .bk-panel .bk-hint,
+  html body .bk-panel .bk-sub,
+  html body .bk-panel .bk-field label span,
+  html body #menu .intro,
+  html body #menu .desc,
+  html body #menu .foot,
+  html body #menu .m-wi-intro,
+  html body #menu .wi,
+  html body #menu .m-legend,
+  html body #menu .line.sub .name {
+    color: #9a9a9a !important;
+    -webkit-text-fill-color: #9a9a9a !important;
+  }
+
+  html body .op .op-soldout,
+  html body .op-mback .op-soldout {
+    color: #9a9a9a !important;
+  }
+
+  /* Errors stay clearly red on the dark ground */
+  html body .op .op-msg,
+  html body .op-mback .op-msg,
+  html body .bk-panel .bk-msg {
+    color: #e07070 !important;
+    -webkit-text-fill-color: #e07070 !important;
+  }
+
+  /* Dividers */
+  html body .op .op-line,
+  html body .op .op-totals,
+  html body .op .op-co-sec,
+  html body .op .op-confirm ul,
+  html body .op-mback .op-group,
+  html body .op-mback .op-modal,
+  html body .op-mback .op-modal-foot,
+  html body .op .op-mobile-bar,
+  html body .bk-panel .bk-sum,
+  html body #menu .line .lead,
+  html body #menu .divider {
+    border-color: #2a2a2a !important;
+    border-top-color: #2a2a2a !important;
+    border-bottom-color: #2a2a2a !important;
+    border-left-color: #2a2a2a !important;
+    border-right-color: #2a2a2a !important;
+  }
+
+  /* Form inputs: dark field, light text */
+  html body .op .op-field input,
+  html body .op .op-field select,
+  html body .op .op-field textarea,
+  html body .op-mback .op-field textarea,
+  html body .op input,
+  html body .op select,
+  html body .op textarea,
+  html body .bk-panel .bk-field input,
+  html body .bk-panel .bk-field select,
+  html body .bk-panel .bk-field textarea {
+    background: #121212 !important;
+    background-color: #121212 !important;
+    color: #eaeaea !important;
+    -webkit-text-fill-color: #eaeaea !important;
+    caret-color: #eaeaea !important;
+    border-bottom-color: #2a2a2a !important;
+    color-scheme: dark;
+  }
+
+  html body .op .op-field input:focus,
+  html body .op .op-field select:focus,
+  html body .op .op-field textarea:focus,
+  html body .op-mback .op-field textarea:focus,
+  html body .bk-panel .bk-field input:focus,
+  html body .bk-panel .bk-field select:focus,
+  html body .bk-panel .bk-field textarea:focus {
+    border-bottom-color: #eaeaea !important;
+    box-shadow: none !important;
+    outline-color: #eaeaea !important;
+  }
+
+  html body .bk-panel .bk-field input.bk-invalid,
+  html body .bk-panel .bk-field select.bk-invalid,
+  html body .op .op-field input.op-invalid,
+  html body .op .op-field select.op-invalid {
+    border-bottom-color: #e07070 !important;
+  }
+
+  html body .bk-panel .bk-field textarea::placeholder,
+  html body .bk-panel .bk-field input::placeholder,
+  html body .bk-panel .bk-field textarea::-webkit-input-placeholder,
+  html body .bk-panel .bk-field input::-webkit-input-placeholder,
+  html body .op input::placeholder,
+  html body .op textarea::placeholder,
+  html body .op input::-webkit-input-placeholder,
+  html body .op textarea::-webkit-input-placeholder {
+    color: #9a9a9a !important;
+    -webkit-text-fill-color: #9a9a9a !important;
+    opacity: 1 !important;
+  }
+
+  html body .op input:-webkit-autofill,
+  html body .op textarea:-webkit-autofill,
+  html body .op select:-webkit-autofill,
+  html body .bk-panel input:-webkit-autofill,
+  html body .bk-panel textarea:-webkit-autofill,
+  html body .bk-panel select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #121212 inset !important;
+    -webkit-text-fill-color: #eaeaea !important;
+    caret-color: #eaeaea !important;
+    border-bottom-color: #2a2a2a !important;
+  }
+
+  html body .op input,
+  html body .op-mback input,
+  html body .bk-panel input {
+    accent-color: #eaeaea !important;
+  }
+
+  /* Item-options backdrop: dim in dark, not a white wash */
+  html body .op-mback {
+    background: #000000b8 !important;
+  }
+
+  /* Close / stepper / plus icons */
+  html body .op .op-x,
+  html body .op .op-x:hover,
+  html body .op .op-x:focus-visible,
+  html body .op-mback .op-close,
+  html body .op-mback .op-close:hover,
+  html body .op-mback .op-close:focus-visible,
+  html body .bk-panel .bk-x,
+  html body .bk-panel .bk-x:hover,
+  html body .bk-panel .bk-x:focus-visible,
+  html body .op .op-stepper button,
+  html body .op-mback .op-stepper button,
+  html body .bk-panel .bk-stepper button,
+  html body .op .op-edit:hover,
+  html body .op .op-remove:hover,
+  html body .op .op-back:hover,
+  html body .bk-panel a:hover,
+  html body .bk-panel .bk-addr:hover {
+    color: #eaeaea !important;
+    background: none !important;
+    background-color: transparent !important;
+  }
+
+  html body .op .op-stepper button:disabled,
+  html body .op-mback .op-stepper button:disabled,
+  html body .bk-panel .bk-stepper button:disabled {
+    color: #5a5a5a !important;
+    background: none !important;
+  }
+
+  html body button.op-group-head.op-meze-toggle,
+  html body button.op-group-head.op-meze-toggle:hover,
+  html body button.op-group-head.op-meze-toggle:active,
+  html body button.op-group-head.op-meze-toggle:focus {
+    background: none !important;
+    color: #eaeaea !important;
+  }
+  html body button.op-group-head.op-meze-toggle:focus-visible {
+    outline-color: #eaeaea !important;
+  }
+
+  /* Solid actions (View order bar, Add, Checkout, Book): invert to a light bar */
+  html body .op .op-btn,
+  html body .op .op-btn-primary,
+  html body .op .op-btn-secondary,
+  html body .op-mback .op-btn,
+  html body .op-mback .op-btn-primary,
+  html body .op-mback .op-btn-secondary,
+  html body .bk-panel .bk-submit,
+  html body .bk-panel .bk-home-btn {
+    background: #eaeaea !important;
+    background-color: #eaeaea !important;
+    color: #121212 !important;
+    -webkit-text-fill-color: #121212 !important;
+    box-shadow: none !important;
+  }
+
+  html body .op .op-btn:not(:disabled):hover,
+  html body .op .op-btn-primary:not(:disabled):hover,
+  html body .op .op-btn-secondary:not(:disabled):hover,
+  html body .op-mback .op-btn:not(:disabled):hover,
+  html body .op-mback .op-btn-primary:not(:disabled):hover,
+  html body .op-mback .op-btn-secondary:not(:disabled):hover,
+  html body .bk-panel .bk-submit:not(:disabled):hover,
+  html body .bk-panel .bk-home-btn:hover {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #121212 !important;
+    -webkit-text-fill-color: #121212 !important;
+  }
+
+  html body .op .op-btn:disabled,
+  html body .op .op-btn-primary:disabled,
+  html body .op .op-btn-secondary:disabled,
+  html body .op-mback .op-btn:disabled,
+  html body .op-mback .op-btn-primary:disabled,
+  html body .op-mback .op-btn-secondary:disabled,
+  html body .bk-panel .bk-submit:disabled {
+    background: #2a2a2a !important;
+    background-color: #2a2a2a !important;
+    color: #9a9a9a !important;
+    -webkit-text-fill-color: #9a9a9a !important;
+    cursor: not-allowed !important;
+  }
+
+  /* Status chips if they appear */
+  html body .status,
+  html body .status.is-closed {
+    background: #1c1c1c !important;
+    color: #9a9a9a !important;
+  }
+  html body .status.is-ordering-closed {
+    background: #2a2418 !important;
+    color: #d4c08a !important;
+  }
+
+  /* Keep gold/teal menu accents (readable on dark). Underlines follow text. */
+  html body #menu .m-pdf,
+  html body #menu .m-pdf:hover {
+    color: #eaeaea !important;
+    text-decoration-color: #9a9a9a !important;
+  }
+
+  /* Selection */
+  html body ::selection {
+    background: #3a3a3a !important;
+    color: #eaeaea !important;
+  }
+}
+
+@media (prefers-color-scheme: dark) and (hover: hover) {
+  html body .s-info .s-btns a.btn:hover,
+  html body .s-info > .s-link:hover,
+  html body .s-info a[href^="tel"]:hover {
+    color: #eaeaea !important;
+    -webkit-text-fill-color: #eaeaea !important;
+    background: none !important;
+  }
+  html body .op .op-stepper button:not(:disabled):hover,
+  html body .op-mback .op-stepper button:not(:disabled):hover,
+  html body .bk-panel .bk-stepper button:not(:disabled):hover {
+    color: #eaeaea !important;
+    background: none !important;
+  }
+}
+
+
+/* Night mode: beat later html body .op / .bk-panel !important whites */
+@media (prefers-color-scheme: dark) {
+  html body .op .op-pills,
+  html body .op .op-item,
+  html body .op .op-category .op-item,
+  html body .op .op-item:hover,
+  html body .op .op-category .op-item:hover,
+  html body .op .op-mobile-bar,
+  html body .op-mback .op-modal-foot,
+  html body .op .op-cart-card,
+  html body .op .op-co-sum,
+  html body .op .op-info-tile,
+  html body .op .op-menu-card,
+  html body .op #op-menu,
+  html body .op-mback .op-modal,
+  html body .op-mback .op-modal-head,
+  html body .op-mback .op-modal-body,
+  html body .bk-panel .bk-top,
+  html body .bk-panel .bk-confirm,
+  html body .bk-panel .bk-field input,
+  html body .bk-panel .bk-field select,
+  html body .bk-panel .bk-field textarea,
+  html body .bk-panel .bk-field input[type=date],
+  html body .bk-panel .bk-field input[type=date]:focus,
+  html body .op .op-field input,
+  html body .op .op-field select,
+  html body .op .op-field textarea,
+  html body .op-mback .op-field textarea,
+  html body .to-top,
+  html body .to-top.is-on,
+  html body .to-top:hover {
+    background: #121212 !important;
+    background-color: #121212 !important;
+    color: #eaeaea !important;
+    -webkit-text-fill-color: #eaeaea !important;
+    box-shadow: none !important;
+    border-color: #2a2a2a !important;
+  }
+
+  html body .to-top,
+  html body .to-top.is-on,
+  html body .to-top:hover {
+    border: 1px solid #2a2a2a !important;
+  }
+  html body .to-top svg {
+    color: #eaeaea !important;
+    fill: currentColor !important;
+    stroke: currentColor !important;
+  }
+
+  html body .op .op-pill,
+  html body .op .op-pill.op-active,
+  html body .op .op-pill:hover,
+  html body .op .op-pill:not(.op-active):hover {
+    background: none !important;
+    background-color: transparent !important;
+    color: #eaeaea !important;
+    -webkit-text-fill-color: #eaeaea !important;
+  }
+
+  html body .op .op-item-name,
+  html body .op .op-item-price,
+  html body .op .op-item-desc,
+  html body .op .op-item:after,
+  html body .op .op-item:hover:after {
+    color: #eaeaea !important;
+    -webkit-text-fill-color: #eaeaea !important;
+  }
+  html body .op .op-item:after,
+  html body .op .op-item:hover:after {
+    background: none !important;
+    background-color: transparent !important;
+  }
+  html body .op .op-item-desc,
+  html body .op .op-cat-desc {
+    color: #9a9a9a !important;
+    -webkit-text-fill-color: #9a9a9a !important;
+  }
+
+  html body .bk-panel .bk-field input[type=date]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: .75;
+  }
+
+  html body .op .op-btn,
+  html body .op .op-btn-primary,
+  html body .op .op-btn-secondary,
+  html body .op-mback .op-btn,
+  html body .op-mback .op-btn-primary,
+  html body .op-mback .op-btn-secondary,
+  html body .op .op-mobile-bar .op-btn,
+  html body .op .op-mobile-bar .op-btn-primary,
+  html body .op-mback .op-modal-foot .op-btn,
+  html body .bk-panel .bk-submit,
+  html body .bk-panel .bk-home-btn {
+    background: #eaeaea !important;
+    background-color: #eaeaea !important;
+    color: #121212 !important;
+    -webkit-text-fill-color: #121212 !important;
+  }
+  html body .op .op-btn:disabled,
+  html body .op .op-btn-primary:disabled,
+  html body .op .op-btn-secondary:disabled,
+  html body .op-mback .op-btn:disabled,
+  html body .op .op-mobile-bar .op-btn:disabled,
+  html body .bk-panel .bk-submit:disabled {
+    background: #2a2a2a !important;
+    background-color: #2a2a2a !important;
+    color: #9a9a9a !important;
+    -webkit-text-fill-color: #9a9a9a !important;
+  }
+}
+
+
+/* Night mode: option prices and other modal text that stayed black */
+@media (prefers-color-scheme: dark) {
+  html body .op-opt-price,
+  html body .op .op-opt-price,
+  html body .op-mback .op-opt-price,
+  html body .op .op-opt-name,
+  html body .op-mback .op-opt-name,
+  html body .op-mback .op-label,
+  html body .op-mback .op-group-head,
+  html body .op-mback .op-qn {
+    color: #eaeaea !important;
+    -webkit-text-fill-color: #eaeaea !important;
+  }
+  html body .op-opt-price,
+  html body .op .op-opt-price,
+  html body .op-mback .op-opt-price {
+    color: #9a9a9a !important;
+    -webkit-text-fill-color: #9a9a9a !important;
+  }
+  html body .op .op-opts,
+  html body .op-mback .op-opts {
+    background: none !important;
+    background-color: transparent !important;
+  }
+  html body .op-mback .op-opt input,
+  html body .op .op-opt input {
+    accent-color: #eaeaea !important;
+    color-scheme: dark;
+  }
+}
+
+
+/* Night mode: checkout field labels and a few leftover hover/menu blacks */
+@media (prefers-color-scheme: dark) {
+  html body .op .op-field label,
+  html body .op-mback .op-field label,
+  html body .op label,
+  html body .op .op-label,
+  html body .op .op-item:hover .op-item-name,
+  html body .s-info .s-link:hover,
+  html body .ct-menu .cols2 span,
+  html body .ct-menu a.m-pdf,
+  html body .ct-menu a.m-pdf:hover,
+  html body #menu .cols2 span {
+    color: #eaeaea !important;
+    -webkit-text-fill-color: #eaeaea !important;
+  }
+}
