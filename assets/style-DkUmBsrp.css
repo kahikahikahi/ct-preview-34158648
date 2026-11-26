@@ -1049,3 +1049,92 @@ html body .s-info > .s-link + .s-link,
 html body .s-info a[href^="tel"] {
   font-style: normal !important;
 }
+
+
+/* Order page: Delivery on apps, after the menu items, above the footer / cart bar. */
+html body .op .op-apps {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  margin: 28px 0 12px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  text-align: center !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  color: #000 !important;
+}
+html body .op .op-apps > span {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: none !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+  color: #000 !important;
+  text-decoration: none !important;
+}
+html body .op .op-apps .op-apps-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 14px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+html body .op .op-apps .op-apps-row a,
+html body .op .op-apps .op-apps-row a:link,
+html body .op .op-apps .op-apps-row a:visited,
+html body .op .op-apps .op-apps-row a:hover,
+html body .op .op-apps .op-apps-row a:active {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 56px !important;
+  height: 56px !important;
+  min-width: 56px !important;
+  min-height: 56px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: none !important;
+  box-shadow: none !important;
+  line-height: 0 !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+html body .op .op-apps .op-apps-row img {
+  width: 56px !important;
+  height: 56px !important;
+  max-width: 56px !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  box-shadow: none !important;
+  display: block !important;
+}
+@media (hover: hover) and (pointer: fine) {
+  html body .op .op-apps .op-apps-row a:hover img {
+    opacity: .82 !important;
+  }
+}
+
+html body .op.op-step-cart .op-apps,
+html body .op.op-step-checkout .op-apps {
+  display: none !important;
+}
