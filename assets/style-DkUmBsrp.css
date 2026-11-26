@@ -1130,3 +1130,16 @@ html body .s-info > .s-btns {
     display: none !important;
   }
 }
+
+
+/* Homepage: hours, address and phone upright again. */
+html body .s-info > .s-hours,
+html body .s-info > .s-hours p,
+html body .s-info > .s-hours span,
+html body .s-info .s-logo + .s-hours,
+html body .s-info > .s-link,
+html body .s-info > .s-hours + .s-link,
+html body .s-info > .s-link + .s-link,
+html body .s-info a[href^="tel"] {
+  font-style: normal !important;
+}
