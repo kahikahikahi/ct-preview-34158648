@@ -1051,7 +1051,7 @@ html body .s-info a[href^="tel"] {
 }
 
 
-/* Order page: Delivery on apps, under the Order for pickup header, above the category list. */
+/* Order page: Delivery on apps, in the scrolling menu, above the Kebabs heading. */
 html body .op .op-apps {
   display: flex !important;
   flex-direction: row !important;
@@ -1059,8 +1059,15 @@ html body .op .op-apps {
   align-items: center !important;
   justify-content: center !important;
   gap: 10px !important;
-  margin: 0 !important;
-  padding: 6px 16px !important;
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  inset: auto !important;
+  z-index: auto !important;
+  margin: 0 0 10px !important;
+  padding: 6px 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
   background: #fff !important;
