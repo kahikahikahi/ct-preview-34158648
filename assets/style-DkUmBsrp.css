@@ -1084,16 +1084,16 @@ html body .s-info .s-btns a.btn {
 @media (prefers-color-scheme: dark) {
   :root, html, html body {
     color-scheme: dark;
-    --white: #121212 !important;
+    --white: #000000 !important;
     --ink: #eaeaea !important;
     --muted: #9a9a9a !important;
     --teal-ink: #eaeaea !important;
-    --pale: #1c1c1c !important;
+    --pale: #000000 !important;
     --hair: #2a2a2a !important;
-    --bg-pale: #121212 !important;
-    --op-card: #121212 !important;
+    --bg-pale: #000000 !important;
+    --op-card: #000000 !important;
     --op-line: #2a2a2a !important;
-    --op-soft: #1a1a1a !important;
+    --op-soft: #000000 !important;
     --op-ink: #eaeaea !important;
     --op-mute: #9a9a9a !important;
     --m-ink: #eaeaea !important;
@@ -1105,8 +1105,8 @@ html body .s-info .s-btns a.btn {
   html { color-scheme: dark; }
 
   html, body, #root, main {
-    background: #121212 !important;
-    background-color: #121212 !important;
+    background: #000000 !important;
+    background-color: #000000 !important;
     color: #eaeaea !important;
   }
 
@@ -1159,8 +1159,8 @@ html body .s-info .s-btns a.btn {
   html body .bk-scroll,
   html body .bk-wrap,
   html body .bk-confirm {
-    background: #121212 !important;
-    background-color: #121212 !important;
+    background: #000000 !important;
+    background-color: #000000 !important;
     color: #eaeaea !important;
     box-shadow: none !important;
     text-shadow: none !important;
@@ -1343,8 +1343,8 @@ html body .s-info .s-btns a.btn {
   html body .bk-panel .bk-field input,
   html body .bk-panel .bk-field select,
   html body .bk-panel .bk-field textarea {
-    background: #121212 !important;
-    background-color: #121212 !important;
+    background: #000000 !important;
+    background-color: #000000 !important;
     color: #eaeaea !important;
     -webkit-text-fill-color: #eaeaea !important;
     caret-color: #eaeaea !important;
@@ -1390,7 +1390,7 @@ html body .s-info .s-btns a.btn {
   html body .bk-panel input:-webkit-autofill,
   html body .bk-panel textarea:-webkit-autofill,
   html body .bk-panel select:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px #121212 inset !important;
+    -webkit-box-shadow: 0 0 0 1000px #000000 inset !important;
     -webkit-text-fill-color: #eaeaea !important;
     caret-color: #eaeaea !important;
     border-bottom-color: #2a2a2a !important;
@@ -1459,8 +1459,8 @@ html body .s-info .s-btns a.btn {
   html body .bk-panel .bk-home-btn {
     background: #eaeaea !important;
     background-color: #eaeaea !important;
-    color: #121212 !important;
-    -webkit-text-fill-color: #121212 !important;
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
     box-shadow: none !important;
   }
 
@@ -1474,8 +1474,8 @@ html body .s-info .s-btns a.btn {
   html body .bk-panel .bk-home-btn:hover {
     background: #ffffff !important;
     background-color: #ffffff !important;
-    color: #121212 !important;
-    -webkit-text-fill-color: #121212 !important;
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
   }
 
   html body .op .op-btn:disabled,
@@ -1495,7 +1495,7 @@ html body .s-info .s-btns a.btn {
   /* Status chips if they appear */
   html body .status,
   html body .status.is-closed {
-    background: #1c1c1c !important;
+    background: #000000 !important;
     color: #9a9a9a !important;
   }
   html body .status.is-ordering-closed {
@@ -1565,8 +1565,8 @@ html body .s-info .s-btns a.btn {
   html body .to-top,
   html body .to-top.is-on,
   html body .to-top:hover {
-    background: #121212 !important;
-    background-color: #121212 !important;
+    background: #000000 !important;
+    background-color: #000000 !important;
     color: #eaeaea !important;
     -webkit-text-fill-color: #eaeaea !important;
     box-shadow: none !important;
@@ -1631,8 +1631,8 @@ html body .s-info .s-btns a.btn {
   html body .bk-panel .bk-home-btn {
     background: #eaeaea !important;
     background-color: #eaeaea !important;
-    color: #121212 !important;
-    -webkit-text-fill-color: #121212 !important;
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
   }
   html body .op .op-btn:disabled,
   html body .op .op-btn-primary:disabled,
