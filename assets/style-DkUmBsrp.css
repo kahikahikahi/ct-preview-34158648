@@ -1042,18 +1042,35 @@ html body .s-info a[href^="tel"] {
 }
 
 
-/* Homepage info (hours, address, phone): selectable plain text on phones and desktop.
-   Address and phone are no longer links, so a long-press can highlight instead of opening a link. */
+/* Homepage hours and address: plain selectable text (not links). */
 html body .s-info,
 html body .s-info .s-hours,
 html body .s-info .s-hours p,
 html body .s-info .s-hours span,
-html body .s-info > .s-link,
-html body .s-info .s-link {
+html body .s-info > span.s-link,
+html body .s-info span.s-link {
   -webkit-user-select: text !important;
   user-select: text !important;
   -webkit-touch-callout: default !important;
   cursor: text !important;
+}
+
+/* Homepage phone: tap-to-call, same plain look, no underline, no tap flash; still selectable. */
+html body .s-info a.s-link[href^="tel"],
+html body .s-info a.s-link[href^="tel"]:link,
+html body .s-info a.s-link[href^="tel"]:visited,
+html body .s-info a.s-link[href^="tel"]:hover,
+html body .s-info a.s-link[href^="tel"]:active {
+  -webkit-user-select: text !important;
+  user-select: text !important;
+  -webkit-touch-callout: default !important;
+  -webkit-tap-highlight-color: transparent !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  color: inherit !important;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
 }
 
 /* Keep no-tap-flash on the Menu / Order / Book words. */
