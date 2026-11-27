@@ -16,7 +16,13 @@
   --radius: 10px;
 }
 *, *::before, *::after { box-sizing: border-box; }
-html, body { margin: 0; height: 100%; }
+html, body {
+  margin: 0;
+  height: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
 body {
   background: var(--page); color: var(--ink);
   font-family: system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
@@ -39,7 +45,7 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 
 .screen { min-height: 100%; }
 .center, #screen-login, #screen-denied { background: var(--bg); }
-.center { display: flex; align-items: center; justify-content: center; padding: 24px; min-height: 100vh; text-align: center; }
+.center { display: flex; align-items: center; justify-content: center; padding: 24px; min-height: 100%; min-height: 100dvh; text-align: center; }
 
 /* Buttons: Ready / Picked up / Send / Log in = solid black; Cancel = quiet outline. */
 .btn {
@@ -79,11 +85,12 @@ h1, h2, h3 { margin: 0; font-weight: 500; }
 .denied { font-size: 22px; text-align: center; margin: 8px 0; }
 
 /* App layout. Centred column on desktop; two-pane when a detail is open on a wide screen. */
-.app { display: flex; flex-direction: column; height: 100vh; background: var(--bg); }
+.app { display: flex; flex-direction: column; height: 100%; height: 100dvh; max-height: 100dvh; overflow: hidden; background: var(--bg); }
 .topbar {
   display: flex; align-items: center; gap: 10px;
   padding: 10px 18px 10px 14px; border-bottom: 1px solid var(--line);
   flex: none; background: var(--bg);
+  position: sticky; top: 0; z-index: 5;
 }
 .top-logo { width: 44px; height: 44px; display: block; flex: none; }
 .conn { font-size: 16px; color: var(--ink); min-width: 0; }
