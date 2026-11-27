@@ -1731,10 +1731,10 @@ html body .op a.op-delivery:focus-visible {
   background: none !important;
   box-shadow: none !important;
   outline: none !important;
-  color: var(--ink) !important;
-  -webkit-text-fill-color: var(--ink) !important;
+  color: #767676 !important;
+  -webkit-text-fill-color: #767676 !important;
   font-family: var(--display), Arial, Helvetica, sans-serif !important;
-  font-size: 18px !important;
+  font-size: 15px !important;
   font-weight: 400 !important;
   letter-spacing: 0 !important;
   line-height: 1.3 !important;
@@ -1763,8 +1763,8 @@ html body .op a.op-delivery:focus-visible {
   html body .op a.op-delivery:active,
   html body .op a.op-delivery:focus,
   html body .op a.op-delivery:focus-visible {
-    color: #eaeaea !important;
-    -webkit-text-fill-color: #eaeaea !important;
+    color: #9a9a9a !important;
+    -webkit-text-fill-color: #9a9a9a !important;
     background: none !important;
   }
 }
