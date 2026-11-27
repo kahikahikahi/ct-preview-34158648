@@ -417,7 +417,7 @@
   }
 
   var CHEVRON = '<svg class="chev" viewBox="0 0 24 24" width="52" height="52" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  var TABLE_ICON = '<svg class="type-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 6h18v2.4H3V6zm2.4 3.6h2.2V20H5.4V9.6zm13 0h2.2V20h-2.2V9.6zM9.2 9.6h5.6v2H9.2v-2z"/></svg>';
+  var TABLE_ICON = '<svg class="type-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M2 7h20v3H2V7zm4.5 3h2.4v10H6.5V10zm10.1 0h2.4v10h-2.4V10z"/></svg>';
   var BAG_ICON = '<svg class="type-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M8 7V6a4 4 0 0 1 8 0v1h3v14H5V7h3zm2-1a2 2 0 0 1 4 0v1h-4V6z"/></svg>';
   var PEOPLE_ICON = '<svg class="people-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>';
   var PHONE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.8 3.5h3.1l.8 3.4-1.8 1.5a12.4 12.4 0 0 0 6.7 6.7l1.5-1.8 3.4.8v3.1c0 .8-.3 1.5-1.1 1.8A16.2 16.2 0 0 1 3.5 6.6c.3-.8 1-1.1 1.8-1.1z"/></svg>';
