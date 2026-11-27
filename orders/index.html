@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="robots" content="noindex, nofollow" />
   <meta name="format-detection" content="telephone=no" />
-  <meta name="theme-color" content="#ffffff" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="Turquoise Orders" />
@@ -13,11 +15,11 @@
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-180.png" />
-  <link rel="stylesheet" href="./app.css?v=34" />
+  <link rel="stylesheet" href="./app.css?v=36" />
   <script defer src="./supabase-js-2.119.2.min.js"></script>
   <script defer src="../assets/libphonenumber-min.js?v=122"></script>
   <script defer src="../assets/phone.js?v=122"></script>
-  <script defer src="./app.js?v=35"></script>
+  <script defer src="./app.js?v=36"></script>
 </head>
 <body>
   <!-- Login -->
@@ -81,7 +83,15 @@
           <h2 class="settings-title" id="settings-title" hidden>Due</h2>
           </div>
           <div id="settings-main" class="settings">
+            <div class="settings-total" id="today-total">
+              <p class="settings-total-label">Today</p>
+              <p class="settings-total-sum" id="today-total-sum">—</p>
+              <p class="settings-total-n" id="today-total-n">Paid online orders</p>
+            </div>
             <div class="settings-list">
+              <button type="button" class="settings-row" id="test-print-btn">
+                <span>Test print</span>
+              </button>
               <button type="button" class="settings-row" id="due-btn">
                 <span>Due</span>
                 <svg class="settings-chev" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -91,13 +101,13 @@
                 <svg class="settings-chev" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
               </button>
               <button type="button" class="settings-row" id="stop-btn" role="switch" aria-checked="true" aria-label="Receiving orders">
-                <span>Receiving orders</span>
+                <span id="stop-btn-label">Receiving orders</span>
                 <span class="switch" aria-hidden="true"></span>
               </button>
             </div>
           </div>
           <div id="settings-menu" hidden>
-            <p class="hint">Switch an item off when it runs out. Customers can't order it until you switch it back on.</p>
+            <p class="hint">Switch an item off when it runs out. Customers can't order it. It comes back on tomorrow, or you can switch it back on now.</p>
             <div id="menu-list" class="menu-list"></div>
           </div>
           <div id="settings-due" hidden>

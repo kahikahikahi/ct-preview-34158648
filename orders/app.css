@@ -443,3 +443,110 @@ button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
   border: 0; border-radius: 0; border-bottom: 1px solid #111;
   background: #fff; font: inherit; resize: vertical; outline: none;
 }
+
+
+/* Settings: today's total + print / pause rows */
+.settings-total {
+  padding: 22px 18px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.settings-total-label {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--mute);
+}
+.settings-total-sum {
+  margin: 4px 0 0;
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.2;
+  color: var(--ink);
+}
+.settings-total-n {
+  margin: 6px 0 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.decide-print {
+  background: transparent;
+  border: 0;
+  color: var(--ink);
+  width: auto;
+  flex: 1;
+  min-height: 56px;
+  height: 56px;
+}
+.decide-print:hover, .decide-print:active {
+  background: transparent;
+  color: var(--ink);
+}
+.detail-actions .row-acts { padding: 0 16px 10px; }
+.detail-actions .row-acts + .row-acts { padding-top: 0; }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #eaeaea;
+    --mute: #9a9a9a;
+    --line: #2a2a2a;
+    --page: #000000;
+    --bg: #000000;
+    --new-soft: #000000;
+    --go-soft: #000000;
+    --danger-soft: #000000;
+  }
+  html { color-scheme: dark; }
+  html, body, .app, .center, #screen-login, #screen-denied,
+  .detail-screen, #pane-settings .wrap, .menu-row, .settings-row,
+  .login input, .msg-box, .modal-box, .modal-row, .edit-note {
+    background: #000000;
+    color: #eaeaea;
+  }
+  .login input::placeholder { color: #9a9a9a; }
+  .btn-dark, .btn-go,
+  .decide-yes, .edit-step,
+  .modal-actions .btn-go, .modal-actions .btn-dark, .modal-actions .btn-stop {
+    background: #eaeaea;
+    border-color: #eaeaea;
+    color: #000000;
+  }
+  .btn-dark:hover, .btn-dark:active, .btn-go:hover, .btn-go:active,
+  .decide-yes:hover, .decide-yes:active,
+  .edit-step:hover, .edit-step:active,
+  .modal-actions .btn-go:hover, .modal-actions .btn-go:active,
+  .modal-actions .btn-dark:hover, .modal-actions .btn-dark:active,
+  .modal-actions .btn-stop:hover, .modal-actions .btn-stop:active {
+    background: #eaeaea;
+    border-color: #eaeaea;
+    color: #000000;
+  }
+  .decide-no, .modal-actions .btn, .btn-stop, .btn-stop-line {
+    background: #000000;
+    color: #eaeaea;
+    border-color: #2a2a2a;
+  }
+  .decide-no:hover, .decide-no:active,
+  .modal-actions .btn:hover, .modal-actions .btn:active {
+    background: #000000;
+    color: #eaeaea;
+  }
+  .switch { background: #eaeaea; }
+  .switch::after { background: #000000; }
+  .settings-row.off .switch, .menu-row.off .switch { background: #555555; }
+  .settings-row.off .switch::after, .menu-row.off .switch::after { background: #000000; }
+  .toast { background: #eaeaea; color: #000000; }
+  .toast.bad { background: var(--danger); color: #eaeaea; }
+  .takeover, .takeover:hover, .takeover:active {
+    background: #000000;
+    color: #eaeaea;
+  }
+  .takeover-title, .takeover-hint { color: #eaeaea; }
+  .edit-remove, .edit-remove:hover, .edit-remove:active,
+  .edit-note-label { color: #eaeaea; }
+  .edit-note { border-bottom-color: #eaeaea; background: #000000; color: #eaeaea; }
+  .decide-print, .decide-print:hover, .decide-print:active { color: #eaeaea; background: transparent; }
+  button:focus-visible { outline-color: #eaeaea; }
+}

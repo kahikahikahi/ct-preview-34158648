@@ -67,6 +67,11 @@
     return p;
   }
   function todayNZ() { var p = nzParts(); return p.year + "-" + p.month + "-" + p.day; }
+  function itemIsSoldOut(m) {
+    if (!m || m.active !== false) return false;
+    if (!m.sold_out_on) return true;
+    return String(m.sold_out_on) === todayNZ();
+  }
   function startOfTodayISO() {
     var p = nzParts();
     var off = (p.timeZoneName || "GMT+13:00").replace("GMT", "") || "+00:00";
@@ -331,10 +336,12 @@
   function refreshSoon() { clearTimeout(refreshSoonTimer); refreshSoonTimer = setTimeout(refresh, 250); }
 
   function loadMenu() {
+    return sb.rpc("expire_sold_out").catch(function () { return null; }).then(function () {
     return Promise.all([
-      sb.from("menu_items").select("id,name,category,price_cents,option_groups,active,sort").order("sort"),
+      sb.from("menu_items").select("id,name,category,price_cents,option_groups,active,sold_out_on,sort").order("sort"),
       sb.from("option_groups").select("key,name")
-    ]).then(function (r) {
+    ]);
+    }).then(function (r) {
       if (r[0].error) throw r[0].error;
       state.menu = r[0].data || [];
       state.itemGroups = {};
@@ -592,7 +599,12 @@
       else actions += '<button type="button" class="decide-btn decide-yes" data-act="accept" data-id="' + o.id + '" aria-label="Accept">Accept</button>';
       if (canEditOrder(o)) actions += '<button type="button" class="decide-btn decide-edit" data-act="edit" data-id="' + o.id + '">Edit</button>';
       actions += '<button type="button" class="decide-btn decide-no" data-act="decline" data-id="' + o.id + '" aria-label="Decline">Decline</button></div>';
+    } else if (o.status === "accepted" || o.status === "preparing" || o.status === "ready") {
+      actions = '<div class="row-acts">' +
+        '<button type="button" class="decide-btn decide-yes" data-act="collect" data-id="' + o.id + '">Picked up</button></div>';
     }
+    actions += '<div class="row-acts">' +
+      '<button type="button" class="decide-btn decide-print" data-act="reprint" data-id="' + o.id + '">Reprint docket</button></div>';
     return detailShell("Pickup", "Pickup", st, body, actions);
   }
 
@@ -777,6 +789,10 @@
     var b = $("stop-btn");
     b.className = "settings-row" + (state.accepting ? "" : " off");
     b.setAttribute("aria-checked", state.accepting ? "true" : "false");
+    b.setAttribute("aria-label", state.accepting ? "Receiving orders" : "Resume online orders");
+    var lab = $("stop-btn-label");
+    if (lab) lab.textContent = state.accepting ? "Receiving orders" : "Resume online orders";
+    if (state.settingsView === "main") loadTodayTotal();
   }
 
   function renderMenu() {
@@ -787,9 +803,9 @@
     });
     $("menu-list").innerHTML = cats.map(function (c) {
       return '<section class="menu-cat"><h2>' + esc(c.toLocaleUpperCase("tr-TR")) + "</h2>" + byCat[c].map(function (m) {
-        return '<button type="button" class="menu-row' + (m.active ? "" : " off") + '" data-act="toggle" data-id="' + esc(m.id) +
-          '" role="switch" aria-checked="' + (m.active ? "true" : "false") + '"><span class="m-name">' + esc(m.name) + "</span>" +
-          (m.active ? "" : '<span class="m-state">Sold out</span>') + '<span class="switch"></span></button>';
+        return '<button type="button" class="menu-row' + (itemIsSoldOut(m) ? " off" : "") + '" data-act="toggle" data-id="' + esc(m.id) +
+          '" role="switch" aria-checked="' + (itemIsSoldOut(m) ? "false" : "true") + '"><span class="m-name">' + esc(m.name) + "</span>" +
+          (itemIsSoldOut(m) ? '<span class="m-state">Sold out</span>' : "") + '<span class="switch"></span></button>';
       }).join("") + "</section>";
     }).join("");
   }
@@ -962,6 +978,179 @@
     }).catch(function (e) { b.disabled = false; toast(errMsg(e), true); });
   }
 
+
+  function payPlain(o) {
+    if (o.payment_method === "online") {
+      if (o.payment_status === "paid") return "Paid online";
+      if (o.payment_status === "failed") return "Pay online (payment failed)";
+      if (o.payment_status === "unpaid") return "Pay online";
+      return "Pay online, not paid";
+    }
+    return o.payment_status === "paid" ? "Paid at counter" : "Pay at counter";
+  }
+  function pickupDocketLine(o) {
+    if (o.pickup_type === "later" && o.pickup_at) return "PICKUP  " + fmtTime(o.pickup_at);
+    if (o.ready_at) return "PICKUP  " + fmtTime(o.ready_at);
+    return "PICKUP  ASAP";
+  }
+  function docketCenter(s, width) {
+    s = String(s || "");
+    if (s.length > width) s = s.slice(0, width);
+    var pad = Math.floor((width - s.length) / 2);
+    return (new Array(pad + 1)).join(" ") + s;
+  }
+  function docketWrap(text, width, indent) {
+    var prefix = (new Array((indent || 0) + 1)).join(" ");
+    var inner = width - (indent || 0);
+    var words = String(text || "").split(/\s+/).filter(Boolean), lines = [], cur = "";
+    words.forEach(function (w) {
+      var next = cur ? cur + " " + w : w;
+      if (next.length <= inner) cur = next;
+      else {
+        if (cur) lines.push(prefix + cur);
+        cur = w;
+      }
+    });
+    if (cur) lines.push(prefix + cur);
+    return lines;
+  }
+  function docketMoney(cents) {
+    return "$" + (Number(cents || 0) / 100).toFixed(2);
+  }
+  function docketItemHead(qty, name, cents, width) {
+    var left = qty + "x " + name, right = docketMoney(cents);
+    var gap = width - left.length - right.length;
+    if (gap < 1) return left.slice(0, Math.max(0, width - right.length - 1)) + " " + right;
+    return left + (new Array(gap + 1)).join(" ") + right;
+  }
+  function optionPlain(it) {
+    var opts = it.options || {}, keys = Object.keys(opts), order = state.itemGroups[it.menu_item_id] || [];
+    keys.sort(function (a, b) {
+      var ia = order.indexOf(a), ib = order.indexOf(b);
+      return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+    });
+    return keys.map(function (k) {
+      var picks = Array.isArray(opts[k]) ? opts[k] : [], counts = {}, list = [];
+      picks.forEach(function (p) { if (!(p in counts)) { counts[p] = 0; list.push(p); } counts[p]++; });
+      if (!list.length) return "";
+      var txt = list.map(function (p) { return p + (counts[p] > 1 ? " ×" + counts[p] : ""); }).join(", ");
+      return (state.groups[k] || k) + ": " + txt;
+    }).filter(Boolean);
+  }
+  function docketHtml(lines, bigIdxs) {
+    function escText(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+    var body = lines.map(function (line, i) {
+      var cls = (bigIdxs || []).indexOf(i) >= 0 ? " class=\"big\"" : "";
+      return "<div" + cls + ">" + (escText(line) || "&nbsp;") + "</div>";
+    }).join("");
+    return "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Docket</title><style>" +
+      "@page{size:80mm auto;margin:4mm}html,body{margin:0;padding:0;background:#fff;color:#000}" +
+      "body{width:72mm;margin:0 auto;font-family:\"Courier New\",Courier,ui-monospace,monospace;" +
+      "font-size:12px;line-height:1.25;color:#000}" +
+      ".docket div{white-space:pre;font-weight:400}" +
+      ".docket div.big{font-size:22px;font-weight:700;text-align:center;line-height:1.2;margin:4px 0}" +
+      "@media print{body{background:#fff;color:#000}}" +
+      "</style></head><body><div class=\"docket\">" + body + "</div></body></html>";
+  }
+  function printHtml(html) {
+    var frame = $("docket-frame");
+    if (!frame) {
+      frame = document.createElement("iframe");
+      frame.id = "docket-frame";
+      frame.setAttribute("aria-hidden", "true");
+      frame.setAttribute("title", "Print docket");
+      frame.style.cssText = "position:fixed;right:0;bottom:0;width:0;height:0;border:0;";
+      document.body.appendChild(frame);
+    }
+    var doc = frame.contentDocument || frame.contentWindow.document;
+    doc.open();
+    doc.write(html);
+    doc.close();
+    function go() {
+      try {
+        frame.contentWindow.focus();
+        frame.contentWindow.print();
+      } catch (e) {
+        toast("Couldn't open the print dialog.", true);
+      }
+    }
+    setTimeout(go, 80);
+  }
+  function testPrint() {
+    var when = fmtStamp(new Date());
+    var lines = ["", docketCenter("Café Turquoise", 42), "", "TEST PRINT", "", docketCenter(when, 42), ""];
+    printHtml(docketHtml(lines, [3]));
+  }
+  function reprintOrder(o) {
+    if (!o) return;
+    var cols = 42, lines = [], big = [];
+    lines.push("");
+    lines.push(docketCenter("Café Turquoise", cols));
+    lines.push("");
+    big.push(lines.length);
+    lines.push(o.ref || "");
+    lines.push("");
+    big.push(lines.length);
+    lines.push(pickupDocketLine(o));
+    lines.push("");
+    lines.push(o.customer_name || "");
+    if (o.phone) lines.push(displayPhone(o.phone));
+    lines.push(payPlain(o));
+    lines.push(new Array(cols + 1).join("-"));
+    var items = (o.order_items || []).slice().sort(function (a, b) { return a.id - b.id; });
+    items.forEach(function (it, n) {
+      lines.push(docketItemHead(it.qty, it.name, it.line_cents != null ? it.line_cents : (it.qty * it.unit_cents), cols));
+      optionPlain(it).forEach(function (opt) {
+        docketWrap(opt, cols, 3).forEach(function (w) { lines.push(w); });
+      });
+      if (it.note) docketWrap("Note: " + it.note, cols, 3).forEach(function (w) { lines.push(w); });
+      if (n < items.length - 1) lines.push("");
+    });
+    lines.push(new Array(cols + 1).join("-"));
+    if (o.notes) {
+      lines.push("Order note:");
+      docketWrap(o.notes, cols, 0).forEach(function (w) { lines.push(w); });
+      lines.push(new Array(cols + 1).join("-"));
+    }
+    var left = "TOTAL", right = docketMoney(o.total_cents);
+    lines.push(left + (new Array(cols - left.length - right.length + 1).join(" ")) + right);
+    lines.push(new Array(cols + 1).join("-"));
+    lines.push("Printed  " + fmtStamp(new Date()));
+    lines.push("");
+    printHtml(docketHtml(lines, big));
+  }
+  function loadTodayTotal() {
+    var sumEl = $("today-total-sum"), nEl = $("today-total-n");
+    if (!sumEl || !nEl) return;
+    sb.from("orders").select("id,total_cents,status,payment_status,payment_method,created_at")
+      .eq("payment_method", "online")
+      .eq("payment_status", "paid")
+      .neq("status", "cancelled")
+      .gte("created_at", startOfTodayISO())
+      .then(function (r) {
+        if (r.error) throw r.error;
+        var rows = r.data || [], cents = 0;
+        rows.forEach(function (o) { cents += Number(o.total_cents || 0); });
+        var n = rows.length;
+        sumEl.textContent = money(cents);
+        nEl.textContent = n === 1 ? "1 paid online order" : (n + " paid online orders");
+      }).catch(function () {
+        sumEl.textContent = "—";
+        nEl.textContent = "Couldn't load today's total";
+      });
+  }
+  function collectOrder(o) {
+    if (!o) return;
+    sb.rpc("collect_order", { p_order_id: o.id }).then(function (r) {
+      if (r.error) throw r.error;
+      toast((o.customer_name || "Order") + " picked up");
+      state.detail = null;
+      refresh();
+    }).catch(function (e) { toast(errMsg(e), true); });
+  }
+
   // ---------- actions ----------
   function setBookingStatus(b, to, okMsg) {
     return sb.from("bookings").update({ status: to }).eq("id", b.id).eq("status", "pending").select("id").then(function (r) {
@@ -979,14 +1168,16 @@
   function toggleItem(btn) {
     var id = btn.dataset.id, m = state.menu.filter(function (x) { return x.id === id; })[0];
     if (!m || btn.classList.contains("busy")) return;
-    var next = !m.active;
+    var makeAvailable = itemIsSoldOut(m);
+    var patch = makeAvailable ? { active: true, sold_out_on: null } : { active: false, sold_out_on: todayNZ() };
     btn.classList.add("busy");
-    sb.from("menu_items").update({ active: next }).eq("id", id).select("id,active").then(function (r) {
+    sb.from("menu_items").update(patch).eq("id", id).select("id,active,sold_out_on").then(function (r) {
       if (r.error) throw r.error;
       if (!r.data || !r.data.length) throw new Error("Couldn't change " + m.name + ".");
       m.active = r.data[0].active;
+      m.sold_out_on = r.data[0].sold_out_on;
       renderMenu();
-      toast(m.name + (m.active ? " is back on" : " is sold out"));
+      toast(m.name + (itemIsSoldOut(m) ? " is sold out" : " is back on"));
     }).catch(function (e) { btn.classList.remove("busy"); toast(errMsg(e), true); });
   }
 
@@ -1015,6 +1206,7 @@
     }
     if (t.id === "due-btn") return openDue();
     if (t.id === "due-more") return loadDue(true);
+    if (t.id === "test-print-btn") return testPrint();
     if (t.id === "edit-menu-btn") { state.settingsView = "menu"; loadMenu(); return render(); }
     if (t.id === "stop-btn") {
       if (!state.accepting) return setAccepting(true);
@@ -1083,6 +1275,8 @@
       }).catch(function (e) { t.disabled = false; toast(errMsg(e), true); refresh(); });
     }
     if (act === "bk-decline" && (b = findBooking(id))) return openDecline("booking", b);
+    if (act === "collect" && (o = findOrder(id))) return collectOrder(o);
+    if (act === "reprint" && (o = findOrder(id))) return reprintOrder(o);
     if (act === "toggle") return toggleItem(t);
   });
   $("modal").addEventListener("click", function (e) { if (e.target === $("modal")) closeModal(); });
