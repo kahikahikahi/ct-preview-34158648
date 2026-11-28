@@ -1847,3 +1847,20 @@ html body .s-info .s-hours .day {
   font-synthesis-weight: none !important;
   font-synthesis-style: none !important;
 }
+
+/* Desktop side-by-side only: a bit larger Duru Sans info text. Not Menu / Order / Book, and not phones. */
+@media (min-width: 961px) {
+  html body .s-info .s-hours,
+  html body .s-info .s-hours p,
+  html body .s-info .s-hours span,
+  html body .s-info .s-hours .status,
+  html body .s-info #openStatus,
+  html body .s-info > .s-link,
+  html body .s-info a.s-link {
+    font-size: 20px !important;
+    line-height: 1.5 !important;
+  }
+  html body .s-info .s-hours .s-htimes {
+    white-space: nowrap !important;
+  }
+}
