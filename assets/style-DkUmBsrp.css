@@ -1769,9 +1769,8 @@ html body .op a.op-delivery:focus-visible {
   }
 }
 
-/* Homepage landing: building-facade turquoise sampled from front-v2.jpg
-   (mean of painted awning/fascia pixels, excluding windows, signage and sky):
-   #5CBBCC in light mode (black text already ≥7:1, no lightening).
+/* Homepage landing: building-facade turquoise, lightened ~30% toward white:
+   #8DD0DB in light mode (same hue as sampled #5CBBCC, not as pale as #D4EFEC).
    Dark mode is a deep version of the same hue, #113136, with existing light text.
    Flat only. Does not restyle the on-page menu, order overlay, booking overlay,
    delivery page, or staff app. */
@@ -1779,8 +1778,8 @@ html,
 body,
 #root,
 main {
-  background: #5CBBCC !important;
-  background-color: #5CBBCC !important;
+  background: #8DD0DB !important;
+  background-color: #8DD0DB !important;
 }
 html body .s-top,
 html body .s-info,
@@ -1790,8 +1789,8 @@ html body footer,
 html body .ph-head,
 html body .ph-bar,
 html body .ph-nav {
-  background: #5CBBCC !important;
-  background-color: #5CBBCC !important;
+  background: #8DD0DB !important;
+  background-color: #8DD0DB !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
 }
