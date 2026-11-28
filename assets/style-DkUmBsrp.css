@@ -1769,17 +1769,15 @@ html body .op a.op-delivery:focus-visible {
   }
 }
 
-/* Homepage landing: building-facade turquoise sampled from front-v2.jpg:
-   #5CBBCC in light mode, with existing dark text.
-   Dark mode is a deep version of the same hue, #113136, with existing light text.
+/* Homepage landing and footer: white in light mode, pure black in dark mode.
    Flat only. Does not restyle the on-page menu, order overlay, booking overlay,
    delivery page, or staff app. */
 html,
 body,
 #root,
 main {
-  background: #5CBBCC !important;
-  background-color: #5CBBCC !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
 }
 html body .s-top,
 html body .s-info,
@@ -1789,8 +1787,8 @@ html body footer,
 html body .ph-head,
 html body .ph-bar,
 html body .ph-nav {
-  background: #5CBBCC !important;
-  background-color: #5CBBCC !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
 }
@@ -1804,8 +1802,8 @@ html body #menu {
   body,
   #root,
   main {
-    background: #113136 !important;
-    background-color: #113136 !important;
+    background: #000000 !important;
+    background-color: #000000 !important;
   }
   html body .s-top,
   html body .s-info,
@@ -1815,8 +1813,8 @@ html body #menu {
   html body .ph-head,
   html body .ph-bar,
   html body .ph-nav {
-    background: #113136 !important;
-    background-color: #113136 !important;
+    background: #000000 !important;
+    background-color: #000000 !important;
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
   }
@@ -1912,9 +1910,7 @@ html body .s-info .s-btns a.btn.btn-book {
   height: auto !important;
   margin: 0 !important;
   padding: 0 14px !important;
-  background: #ffffff !important;
   background-image: none !important;
-  background-color: #ffffff !important;
   color: #000000 !important;
   -webkit-text-fill-color: #000000 !important;
   border: 0 !important;
@@ -1954,31 +1950,85 @@ html body .s-info .s-btns a.btn::after {
     font-size: 18px !important;
   }
 }
+html body .s-info .s-btns a.btn.btn-menu,
+html body .s-info .s-btns a.btn.btn-menu:link,
+html body .s-info .s-btns a.btn.btn-menu:visited {
+  background: #5CBBCC !important;
+  background-color: #5CBBCC !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+html body .s-info .s-btns a.btn.btn-order,
+html body .s-info .s-btns a.btn.btn-order:link,
+html body .s-info .s-btns a.btn.btn-order:visited {
+  background: #c9a227 !important;
+  background-color: #c9a227 !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+html body .s-info .s-btns a.btn.btn-book,
+html body .s-info .s-btns a.btn.btn-book:link,
+html body .s-info .s-btns a.btn.btn-book:visited {
+  background: #0f6e6e !important;
+  background-color: #0f6e6e !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
 @media (hover: hover) and (pointer: fine) {
-  html body .s-info .s-btns a.btn:hover,
-  html body .s-info .s-btns a.btn:hover:visited,
   html body .s-info .s-btns a.btn.btn-menu:hover,
-  html body .s-info .s-btns a.btn.btn-order:hover,
-  html body .s-info .s-btns a.btn.btn-book:hover {
-    background: #f0f0f0 !important;
-    background-image: none !important;
-    background-color: #f0f0f0 !important;
+  html body .s-info .s-btns a.btn.btn-menu:hover:visited {
+    background: #49B3C6 !important;
+    background-color: #49B3C6 !important;
     color: #000000 !important;
     -webkit-text-fill-color: #000000 !important;
     box-shadow: none !important;
     filter: none !important;
     text-decoration: none !important;
-    text-decoration-line: none !important;
+  }
+  html body .s-info .s-btns a.btn.btn-order:hover,
+  html body .s-info .s-btns a.btn.btn-order:hover:visited {
+    background: #B49123 !important;
+    background-color: #B49123 !important;
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    box-shadow: none !important;
+    filter: none !important;
+    text-decoration: none !important;
+  }
+  html body .s-info .s-btns a.btn.btn-book:hover,
+  html body .s-info .s-btns a.btn.btn-book:hover:visited {
+    background: #0C5858 !important;
+    background-color: #0C5858 !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    box-shadow: none !important;
+    filter: none !important;
+    text-decoration: none !important;
   }
 }
-html body .s-info .s-btns a.btn:active,
-html body .s-info .s-btns a.btn.btn-menu:active,
-html body .s-info .s-btns a.btn.btn-order:active,
-html body .s-info .s-btns a.btn.btn-book:active {
-  background: #f0f0f0 !important;
-  background-color: #f0f0f0 !important;
+html body .s-info .s-btns a.btn.btn-menu:active {
+  background: #49B3C6 !important;
+  background-color: #49B3C6 !important;
   color: #000000 !important;
   -webkit-text-fill-color: #000000 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  text-decoration: none !important;
+}
+html body .s-info .s-btns a.btn.btn-order:active {
+  background: #B49123 !important;
+  background-color: #B49123 !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  text-decoration: none !important;
+}
+html body .s-info .s-btns a.btn.btn-book:active {
+  background: #0C5858 !important;
+  background-color: #0C5858 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
   box-shadow: none !important;
   filter: none !important;
   text-decoration: none !important;
@@ -1992,41 +2042,13 @@ html body .s-info .s-btns a.btn.btn-book:focus-visible {
   box-shadow: none !important;
 }
 @media (prefers-color-scheme: dark) {
-  html body .s-info .s-btns a.btn,
-  html body .s-info .s-btns a.btn:link,
-  html body .s-info .s-btns a.btn:visited,
-  html body .s-info .s-btns a.btn.btn-menu,
-  html body .s-info .s-btns a.btn.btn-order,
-  html body .s-info .s-btns a.btn.btn-book,
-  html body .s-info .s-btns a.btn:active,
-  html body .s-info .s-btns a.btn.btn-menu:active,
-  html body .s-info .s-btns a.btn.btn-order:active,
-  html body .s-info .s-btns a.btn.btn-book:active {
-    background: #eaeaea !important;
-    background-image: none !important;
-    background-color: #eaeaea !important;
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
-    border: 0 !important;
+  html body .s-info .s-btns a.btn:focus-visible,
+  html body .s-info .s-btns a.btn.btn-menu:focus-visible,
+  html body .s-info .s-btns a.btn.btn-order:focus-visible,
+  html body .s-info .s-btns a.btn.btn-book:focus-visible {
+    outline: 3px solid #ffffff !important;
+    outline-offset: 3px !important;
     box-shadow: none !important;
-    text-decoration: none !important;
-    text-decoration-line: none !important;
   }
 }
-@media (prefers-color-scheme: dark) and (hover: hover) and (pointer: fine) {
-  html body .s-info .s-btns a.btn:hover,
-  html body .s-info .s-btns a.btn:hover:visited,
-  html body .s-info .s-btns a.btn.btn-menu:hover,
-  html body .s-info .s-btns a.btn.btn-order:hover,
-  html body .s-info .s-btns a.btn.btn-book:hover {
-    background: #dddddd !important;
-    background-image: none !important;
-    background-color: #dddddd !important;
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
-    box-shadow: none !important;
-    filter: none !important;
-    text-decoration: none !important;
-    text-decoration-line: none !important;
-  }
-}
+
