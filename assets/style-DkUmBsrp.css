@@ -1826,3 +1826,24 @@ html body #menu {
     background-color: #000000 !important;
   }
 }
+
+/* Homepage info text: Duru Sans regular (400). Not the Menu / Order / Book
+   links, header, menu, order overlay, booking overlay, delivery page, or staff app. */
+html body .s-info .s-hours,
+html body .s-info .s-hours p,
+html body .s-info .s-hours span,
+html body .s-info .s-hours .status,
+html body .s-info #openStatus,
+html body .s-info > .s-link,
+html body .s-info a.s-link,
+html body .s-info .descriptor,
+html body .s-info .label,
+html body .s-info .s-hours .label,
+html body .s-info .s-hours .day {
+  font-family: "Duru Sans", Arial, Helvetica, sans-serif !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  font-synthesis: none !important;
+  font-synthesis-weight: none !important;
+  font-synthesis-style: none !important;
+}
