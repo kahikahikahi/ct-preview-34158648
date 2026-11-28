@@ -1825,8 +1825,8 @@ html body #menu {
   }
 }
 
-/* Homepage info text: Duru Sans regular (400). Not the Menu / Order / Book
-   links, header, menu, order overlay, booking overlay, delivery page, or staff app. */
+/* Homepage info text: Duru Sans regular (400). Not the header, menu,
+   order overlay, booking overlay, delivery page, or staff app. */
 html body .s-info .s-hours,
 html body .s-info .s-hours p,
 html body .s-info .s-hours span,
@@ -1919,7 +1919,7 @@ html body .s-info .s-btns a.btn.btn-book {
   text-shadow: none !important;
   filter: none !important;
   border-radius: 999px !important;
-  font-family: Arial, Helvetica, sans-serif !important;
+  font-family: "Duru Sans", Arial, Helvetica, sans-serif !important;
   font-size: 16px !important;
   font-weight: 400 !important;
   font-style: normal !important;
