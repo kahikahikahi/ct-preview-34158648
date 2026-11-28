@@ -1768,3 +1768,59 @@ html body .op a.op-delivery:focus-visible {
     background: none !important;
   }
 }
+
+/* Homepage landing: soft pale turquoise (light) / deep muted turquoise (dark).
+   Flat only. Does not restyle the on-page menu, order overlay, booking overlay,
+   delivery page, or staff app. */
+html,
+body,
+#root,
+main {
+  background: #D4EFEC !important;
+  background-color: #D4EFEC !important;
+}
+html body .s-top,
+html body .s-info,
+html body .s-info .s-hours,
+html body .s-media,
+html body footer,
+html body .ph-head,
+html body .ph-bar,
+html body .ph-nav {
+  background: #D4EFEC !important;
+  background-color: #D4EFEC !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+html body .ct-menu,
+html body #menu {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+@media (prefers-color-scheme: dark) {
+  html,
+  body,
+  #root,
+  main {
+    background: #0E3B3A !important;
+    background-color: #0E3B3A !important;
+  }
+  html body .s-top,
+  html body .s-info,
+  html body .s-info .s-hours,
+  html body .s-media,
+  html body footer,
+  html body .ph-head,
+  html body .ph-bar,
+  html body .ph-nav {
+    background: #0E3B3A !important;
+    background-color: #0E3B3A !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  html body .ct-menu,
+  html body #menu {
+    background: #000000 !important;
+    background-color: #000000 !important;
+  }
+}
